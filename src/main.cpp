@@ -25,9 +25,9 @@ ofstream fx;
 
 #endif
 
-#include <c:\Documents and Settings\Kaczy\Moje dokumenty\Programy Walczace\Conixer2\tel.h>
-#include <c:\Documents and Settings\Kaczy\Moje dokumenty\Programy Walczace\Conixer2\FieldSpace.h>
-#include <c:\Documents and Settings\Kaczy\Moje dokumenty\Programy Walczace\Conixer2\path_finder.h>
+#include <src/tel.h>
+#include <src/FieldSpace.h>
+#include <src/path_finder.h>
 
 
 
@@ -41,11 +41,11 @@ MaxMoves=92;
 
 #if DEBUGIN==1 || DEBUGIN==2
 if(StaringWith==1){
-	fx.open("C:/Documents and Settings/Kaczy/Moje dokumenty/Programy Walczace/Conixer2/smDebug1.log", ios::trunc);
+	fx.open("logout/smDebug1.log", ios::trunc);
 	}
 	else
 	{
-		fx.open("C:/Documents and Settings/Kaczy/Moje dokumenty/Programy Walczace/Conixer2/smDebug2.log", ios::trunc);
+		fx.open("logout/smDebug2.log", ios::trunc);
 		}
 if(fx.is_open()){
 #endif

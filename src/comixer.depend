@@ -1,18 +1,18 @@
 # depslib dependency file v1.0
-1161995986 c:\documents and settings\kaczy\moje dokumenty\programy walczace\conixer2\main.cpp
+1161995986 src/main.cpp
 	<cstdlib>
 	<iostream>
 	<fstream>
 	<sstream>
-	<c:\Documents and Settings\Kaczy\Moje dokumenty\Programy Walczace\Conixer2\tel.h>
-	<c:\Documents and Settings\Kaczy\Moje dokumenty\Programy Walczace\Conixer2\FieldSpace.h>
-	<c:\Documents and Settings\Kaczy\Moje dokumenty\Programy Walczace\Conixer2\path_finder.h>
+	<src/tel.h>
+	<src/FieldSpace.h>
+	<src/path_finder.h>
 
-1161527824 d:\blazej\programy walczace\conixer2\main.cpp
+1161527824 src/main.cpp
 	<cstdlib>
 	<iostream>
 	<fstream>
-	<D:\Blazej\Programy Walczace\Conixer2\tel.h>
-	<D:\Blazej\Programy Walczace\Conixer2\FieldSpace.h>
-	<D:\Blazej\Programy Walczace\Conixer2\path_finder.h>
+	<src/tel.h>
+	<src/FieldSpace.h>
+	<src/path_finder.h>
 

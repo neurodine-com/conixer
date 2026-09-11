@@ -3,7 +3,7 @@
 ###############################################################################
 
 # Project:          Console application
-# Project filename: C:\Documents and Settings\Kaczy\Moje dokumenty\Programy Walczace\Conixer2\comixer.cbp
+# Project filename: src/comixer.cbp
 # Compiler used:    GNU GCC Compiler
 
 ### Variables used in this Makefile
@@ -18,9 +18,11 @@ default_GLOBAL_CFLAGS=
 default_PROJECT_CFLAGS= -g
 default_GLOBAL_LDFLAGS=
 default_PROJECT_LDFLAGS=
-default_GLOBAL_INCS= -ID:/Program\ Files/CodeBlocks/include
+# default_GLOBAL_INCS= -ID:/Program\ Files/CodeBlocks/include
+default_GLOBAL_INCS= -ID:include
 default_PROJECT_INCS=
-default_GLOBAL_LIBDIRS= -LD:/Program\ Files/CodeBlocks/lib
+# default_GLOBAL_LIBDIRS= -LD:/Program\ Files/CodeBlocks/lib
+default_GLOBAL_LIBDIRS= -LD:lib
 default_PROJECT_LIBDIRS=
 default_GLOBAL_LIBS=
 default_PROJECT_LIBS=
@@ -53,7 +55,8 @@ default_LINKOBJS=$(default_OBJS)
 default_DEPS=.deps/main.d 
 
 ### The targets of this project
-default_BIN=C:/Documents\ and\ Settings/Kaczy/Moje\ dokumenty/Programy\ Walczace/Conixer2/comixer.exe
+# default_BIN=C:/Documents\ and\ Settings/Kaczy/Moje\ dokumenty/Programy\ Walczace/Conixer2/comixer.exe
+default_BIN=bin/comixer.exe
 
 .PHONY: all all-before all-custom all-after clean clean-custom distclean distclean-custom depend_default default-before default-after 
 

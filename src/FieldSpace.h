@@ -133,8 +133,8 @@ class BaseBlock{
 
 
 	typedef struct {
-	int radius;//okresla dlugosc drogi
-	TPoint DestPoint;//okresla max punkt o ktorego moze dotzrec dana betoniarka
+	int radius;// denotes max path length aka max vector length
+	TPoint DestPoint;//denotes a max point on FieldMap that the "ConcrateMixer" is managed to move
 	int Mask;
 	} SimpPath;//Simple Bath aka. Basic Path
 
@@ -143,9 +143,9 @@ class BaseBlock{
 	const SimpPath Starter={-1, (TPoint){-1,-1}, -1};
 
 typedef struct{
-	TVect Vect;//wektor mozliwych max drog - dzieki radious z CMoveblur[.x] moze okreslic dowolne wspolzredne pola na ktore dany element Path ma sie udac - czyli moja betoniarka
-	int VectCount;//okresla ilosc mozlwych wektorow ktore zostaly znalezione
-	TPoint Ground00;//okresla meijsce(TPoint) dla ktorej obliczenia zostaly wykonane
+	TVect Vect;// a vector of possible maximum paths - thanks to radious z CMoveblur[.x] can set any coordinates on the filed on which the item Path has to move - that is my "Concrate Mixer"
+	int VectCount;// takes a value that represents number of vectors found with possible moves
+	TPoint Ground00;// represents a point (TPoint) for which all the above computations have been calculated
 	}VV;
 
 
@@ -153,12 +153,12 @@ typedef struct{
 		public:
 		VV fVV;
 
-		VV BombHQ;//oznacza pole do ktorego beda wisywane wspolzredne z ktorych nastapi obstrzal
-				// pola Vect i VectCount powinny zostac wyczysczczone i tylko pole GroundZero ustawione
+		VV BombHQ;// represents a filed which is used to as a point from which a "BOMB" will be deployed 
+		          // fields Vect and VectCount should get cleaned and only field GroundZero set
 
 		int PathForMixer;
 		TPoint Org;
-		bool Tim;//okresla druzyne dla ktorej jest to droga
+		bool Tim;// there are just two players so bool is enough to assign value for each of the teams; true - tema1, false - team2
 		bool TempNotIntresting;
 
 		int PathCount(){
@@ -235,16 +235,20 @@ class FieldSpace{
 
 	public:
 	TPole MOF;
-	TPathPoints WariorLoc;//okresla koordynatu MOIcH jednostek
-	TPathPoints EnemyLoc;// okresla koordynaty jednostek wroga
+	TPathPoints WariorLoc;// represents coordinates of my units
+	TPathPoints EnemyLoc;// represents coordinates of enemy units 
 
-	int TimeLeft;//czas pozostaly na wykonanie obliczen
-	int EmptyFields;//okresla ilosc wolnych pol pozostalych na planszy
+	int TimeLeft;// time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time 
+	int EmptyFields;// represents the number of all free fields on the board
 
 
-		/*ustawia pola na lanszy z zajetych na wolne i zapisuje:
+		/* ustawia pola na lanszy z zajetych na wolne i zapisuje:
 		***na planszy pole ktore zostalo zacementowane
 		****pole ktore zostalo zajete
+		*/
+		/* sets fields on the board from occupied to NOT-occupied and saves them
+		***a field on board that got occupied (by obsticle, not the player itself)
+		***a field on boeard that is used (taken by player itself)
 		*/
 
 	bool EQPoint(TPoint P1,int  X, int Y){
