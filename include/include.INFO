@@ -1,0 +1,5 @@
+# ionclude.INFO
+
+# This is a description - a purpose for this directory
+
+	## here should be placed some includes on whic the code depends when running MakeFile compilaton ##
