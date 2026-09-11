@@ -7,7 +7,7 @@ Note:
 	This requires a Java Applet that simply is the Judge/Rule Holder and governs the game play to be conducted in fair manner by Players.
 
 Code:
-	Code was written in mingw compiller (MinGW)
+	Code was written in MinGw compiller in CodeBlocks environment
 
 
 Game env:
