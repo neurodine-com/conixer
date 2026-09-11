@@ -1,0 +1,388 @@
+---2009187278----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(2)
+ChoosingUnits::736:id(0)
+ChoosingUnits::770:TTMUC(2)
+ChoosingUnits::771:id(0)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(0)
+ChoosingUnits::773:EnemyLoc[id].Org.x(3)
+ChoosingUnits::773:EnemyLoc[id].Org.y(9)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(-1)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(0)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(4)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(0)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[2, 3, 4, 6]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(4)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[6, 9, 3, 6, 3, 7]
+---1----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(2)
+ChoosingUnits::736:id(2)
+ChoosingUnits::770:TTMUC(2)
+ChoosingUnits::771:id(2)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(2)
+ChoosingUnits::773:EnemyLoc[id].Org.x(0)
+ChoosingUnits::773:EnemyLoc[id].Org.y(6)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(1)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(0)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(1)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(2)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(0)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[3, 4, -1, -1]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(2)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[9, 6, 6, 3, 6, 6]
+---2----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(2)
+ChoosingUnits::736:id(3)
+ChoosingUnits::770:TTMUC(2)
+ChoosingUnits::771:id(3)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(3)
+ChoosingUnits::773:EnemyLoc[id].Org.x(6)
+ChoosingUnits::773:EnemyLoc[id].Org.y(3)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(1)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(0)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(4)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(1)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[2, 3, 4, 6]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(4)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[3, 6, 4, 7, 4, 8]
+---3----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::704
+ruch Z miejsca:
+CementOldPlace::502:WolnyElement.Org.x(3)
+CementOldPlace::502:WolnyElement.Org.y(8)
+CementOldPlace::503:WolnyElement.PathCount()(3)
+ruch DO miejsca:
+CementOldPlace::514:Destination.x(0)
+CementOldPlace::514:Destination.y(8)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[4, 7, 3, 6, 2, 7]
+---4----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(1)
+ChoosingUnits::736:id(3)
+ChoosingUnits::770:TTMUC(1)
+ChoosingUnits::771:id(3)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(3)
+ChoosingUnits::773:EnemyLoc[id].Org.x(6)
+ChoosingUnits::773:EnemyLoc[id].Org.y(3)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(-1)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(1)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(3)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(2)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[0, 6, 7, -1]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(3)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[0, 6, 1, 5, 0, 6]
+---5----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(1)
+ChoosingUnits::736:id(2)
+ChoosingUnits::770:TTMUC(1)
+ChoosingUnits::771:id(2)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(2)
+ChoosingUnits::773:EnemyLoc[id].Org.x(1)
+ChoosingUnits::773:EnemyLoc[id].Org.y(5)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(1)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(0)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(3)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(0)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[3, 4, 6, -1]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(3)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[3, 6, 3, 5, 1, 7]
+---6----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(2)
+ChoosingUnits::736:id(1)
+ChoosingUnits::770:TTMUC(2)
+ChoosingUnits::771:id(1)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(1)
+ChoosingUnits::773:EnemyLoc[id].Org.x(3)
+ChoosingUnits::773:EnemyLoc[id].Org.y(5)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(0)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(-1)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(2)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(0)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[1, 3, -1, -1]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(2)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[3, 9, 5, 9, 3, 9]
+---7----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(1)
+ChoosingUnits::736:id(1)
+ChoosingUnits::770:TTMUC(1)
+ChoosingUnits::771:id(1)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(1)
+ChoosingUnits::773:EnemyLoc[id].Org.x(3)
+ChoosingUnits::773:EnemyLoc[id].Org.y(5)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(0)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(1)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(2)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(0)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[0, 5, -1, -1]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(2)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[6, 3, 3, 3, 5, 5]
+---8----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(1)
+ChoosingUnits::736:id(2)
+ChoosingUnits::770:TTMUC(1)
+ChoosingUnits::771:id(2)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(2)
+ChoosingUnits::773:EnemyLoc[id].Org.x(1)
+ChoosingUnits::773:EnemyLoc[id].Org.y(5)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(-1)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(-1)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(1)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(0)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[6, -1, -1, -1]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(1)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[1, 5, 1, 4, 1, 5]
+---9----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(0)
+ChoosingUnits::736:id(-1)
+ChoosingUnits::742
+ChooseShootAndRun::527
+ChooseShootAndRun::532:id(1)
+ChooseShootAndRun::533:FindMostRestrictedUnit(WariorLoc)(1)
+ChooseShootAndRun::534:WariorLoc[id].Org.x(4)
+ChooseShootAndRun::534:WariorLoc[id].Org.y(5)
+ChooseShootAndRun::535:WariorLoc[id].PathCount()(3)
+ChooseShootAndRun::548:RestrictionsForHOOD(11)
+ChooseShootAndRun::549:RestrictionsForMyUnitFrom[2, 2, 0, 2]
+ChooseShootAndRun::576:EngagedEnemyIs(0)
+ChooseShootAndRun::577:EnemyLoc[EngagedEnemyIs].Org.x(5)
+ChooseShootAndRun::577:EnemyLoc[EngagedEnemyIs].Org.y(9)
+ChooseShootAndRun::578:WariorLoc[id].Org.x(4)
+ChooseShootAndRun::578:WariorLoc[id].Org.y(5)
+ChooseShootAndRun::583:CementX.x(5)
+ChooseShootAndRun::583:CementX.y(8)
+Pole z ktoego testuje strzaly do pola: [5, 8]
+GetConnectionField::625:NextP.x(4)
+GetConnectionField::625:NextP.y(6)
+FindFieldToShoot::452:Found(0)
+FindFieldToShoot::453:StopOnThisOne.x(5)
+FindFieldToShoot::453:StopOnThisOne.y(8)
+FindFieldToShoot::454:XUnit.Ground00.x(4)
+FindFieldToShoot::454:XUnit.Ground00.y(6)
+Pole z ktoego testuje strzaly do pola: [5, 8]
+GetConnectionField::625:NextP.x(4)
+GetConnectionField::625:NextP.y(7)
+FindFieldToShoot::452:Found(0)
+FindFieldToShoot::453:StopOnThisOne.x(5)
+FindFieldToShoot::453:StopOnThisOne.y(8)
+FindFieldToShoot::454:XUnit.Ground00.x(4)
+FindFieldToShoot::454:XUnit.Ground00.y(7)
+znaleziony punkt:
+GetConnectionField::635:NextP.x(4)
+GetConnectionField::635:NextP.y(7)
+ChooseShootAndRun::595:StopField.x(4)
+ChooseShootAndRun::595:StopField.y(7)
+koniec rcedury ChooseShootAndRun()
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[5, 9, 6, 8, 5, 7]
+---10----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(1)
+ChoosingUnits::736:id(1)
+ChoosingUnits::770:TTMUC(1)
+ChoosingUnits::771:id(1)
+ChoosingUnits::772:EnemyLoc[id].PathForMixer(1)
+ChoosingUnits::773:EnemyLoc[id].Org.x(3)
+ChoosingUnits::773:EnemyLoc[id].Org.y(5)
+DUPLET computation
+ChooseFromGivenAndCement_DupletShoot::481:masc.x(1)
+ChooseFromGivenAndCement_DupletShoot::481:masc.y(0)
+ChooseFromGivenAndCement_DupletShoot::482:curr_id(0)
+ChooseFromGivenAndCement_DupletShoot::483:FInfo[curr_id].PosibleFieldsCount(1)
+ChooseFromGivenAndCement_DupletShoot::484:mask_to_use(0)
+ChooseFromGivenAndCement_DupletShoot::485:FInfo[curr_id].UsableMasksIDsVector[3, -1, -1, -1]
+ChooseFromGivenAndCement_DupletShoot::486:FInfo[curr_id].PosibleFieldsCount(1)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[6, 8, 6, 7, 5, 6]
+---11----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(0)
+ChoosingUnits::736:id(-1)
+ChoosingUnits::742
+ChooseShootAndRun::527
+ChooseShootAndRun::532:id(1)
+ChooseShootAndRun::533:FindMostRestrictedUnit(WariorLoc)(1)
+ChooseShootAndRun::534:WariorLoc[id].Org.x(4)
+ChooseShootAndRun::534:WariorLoc[id].Org.y(6)
+ChooseShootAndRun::535:WariorLoc[id].PathCount()(1)
+ChooseShootAndRun::548:RestrictionsForHOOD(0)
+ChooseShootAndRun::549:RestrictionsForMyUnitFrom[0, 0, 0, 0]
+ruch Z miejsca:
+CementOldPlace::502:WolnyElement.Org.x(4)
+CementOldPlace::502:WolnyElement.Org.y(6)
+CementOldPlace::503:WolnyElement.PathCount()(1)
+ruch DO miejsca:
+CementOldPlace::514:Destination.x(4)
+CementOldPlace::514:Destination.y(7)
+ChooseShootAndRun::556
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[3, 5, 7, 1, 8, 2]
+---12----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(0)
+ChoosingUnits::736:id(-1)
+ChoosingUnits::742
+ChooseShootAndRun::527
+ChooseShootAndRun::532:id(0)
+ChooseShootAndRun::533:FindMostRestrictedUnit(WariorLoc)(3)
+ChooseShootAndRun::534:WariorLoc[id].Org.x(0)
+ChooseShootAndRun::534:WariorLoc[id].Org.y(8)
+ChooseShootAndRun::535:WariorLoc[id].PathCount()(4)
+ChooseShootAndRun::548:RestrictionsForHOOD(0)
+ChooseShootAndRun::549:RestrictionsForMyUnitFrom[0, 0, 0, 0]
+ruch Z miejsca:
+CementOldPlace::502:WolnyElement.Org.x(0)
+CementOldPlace::502:WolnyElement.Org.y(8)
+CementOldPlace::503:WolnyElement.PathCount()(4)
+ruch DO miejsca:
+CementOldPlace::514:Destination.x(2)
+CementOldPlace::514:Destination.y(8)
+ChooseShootAndRun::556
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[1, 4, 3, 2, 1, 4]
+---13----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(0)
+ChoosingUnits::736:id(-1)
+ChoosingUnits::742
+ChooseShootAndRun::527
+ChooseShootAndRun::532:id(0)
+ChooseShootAndRun::533:FindMostRestrictedUnit(WariorLoc)(0)
+ChooseShootAndRun::534:WariorLoc[id].Org.x(2)
+ChooseShootAndRun::534:WariorLoc[id].Org.y(8)
+ChooseShootAndRun::535:WariorLoc[id].PathCount()(2)
+ChooseShootAndRun::548:RestrictionsForHOOD(0)
+ChooseShootAndRun::549:RestrictionsForMyUnitFrom[0, 0, 0, 0]
+ruch Z miejsca:
+CementOldPlace::502:WolnyElement.Org.x(2)
+CementOldPlace::502:WolnyElement.Org.y(8)
+CementOldPlace::503:WolnyElement.PathCount()(2)
+ruch DO miejsca:
+CementOldPlace::514:Destination.x(1)
+CementOldPlace::514:Destination.y(8)
+ChooseShootAndRun::556
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[6, 7, 9, 4, 8, 4]
+---14----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(0)
+ChoosingUnits::736:id(-1)
+ChoosingUnits::742
+ChooseShootAndRun::527
+ChooseShootAndRun::532:id(3)
+ChooseShootAndRun::533:FindMostRestrictedUnit(WariorLoc)(3)
+ChooseShootAndRun::534:WariorLoc[id].Org.x(9)
+ChooseShootAndRun::534:WariorLoc[id].Org.y(3)
+ChooseShootAndRun::535:WariorLoc[id].PathCount()(2)
+ChooseShootAndRun::548:RestrictionsForHOOD(6)
+ChooseShootAndRun::549:RestrictionsForMyUnitFrom[2, 1, 1, 0]
+ChooseShootAndRun::576:EngagedEnemyIs(0)
+ChooseShootAndRun::577:EnemyLoc[EngagedEnemyIs].Org.x(9)
+ChooseShootAndRun::577:EnemyLoc[EngagedEnemyIs].Org.y(4)
+ChooseShootAndRun::578:WariorLoc[id].Org.x(9)
+ChooseShootAndRun::578:WariorLoc[id].Org.y(3)
+ChooseShootAndRun::583:CementX.x(8)
+ChooseShootAndRun::583:CementX.y(3)
+Pole z ktoego testuje strzaly do pola: [8, 3]
+GetConnectionField::625:NextP.x(9)
+GetConnectionField::625:NextP.y(2)
+FindFieldToShoot::452:Found(0)
+FindFieldToShoot::453:StopOnThisOne.x(8)
+FindFieldToShoot::453:StopOnThisOne.y(3)
+FindFieldToShoot::454:XUnit.Ground00.x(9)
+FindFieldToShoot::454:XUnit.Ground00.y(2)
+znaleziony punkt:
+GetConnectionField::635:NextP.x(9)
+GetConnectionField::635:NextP.y(2)
+ChooseShootAndRun::595:StopField.x(9)
+ChooseShootAndRun::595:StopField.y(2)
+koniec rcedury ChooseShootAndRun()
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[7, 1, 9, 1, 8, 1]
+---15----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::704
+ruch Z miejsca:
+CementOldPlace::502:WolnyElement.Org.x(9)
+CementOldPlace::502:WolnyElement.Org.y(2)
+CementOldPlace::503:WolnyElement.PathCount()(1)
+ruch DO miejsca:
+CementOldPlace::514:Destination.x(9)
+CementOldPlace::514:Destination.y(3)
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[9, 4, 9, 5, 9, 4]
+---16----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(0)
+ChoosingUnits::736:id(-1)
+ChoosingUnits::742
+ChooseShootAndRun::527
+ChooseShootAndRun::532:id(0)
+ChooseShootAndRun::533:FindMostRestrictedUnit(WariorLoc)(0)
+ChooseShootAndRun::534:WariorLoc[id].Org.x(1)
+ChooseShootAndRun::534:WariorLoc[id].Org.y(8)
+ChooseShootAndRun::535:WariorLoc[id].PathCount()(3)
+ChooseShootAndRun::548:RestrictionsForHOOD(0)
+ChooseShootAndRun::549:RestrictionsForMyUnitFrom[0, 0, 0, 0]
+ruch Z miejsca:
+CementOldPlace::502:WolnyElement.Org.x(1)
+CementOldPlace::502:WolnyElement.Org.y(8)
+CementOldPlace::503:WolnyElement.PathCount()(3)
+ruch DO miejsca:
+CementOldPlace::514:Destination.x(1)
+CementOldPlace::514:Destination.y(9)
+ChooseShootAndRun::556
+Nowe polozenie wroga:
+RecordMovement::347:MovVector[3, 3, 6, 3, 6, 0]
+---17----
+-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-=
+ChoosingUnits::735:TTMUC(0)
+ChoosingUnits::736:id(-1)
+ChoosingUnits::742
+ChooseShootAndRun::527
+ChooseShootAndRun::532:id(0)
+ChooseShootAndRun::533:FindMostRestrictedUnit(WariorLoc)(0)
+ChooseShootAndRun::534:WariorLoc[id].Org.x(1)
+ChooseShootAndRun::534:WariorLoc[id].Org.y(9)
+ChooseShootAndRun::535:WariorLoc[id].PathCount()(1)
+ChooseShootAndRun::548:RestrictionsForHOOD(0)
+ChooseShootAndRun::549:RestrictionsForMyUnitFrom[0, 0, 0, 0]
+ruch Z miejsca:
+CementOldPlace::502:WolnyElement.Org.x(1)
+CementOldPlace::502:WolnyElement.Org.y(9)
+CementOldPlace::503:WolnyElement.PathCount()(1)
+ruch DO miejsca:
+CementOldPlace::514:Destination.x(0)
+CementOldPlace::514:Destination.y(9)
+ChooseShootAndRun::556

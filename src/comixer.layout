@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE CodeBlocks_layout_file>
+<CodeBlocks_layout_file>
+	<File name="FieldSpace.h" open="1" top="0">
+		<Cursor position="11726" topLine="0"/>
+	</File>
+	<File name="main.cpp" open="0" top="0">
+		<Cursor position="2309" topLine="0"/>
+	</File>
+	<File name="path_finder.h" open="1" top="1">
+		<Cursor position="138" topLine="0"/>
+	</File>
+	<File name="tel.h" open="1" top="0">
+		<Cursor position="199" topLine="0"/>
+	</File>
+</CodeBlocks_layout_file>
