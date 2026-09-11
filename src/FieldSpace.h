@@ -1,3 +1,18 @@
+# --------------------------------------------------------------------------------------------------------
+# Author:          Blazej Kaczmarek
+# ORCID:           https://orcid.org/0009-0003-1070-8870
+# email:           fajny.masz.tornister@gmail.com
+# github ord email:MasterDisaster@neurodine.com
+# domain email:    Blazej.Kaczmarek@neurodine.com
+# oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
+# PEN:             1.3.6.1.4.1.53685
+# oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
+# Description:     this is the file that creates the structures that are used in path_finding file
+#			there is not much logic here.. it's simply definitions and not much except setting some
+# 			constant valuses, ZERO states and base values for structures itself - usual 
+# 			init a man would do when writing a chess łike game
+#
+# --------------------------------------------------------------------------------------------------------
 using namespace std;
 
 typedef struct{
