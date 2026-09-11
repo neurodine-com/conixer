@@ -4,6 +4,10 @@ A very veeeeery old (first code in C) buggy code from Fighting Programs Competit
 Note:
 This requires a Java Applet that simply is the Judge/Rule Holder and governs the game play to be conducted in fair manner by Players.
 
+Code:
+	Code was written in mingw compiller (MinGW)
+
+
 Game env:
 	A 2D board (a chess board but 9x9 fields weight and height)
 
