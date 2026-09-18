@@ -21,11 +21,12 @@
 # Compiler used:    GNU GCC Compiler
 
 ### Variables used in this Makefile
-default_CC=mingw32-gcc.exe
-default_CPP=mingw32-g++.exe
-default_LD=mingw32-g++.exe
-default_LIB=ar.exe
-default_RESCOMP=windres.exe
+default_CC=gcc
+default_CPP=g++
+default_LD=g++
+default_LIB=ar
+#default_RESCOMP=windres.exe
+default_RESCOMP=
 
 ### Compiler/linker options
 default_GLOBAL_CFLAGS=
