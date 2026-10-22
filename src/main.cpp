@@ -41,14 +41,12 @@ ofstream fx;
 
 #endif
 
-#include <src/tel.h>
-#include <src/FieldSpace.h>
-#include <src/path_finder.h>
-
+#include <tel.h>
+#include <FieldSpace.h>
+#include <path_finder.h>
 
 
 int MaxMoves;
-
 
 int main(int argc, char *argv[]){
 
@@ -56,18 +54,16 @@ MaxMoves=92;
 	cin >> StaringWith;
 
 #if DEBUGIN==1 || DEBUGIN==2
-if(StaringWith==1){
-	fx.open("logout/smDebug1.log", ios::trunc);
-	}
-	else
-	{
+	if(StaringWith==1){
+		fx.open("logout/smDebug1.log", ios::trunc);
+	} else {
 		fx.open("logout/smDebug2.log", ios::trunc);
-		}
+	}
 if(fx.is_open()){
 #endif
 
-		tel call=tel::tel(StaringWith);
-		CPathFinder World=CPathFinder::CPathFinder(StaringWith);
+	tel call=tel::tel(StaringWith);
+	CPathFinder World=CPathFinder::CPathFinder(StaringWith);
 
 	TBufor MyReadBuff={0,0,0,0,0,0};
 	TBufor MyWriteBuff={0,3,0,2,0,3};
@@ -81,11 +77,10 @@ if(fx.is_open()){
 		call.readLine(MyReadBuff);
 
 		World.RecordMovement(MyReadBuff);
-		}
-		else
-			{	call.readLine(MyReadBuff);
-				World.RecordMovement(MyReadBuff);
-				};
+	} else {
+		call.readLine(MyReadBuff);
+		World.RecordMovement(MyReadBuff);
+	};
 
 	World.RuchNR=1;
 	while(World.RuchNR<100){
@@ -97,18 +92,13 @@ if(fx.is_open()){
 
 		call.readLine(MyReadBuff);
 		World.RecordMovement(MyReadBuff);
-		};
+	};
 
 #if DEBUGIN==1 || DEBUGIN==2
 	fx.close();
-	}
-
-	else
-  {
+} else {
     cout << "Error opening file";
-  }
+}
 #endif
-
 	return 0;
-
 };
