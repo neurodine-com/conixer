@@ -1,18 +1,20 @@
-# --------------------------------------------------------------------------------------------------------
-# Author:          Blazej Kaczmarek
-# ORCID:           https://orcid.org/0009-0003-1070-8870
-# email:           fajny.masz.tornister@gmail.com
-# github ord email:MasterDisaster@neurodine.com
-# domain email:    Blazej.Kaczmarek@neurodine.com
-# oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
-# PEN:             1.3.6.1.4.1.53685
-# oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
-# Description:     this is the file that creates the structures that are used in path_finding file
-#			there is not much logic here.. it's simply definitions and not much except setting some
-# 			constant valuses, ZERO states and base values for structures itself - usual 
-# 			init a man would do when writing a chess łike game
-#
-# --------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// Author:          Blazej Kaczmarek
+// ORCID:           https://orcid.org/0009-0003-1070-8870
+// email:           fajny.masz.tornister@gmail.com
+// github ord email:MasterDisaster@neurodine.com
+// domain email:    Blazej.Kaczmarek@neurodine.com
+// oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
+// PEN:             1.3.6.1.4.1.53685
+// oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
+// Description:     this is the file that creates the structures that are used in path_finding file
+//			there is not much logic here.. it's simply definitions and not much except setting some
+// 			constant valuses, ZERO states and base values for structures itself - usual 
+// 			init a man would do when writing a chess łike game
+//
+// --------------------------------------------------------------------------------------------------------
+#include <iostream>
+#include <cstdio>
 using namespace std;
 
 typedef struct{
@@ -50,107 +52,108 @@ class BaseBlock{
 	TUID WariorsID_ShootMutual;
 
 
-		bool BlockAccess(){
-			return accessible;
-			};
+	bool BlockAccess(){
+		return accessible;
+	};
 
-		void SetAccessRights(bool value){
-			accessible=value;
-			if(value==false)
-				{AfterMooveClearMutuals();}
+	void SetAccessRights(bool value){
+		accessible=value;
+		if(value==false) {
+				AfterMooveClearMutuals();
+		}
 
-			};
+	};
 
-		void AfterMooveClearMutuals(){
+	void AfterMooveClearMutuals(){
+		EnemyMutualMov=0;
+		TimMutualMov=0;
+		EnemyShootMut=0;
+		TimShootMut=0;
+		restBufer(EnemysID_MutualMov);
+		restBufer(WariorsID_MutualMov);
+		restBufer(EnemysID_ShootMutual);
+		restBufer(WariorsID_ShootMutual);
+	};
+
+
+	void SetMutualFactor(int unitID, bool MyTeam, bool shooting){
+		/*WariorsID_xxx[..] i inne okreslaja czy jednostka
+		tora wykonuje wirtualny strzal lub ruch np jednostka druzyny(Tim==true)
+		ma mozliwosc strzelenia w ten punkt*/
+
+		if (shooting) {
+			if(MyTeam==true)
+				{TimShootMut++;
+				WariorsID_ShootMutual[unitID]=1;
+			}
+			else
+			{
+				EnemyShootMut++;
+				EnemysID_ShootMutual[unitID]=1;
+			}
+		} else {
+			if(MyTeam==true){
+				TimMutualMov++;
+				WariorsID_MutualMov[unitID]=1;
+			}
+			else
+			{
+				EnemyMutualMov++;
+				EnemysID_MutualMov[unitID]=1;
+			}
+		}
+	};
+
+	TPoint GetOrgin(){
+		return Cords;
+	};
+
+	BaseBlock(int X, int Y, bool FieldIsAccesible){
+		accessible=FieldIsAccesible;
+		Cords.x=X;
+		Cords.y=Y;
 			EnemyMutualMov=0;
 			TimMutualMov=0;
 			EnemyShootMut=0;
 			TimShootMut=0;
-			restBufer(EnemysID_MutualMov);
-			restBufer(WariorsID_MutualMov);
-			restBufer(EnemysID_ShootMutual);
-			restBufer(WariorsID_ShootMutual);
-			};
+
+		restBufer(EnemysID_MutualMov);
+		restBufer(WariorsID_MutualMov);
+		restBufer(EnemysID_ShootMutual);
+		restBufer(WariorsID_ShootMutual);
+	};
+
+	void restBufer(TUID& Data){
+		Data[0]=0;Data[2]=0;
+		Data[1]=0;Data[3]=0;
+	};
 
 
-		void SetMutualFactor(int unitID, bool MyTeam, bool shooting){
-			/*WariorsID_xxx[..] i inne okreslaja czy jednostka
-			tora wykonuje wirtualny strzal lub ruch np jednostka druzyny(Tim==true)
-			ma mozliwosc strzelenia w ten punkt*/
+	BaseBlock(){
+		Cords.x=-1;
+		Cords.y=-1;
+		EnemyMutualMov=0;
+		TimMutualMov=0;
+		EnemyShootMut=0;
+		TimShootMut=0;
+		accessible=true;
+		restBufer(EnemysID_MutualMov);
+		restBufer(WariorsID_MutualMov);
+		restBufer(EnemysID_ShootMutual);
+		restBufer(WariorsID_ShootMutual);
+	}
+	~BaseBlock(){
 
-			switch(shooting){
-			case true:{
-				if(MyTeam==true)
-					{TimShootMut++;
-					WariorsID_ShootMutual[unitID]=1;
-										}
-					else
-					{EnemyShootMut++;
-					EnemysID_ShootMutual[unitID]=1;
-					};
-				}; break;
-			case false:{
-				if(MyTeam==true){
-					TimMutualMov++;
-					WariorsID_MutualMov[unitID]=1;
-				}
-				else
-				{	EnemyMutualMov++;
-					EnemysID_MutualMov[unitID]=1;
-				};
-				}; break;
-			};
-			};
-
-		TPoint GetOrgin(){
-			return Cords;
-		};
-
-		BaseBlock(int X, int Y, bool FieldIsAccesible){
-            accessible=FieldIsAccesible;
-			Cords.x=X;
-			Cords.y=Y;
-				EnemyMutualMov=0;
-				TimMutualMov=0;
-				EnemyShootMut=0;
-				TimShootMut=0;
-
-			restBufer(EnemysID_MutualMov);
-			restBufer(WariorsID_MutualMov);
-			restBufer(EnemysID_ShootMutual);
-			restBufer(WariorsID_ShootMutual);
-			};
-
-		void restBufer(TUID& Data){
-			Data[0]=0;Data[2]=0;
-			Data[1]=0;Data[3]=0;
-		};
-
-
-		BaseBlock(){
-			Cords.x=-1;
-			Cords.y=-1;
-				EnemyMutualMov=0;
-				TimMutualMov=0;
-				EnemyShootMut=0;
-				TimShootMut=0;
-				accessible=true;
-			restBufer(EnemysID_MutualMov);
-			restBufer(WariorsID_MutualMov);
-			restBufer(EnemysID_ShootMutual);
-			restBufer(WariorsID_ShootMutual);
-			 };
-
-		~BaseBlock(){};
+	}
 	};
 
 	typedef BaseBlock bb;
 
 
 	typedef struct {
-	int radius;// denotes max path length aka max vector length
-	TPoint DestPoint;//denotes a max point on FieldMap that the "ConcrateMixer" is managed to move
-	int Mask;
+		int radius;// denotes max path length aka max vector length
+		TPoint DestPoint;//denotes a max point on FieldMap that the "ConcrateMixer" is managed to move
+		int Mask;
 	} SimpPath;//Simple Bath aka. Basic Path
 
 	typedef SimpPath TVect[8];
@@ -161,84 +164,85 @@ typedef struct{
 	TVect Vect;// a vector of possible maximum paths - thanks to radious z CMoveblur[.x] can set any coordinates on the filed on which the item Path has to move - that is my "Concrate Mixer"
 	int VectCount;// takes a value that represents number of vectors found with possible moves
 	TPoint Ground00;// represents a point (TPoint) for which all the above computations have been calculated
-	}VV;
+} VV;
 
 
-	class TPath{
-		public:
-		VV fVV;
+class TPath{
+	public:
+	VV fVV;
 
-		VV BombHQ;// represents a filed which is used to as a point from which a "BOMB" will be deployed 
-		          // fields Vect and VectCount should get cleaned and only field GroundZero set
+	VV BombHQ;// represents a filed which is used to as a point from which a "BOMB" will be deployed 
+				// fields Vect and VectCount should get cleaned and only field GroundZero set
 
-		int PathForMixer;
-		TPoint Org;
-		bool Tim;// there are just two players so bool is enough to assign value for each of the teams; true - tema1, false - team2
-		bool TempNotIntresting;
+	int PathForMixer;
+	TPoint Org;
+	bool Tim;// there are just two players so bool is enough to assign value for each of the teams; true - tema1, false - team2
+	bool TempNotIntresting;
 
-		int PathCount(){
-			return fVV.VectCount;
-			};
+	int PathCount(){
+		return fVV.VectCount;
+	};
 
-        int ShootDirectionCount(){
-            return BombHQ.VectCount;
-            };
-
-
-		void SetNewPos(TPoint NewPos){
-			SetNewPos(NewPos.x, NewPos.y);
-			};
-
-		void SetNewPos(int _x, int _y){
-			Org.x=_x;
-			Org.y=_y;
-			for(int p=0;p<8;p++){
-			    fVV.Vect[p].radius=-1;
-			    fVV.Vect[p].Mask=p;
-			    fVV.Vect[p].DestPoint=Org;
-			    };
-			fVV.Ground00=Org;
-			fVV.VectCount=0;
-			};
-
-        void ClearMixer_VV_ToStartup(){
-            for(int p=0;p<8;p++){
-			    fVV.Vect[p].radius=-1;
-			    fVV.Vect[p].Mask=-1;
-			    fVV.Vect[p].DestPoint=this->Org;
-			    };
-			fVV.Ground00=Org;
-			fVV.VectCount=0;
-            };
+	int ShootDirectionCount(){
+		return BombHQ.VectCount;
+	};
 
 
-		void SetHQ(const TPoint HQCording){
-			BombHQ.Ground00=HQCording;
-			BombHQ.VectCount=0;
-			for(int z=0; z<8; z++){
-				BombHQ.Vect[z].DestPoint=HQCording;
-				BombHQ.Vect[z].Mask=-1;
-				BombHQ.Vect[z].radius=-1;
-				}
+	void SetNewPos(TPoint NewPos){
+		SetNewPos(NewPos.x, NewPos.y);
+	};
+
+	void SetNewPos(int _x, int _y){
+		Org.x=_x;
+		Org.y=_y;
+		for(int p=0;p<8;p++){
+			fVV.Vect[p].radius=-1;
+			fVV.Vect[p].Mask=p;
+			fVV.Vect[p].DestPoint=Org;
 		};
+		fVV.Ground00=Org;
+		fVV.VectCount=0;
+	};
 
-		//constructor & destrucotr
-		TPath(bool MyTeam, int mx, int my, int TeamId){
-			Tim=MyTeam;
-			Org.x=mx;
-			Org.y=my;
-			PathForMixer=TeamId;
-			TempNotIntresting=false;
-
-			SetNewPos(Org);
-
+	void ClearMixer_VV_ToStartup(){
+		for(int p=0;p<8;p++){
+			fVV.Vect[p].radius=-1;
+			fVV.Vect[p].Mask=-1;
+			fVV.Vect[p].DestPoint=this->Org;
 		};
-		TPath(){};
+		fVV.Ground00=Org;
+		fVV.VectCount=0;
+	};
 
-		~TPath(){
-			};
 
-		};
+	void SetHQ(const TPoint HQCording){
+		BombHQ.Ground00=HQCording;
+		BombHQ.VectCount=0;
+		for(int z=0; z<8; z++){
+			BombHQ.Vect[z].DestPoint=HQCording;
+			BombHQ.Vect[z].Mask=-1;
+			BombHQ.Vect[z].radius=-1;
+		}
+	}
+
+	//constructor & destrucotr
+	TPath(bool MyTeam, int mx, int my, int TeamId){
+		Tim=MyTeam;
+		Org.x=mx;
+		Org.y=my;
+		PathForMixer=TeamId;
+		TempNotIntresting=false;
+
+		SetNewPos(Org);
+	}
+
+	TPath(){
+	}
+
+	~TPath(){
+	}
+
+};
 
 typedef TPath TPathPoints[4];
 
@@ -278,73 +282,67 @@ class FieldSpace{
 		 return  (A.x>=0 && A.x<10 && A.y>=0 && A.y<10 );
 	};
 
-
-
 	void SendData(TBufor& WriteIn){
-	for(int o=0; o<6;o++)
-		{WriteIn[o]=FinalBuff[o];};
-	};
-
+		for(int o=0; o<6;o++) {
+			WriteIn[o]=FinalBuff[o];
+		};
+	}
 
 	bool Valid(int fx, int fy){
 		return (bool)MOF[fx][fy].BlockAccess();
-		};
+	};
 
 	bool Valid(TPoint _org){
 		if(GoodP(_org)){
-		return Valid(_org.x,_org.y);
-		}
-		else
-			{return false;};
+			return Valid(_org.x,_org.y);
+		} else {
+			return false;
 		};
+	}
 
 	/*Player To Coordinates*/
 	int PTC(TPathPoints& Team, int X, int Y){
 		int i=-1;
-		while(EQPoint(Team[++i].Org,X,Y)==false && i<4){};
-		return (i<4)? i:-1;
+		while(EQPoint(Team[++i].Org,X,Y)==false && i<4){
 		};
+		return (i<4)? i:-1;
+	}
 
 	int PTC(TPathPoints& Team, const TPoint Pkt){
 		return PTC(Team,Pkt.x, Pkt.y);
-		};
+	}
 
 	void ConcrateXY(int shoot_x, int shoot_y){
 		MOF[shoot_x][shoot_y].SetAccessRights(false);
 		EmptyFields--;
-		};
+	}
 
 	void ConcrateXY(TPoint ShootPos){
-			if(GoodP(ShootPos)){
-				ConcrateXY(ShootPos.x, ShootPos.y);
-				};
+		if(GoodP(ShootPos)){
+			ConcrateXY(ShootPos.x, ShootPos.y);
 		};
+	}
 
+	bool MaskOK(int MAskId){
+		return (MAskId>=0 || MAskId<=7);
+	}
 
-        bool MaskOK(int MAskId){
-            return (MAskId>=0 || MAskId<=7);
-	    };
+	bool RadOK(int radius_length){
+		return (radius_length>0 && radius_length<10);
+	}
 
-	    bool RadOK(int radius_length){
-	        return (radius_length>0 && radius_length<10);
-	        };
-
-		TPoint GetPoint(TPath& Element,  int radius, int MoveBlurID){
-		    if(RadOK(radius)==false || MaskOK(MoveBlurID)==false){
-		        cout<< "radius: "<< radius << " or mask ID: "<< MoveBlurID << " couses error";
-		        cin>> radius;
-		        return NullPoint;
-		        }
-		    else
-		    {
-		    TPoint Local=Element.Org;
-		    Local.x=(radius*cMoveBlur[MoveBlurID].x) + Element.Org.x;
-		    Local.y=(radius*cMoveBlur[MoveBlurID].y) + Element.Org.y;
-		    return Local;
-		    };
-
-		    };
-
+	TPoint GetPoint(TPath& Element,  int radius, int MoveBlurID){
+		if(RadOK(radius)==false || MaskOK(MoveBlurID)==false){
+			cout<< "radius: "<< radius << " or mask ID: "<< MoveBlurID << " couses error";
+			cin>> radius;
+			return NullPoint;
+		} else {
+			TPoint Local=Element.Org;
+			Local.x=(radius*cMoveBlur[MoveBlurID].x) + Element.Org.x;
+			Local.y=(radius*cMoveBlur[MoveBlurID].y) + Element.Org.y;
+			return Local;
+		};
+	}
 
 	void RecordMovement(TBufor& MovVector){
 		int lx=MovVector[0];	int ly=MovVector[1];
@@ -362,140 +360,135 @@ class FieldSpace{
 		MOF[cx][cy].SetAccessRights(false);
 
 		#if DEBUGIN==1 || DEBUGIN==2
-		fx<<"Nowe polozenie wroga:"<<endl;
-		V6(MovVector);
+			fx<<"Nowe polozenie wroga:"<<endl;
+			V6(MovVector);
 		#endif
 
-		};
+	};
 
-	void RunPathFinder(){
-		for(int TeamMemb=0; TeamMemb<4; TeamMemb++){
+	void RunPathFinder() {
+		for(int TeamMemb=0; TeamMemb<4; TeamMemb++) {
 			WariorLoc[TeamMemb].ClearMixer_VV_ToStartup();
 			GenerateMoves_or_Shots(WariorLoc[TeamMemb].fVV);
 
 			EnemyLoc[TeamMemb].ClearMixer_VV_ToStartup();
 			GenerateMoves_or_Shots(EnemyLoc[TeamMemb].fVV);
-			};
 		};
+	}
 
-	void Step(TPoint& Base, TPoint oVektor){
+	void Step(TPoint& Base, TPoint oVektor) {
 		Base.x+=oVektor.x;
 		Base.y+=oVektor.y;
-		};
+	}
 
-	TPoint Conv(int x, int y){
+	TPoint Conv(int x, int y) {
 		TPoint tmp;
 		tmp.x=x;
 		tmp.y=y;
 		return tmp;
-		};
+	}
 
 
 /*okresla mozliwe rodziny mozliwych strzalow*/
-	void ShotsFromLocalization(TPath& TeamMemb, const TPoint ShootingFrom){
+	void ShotsFromLocalization(TPath& TeamMemb, const TPoint ShootingFrom) {
 		TeamMemb.SetHQ(ShootingFrom);
 		GenerateMoves_or_Shots(TeamMemb.BombHQ);
-		};
+	}
 
-	void VirtualShotsFromLocalization(VV& VirtualShotsPlacement){
+	void VirtualShotsFromLocalization(VV& VirtualShotsPlacement) {
 		//w proc wywolujacej ustawiane sa wszelkie wartosci wstepne (czyli w pathFinder::FindShootMutuals(..))
 		GenerateMoves_or_Shots(VirtualShotsPlacement);
-		};
+	}
 
 
 /*okresla pzremieszczenie danej jednostki - nei wywoluje niczego*/
-	void MoveWarior(TPath& WariorToBeMoved, TPoint MoveTo){
-		/*2.*/FinalBuff[0]=WariorToBeMoved.Org.x; FinalBuff[1]=WariorToBeMoved.Org.y;
-                MOF[WariorToBeMoved.Org.x][WariorToBeMoved.Org.y].SetAccessRights(true);
-
+	void MoveWarior(TPath& WariorToBeMoved, TPoint MoveTo) {
+		/*2.*/
+		FinalBuff[0]=WariorToBeMoved.Org.x; FinalBuff[1]=WariorToBeMoved.Org.y;
+		MOF[WariorToBeMoved.Org.x][WariorToBeMoved.Org.y].SetAccessRights(true);
 
 		WariorToBeMoved.SetNewPos(MoveTo);
-        MOF[WariorToBeMoved.Org.x][WariorToBeMoved.Org.y].SetAccessRights(false);
-
-		/*4.*/FinalBuff[2]=MoveTo.x; FinalBuff[3]=MoveTo.y;
-
-		};
+		MOF[WariorToBeMoved.Org.x][WariorToBeMoved.Org.y].SetAccessRights(false);
+		/*4.*/
+		FinalBuff[2]=MoveTo.x; FinalBuff[3]=MoveTo.y;
+	};
 
 /*okresla punkt ktory ma zostac ostrzelany - nei wywoluje niczego*/
-	void ShootAtLocalization(const TPoint LocalizationToBeShot){
-		/*5.*/ConcrateXY(LocalizationToBeShot);
-		/*6.*/FinalBuff[4]=LocalizationToBeShot.x; FinalBuff[5]=LocalizationToBeShot.y;
-		};
+	void ShootAtLocalization(const TPoint LocalizationToBeShot) {
+		/*5.*/
+		ConcrateXY(LocalizationToBeShot);
+		/*6.*/
+		FinalBuff[4]=LocalizationToBeShot.x; FinalBuff[5]=LocalizationToBeShot.y;
+	}
 
 	/*Argumentem procedury jest element typu VV
 	sa zapisywane wyniki szukania mozliwych max drog/ich ilosc
 	a pole Ground00 tego elementu oznacza pole na planszy dla
 	ktorego wykonywane so oblczenia
 	*/
-	void GenerateMoves_or_Shots(VV& XUnit){
+	void GenerateMoves_or_Shots(VV& XUnit) {
 		TVect Di;
 		//XUnit !!! musi byc koniecznie przygotowane do wpisywania pzred wejsciem do tej procedury;
 		/*jelsi obliczanei dla elementu zasigow ruchw w roznych kierunkach to robi to procedura ClearMixer_VV_ToStartup()
 		jeli inne pochodzenie wywolania elementu to musi to robic inna procedura*/
-
-			/*wstepne ustawienie mozliwych wektorow*/
-			for(int it=0;it<8;it++){
+		/*wstepne ustawienie mozliwych wektorow*/
+		for(int it=0;it<8;it++){
 			Di[it].radius=-1;//-1 ze wzglefu na algorytm obliczania mozliwych drog -> petla do{..}while();
 			Di[it].DestPoint=XUnit.Ground00;
+		};
+		for(int t=0; t<8;t++){
+			int tot=0;//min(XUnit.Ground00.x, XUnit.Ground00.y);
+			do{	Di[t].radius++;
+				Step(Di[t].DestPoint,cMoveBlur[t]);
+				//tot++;
+			} while(GoodP(Di[t].DestPoint)==true && (Valid(Di[t].DestPoint)==true));
+		};
+		/*(tot)<10) && */
+		/*ponizej, przypisane danemu elementowi jego wszystkich mozliwosci ruchu*/
+		for(int iter=0;iter<8;iter++){
+			int rad=Di[iter].radius;
+			if( rad>0 ) {
+				XUnit.Vect[XUnit.VectCount].radius=rad;
+				TPoint Offset=cMoveBlur[iter];
+				Offset.x*=rad;
+				Offset.y*=rad;
+				Step(XUnit.Vect[XUnit.VectCount].DestPoint,Offset);
+				XUnit.Vect[XUnit.VectCount].Mask=iter;
+				XUnit.VectCount++;
 			};
-
-				for(int t=0; t<8;t++){
-					int tot=0;//min(XUnit.Ground00.x, XUnit.Ground00.y);
-					do{	Di[t].radius++;
-						Step(Di[t].DestPoint,cMoveBlur[t]);
-						//tot++;
-					} while(GoodP(Di[t].DestPoint)==true && (Valid(Di[t].DestPoint)==true));
-				};/*(tot)<10) && */
-
-/*ponizej, przypisane danemu elementowi jego wszystkich mozliwosci ruchu*/
-	for(int iter=0;iter<8;iter++){
-		int rad=Di[iter].radius;
-		if(rad>0){
-			XUnit.Vect[XUnit.VectCount].radius=rad;
-			TPoint Offset=cMoveBlur[iter];
-			Offset.x*=rad;
-			Offset.y*=rad;
-			Step(XUnit.Vect[XUnit.VectCount].DestPoint,Offset);
-			XUnit.Vect[XUnit.VectCount].Mask=iter;
-			XUnit.VectCount++;
-			}
 		};
-
-		};
+	}
 
 
 	void FindFieldToShoot(VV& XUnit, const TPoint StopOnThisOne, bool& Found){
 		TVect Di;
-
-#ifdef DEBUGIN==2
-pp(Found);
-pp(StopOnThisOne.x); pp(StopOnThisOne.y);
-pp(XUnit.Ground00.x); pp(XUnit.Ground00.y);
-#endif
-
-			for(int it=0;it<8;it++){
+		#if DEBUGIN==2
+		pp(Found);
+		pp(StopOnThisOne.x); pp(StopOnThisOne.y);
+		pp(XUnit.Ground00.x); pp(XUnit.Ground00.y);
+		#endif
+		for(int it=0;it<8;it++){
 			//Di[it].radius=-1;//-1 ze wzglefu na algorytm obliczania mozliwych drog -> petla do{..}while();
 			Di[it].DestPoint=XUnit.Ground00;
-			};
-
-				for(int t=0; t<8;t++){
-					do{	//Di[t].radius++;
-						Step(Di[t].DestPoint,cMoveBlur[t]);
-					} while(GoodP(Di[t].DestPoint)==true && ((Found=IQl(Di[t].DestPoint, StopOnThisOne))==false) && (Valid(Di[t].DestPoint)==true));
-				if(true==Found){
-					break;
-					};
-				};
 		};
+		for(int t=0; t<8;t++) {
+			do{	//Di[t].radius++;
+				Step(Di[t].DestPoint,cMoveBlur[t]);
+			} while(GoodP(Di[t].DestPoint)==true && ((Found=IQl(Di[t].DestPoint, StopOnThisOne))==false) && (Valid(Di[t].DestPoint)==true));
+			if(Found==true){
+				break;
+			};
+		};
+	}
 
 
 	void ClearGameMutuals(){
 		for(int d=0;d<10;d++){
 			for(int dd=0;dd<10;dd++){
 				MOF[d][dd].AfterMooveClearMutuals();
-			}
-		}
-	};
+			};
+		};
+	}
 
 
 	FieldSpace(int PlayersNumber){
@@ -511,18 +504,18 @@ pp(XUnit.Ground00.x); pp(XUnit.Ground00.y);
 		TPoint BoardPos=NullPoint;
 		for(int o=0; o<4; o++){
 			/*My Team*/
-		BoardPos=(PlayersNumber==1)? constWariorLoc[o]:constEnemyLoc[o];
+			BoardPos=(PlayersNumber==1) ? constWariorLoc[o]:constEnemyLoc[o];
 			WariorLoc[o]=TPath(true,BoardPos.x,BoardPos.y,o);
 			MOF[WariorLoc[o].Org.x][WariorLoc[o].Org.y].SetAccessRights(false);
 			/*Enemy Team*/
-		BoardPos=(PlayersNumber==2)? constWariorLoc[o]:constEnemyLoc[o];
+			BoardPos=(PlayersNumber==2) ? constWariorLoc[o]:constEnemyLoc[o];
 			EnemyLoc[o]=TPath(false,BoardPos.x,BoardPos.y,o);
 			MOF[EnemyLoc[o].Org.x][EnemyLoc[o].Org.y].SetAccessRights(false);
-			};
-
-
+		};
 	};
 
-//destructor
-	~FieldSpace(){};
-	};
+	//destructor
+	~FieldSpace(){
+
+	}
+};

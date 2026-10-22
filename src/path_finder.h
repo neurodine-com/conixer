@@ -1,31 +1,33 @@
-# --------------------------------------------------------------------------------------------------------
-# Author:          Blazej Kaczmarek
-# ORCID:           https://orcid.org/0009-0003-1070-8870
-# email:           fajny.masz.tornister@gmail.com
-# github ord email:MasterDisaster@neurodine.com
-# domain email:    Blazej.Kaczmarek@neurodine.com
-# oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
-# PEN:             1.3.6.1.4.1.53685
-# oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
-# Description:     So here I am creating a structures that hold some lists/arrays of vectors. this 
-# 		   vectors are divided in general into filed holding a:
-# 			a.) location where the Conctare Comixer is exactly now, as a address on the board.
-# 			b.) this filed is used to calculte all possible allowwed moves I can make
-# 			c.) the are sorted in order to moves with "placing a bomb" and moves without it
-# 			d.) additionally the most effective move is calcutated - this is also a vector 
-# 			    in the logic so that it is not that predictible and get OUT from local minima 
-# 		   The goal is to Calculate the same structure for Me - making the move and for my oponent and
-# 		   based on this relation to select the coordinates of my next move that will:
-# 		    a.) limit in MOST ability of my oponent for future moves
-# 		    b.) leave him smalles amount of possible location to place a obsticle that i will not be able to cross over
-# 		   Each of this set of records is calculated in a way that sth reletive to a probability is 
-# 		   calculated and first on the list is used to achieve one of this 2 goals but... which one this is dependant
-# 		   on calculating which move will be most effective BUT this is also factorized with a probability of a scalar that represents 
-# 	           the UNKNOW factor so that my o[ponent does not prepera itself to fight me with predicting my strategy.
-# 		   ( and i have more then one strategy and which one is chosen is also  unknown for me as a 
-# 		   probability filter is used to choose which one will be used in iteration)
-#  
-# -------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// Author:          Blazej Kaczmarek
+// ORCID:           https://orcid.org/0009-0003-1070-8870
+// email:           fajny.masz.tornister@gmail.com
+// github ord email:MasterDisaster@neurodine.com
+// domain email:    Blazej.Kaczmarek@neurodine.com
+// oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
+// PEN:             1.3.6.1.4.1.53685
+// oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
+// Description:     So here I am creating a structures that hold some lists/arrays of vectors. this 
+// 		   vectors are divided in general into filed holding a:
+// 			a.) location where the Conctare Comixer is exactly now, as a address on the board.
+// 			b.) this filed is used to calculte all possible allowwed moves I can make
+// 			c.) the are sorted in order to moves with "placing a bomb" and moves without it
+// 			d.) additionally the most effective move is calcutated - this is also a vector 
+// 			    in the logic so that it is not that predictible and get OUT from local minima 
+// 		   The goal is to Calculate the same structure for Me - making the move and for my oponent and
+// 		   based on this relation to select the coordinates of my next move that will:
+// 		    a.) limit in MOST ability of my oponent for future moves
+// 		    b.) leave him smalles amount of possible location to place a obsticle that i will not be able to cross over
+// 		   Each of this set of records is calculated in a way that sth reletive to a probability is 
+// 		   calculated and first on the list is used to achieve one of this 2 goals but... which one this is dependant
+// 		   on calculating which move will be most effective BUT this is also factorized with a probability of a scalar that represents 
+// 	           the UNKNOW factor so that my o[ponent does not prepera itself to fight me with predicting my strategy.
+// 		   ( and i have more then one strategy and which one is chosen is also  unknown for me as a 
+// 		   probability filter is used to choose which one will be used in iteration)
+//  
+// -------------------------------------------------------------------------------------------------------
+#include <iostream>
+#include <cstdio>
 using namespace std;
 
 typedef struct{

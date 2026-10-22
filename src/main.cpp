@@ -1,23 +1,23 @@
-# --------------------------------------------------------------------------------------------------------
-# Author:          Blazej Kaczmarek
-# ORCID:           https://orcid.org/0009-0003-1070-8870
-# email:           fajny.masz.tornister@gmail.com
-# github ord email:MasterDisaster@neurodine.com
-# domain email:    Blazej.Kaczmarek@neurodine.com
-# oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
-# PEN:             1.3.6.1.4.1.53685
-# oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
-# Description: 	   So this is the main loop reading what other player did and later afer computations of my move 
-# 		   this loops send to it's own stdout My Own request (move, move +place obstacle - BOMB with Concrate Mixer a concrate "shit"
-# 		   so this is it. From this place the fun starts and 2 other files are used 
-# 		   for the logic: path_finder.h, tel.h, FieldSpace.h 
-#	           
-# -----------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------
+// Author:          Blazej Kaczmarek
+// ORCID:           https://orcid.org/0009-0003-1070-8870
+// email:           fajny.masz.tornister@gmail.com
+// github ord email:MasterDisaster@neurodine.com
+// domain email:    Blazej.Kaczmarek@neurodine.com
+// oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
+// PEN:             1.3.6.1.4.1.53685
+// oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
+// Description: 	   So this is the main loop reading what other player did and later afer computations of my move 
+// 		   this loops send to it's own stdout My Own request (move, move +place obstacle - BOMB with Concrate Mixer a concrate "shit"
+// 		   so this is it. From this place the fun starts and 2 other files are used 
+// 		   for the logic: path_finder.h, tel.h, FieldSpace.h 
+//	           
+// -----------------------------------------------------------------------------------------------
 
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
-#include <sstream>
+//#include <sstream>
 using namespace std;
 
 int StaringWith;
