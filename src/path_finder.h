@@ -24,13 +24,12 @@
 // 	           the UNKNOW factor so that my o[ponent does not prepera itself to fight me with predicting my strategy.
 // 		   ( and i have more then one strategy and which one is chosen is also  unknown for me as a 
 // 		   probability filter is used to choose which one will be used in iteration)
-//  
 // -------------------------------------------------------------------------------------------------------
 #include "stdio.h"
 #include "FieldSpace.h"
 typedef TAtackHQ TAtack[4];
 #define DifP(P1, P2) ((TPoint){P1.x - P2.x , P1.y - P2.y})
-class CPathFinder : FieldSpace {
+class CPathFinder::FieldSpace{
 	public:
 	//okresla ilosc wykonanych ruchow w grze
 	int RuchNR; 
@@ -330,7 +329,7 @@ class CPathFinder : FieldSpace {
 			};
 		};
 	};
-	bool CheckIfCanCementAndStay( TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPossibleNEWLocation, int& OUTPossibilitysCount, TUID& OUTPossibleMasks ){
+	bool CheckIfCanCementAndStay(TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPossibleNEWLocation, int& OUTPossibilitysCount, TUID& OUTPossibleMasks) {
 		bool Result = false;
 		for(int i=0; i<EnUnitToCheck.PathCount(); i++){
 			if(Result==false){

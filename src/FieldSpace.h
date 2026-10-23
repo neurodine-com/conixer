@@ -50,7 +50,7 @@ const TPoint cMoveBlur[8] = {
 	{0, 0}, // [6]
 	{0, 0}  // [7]
 };
-class BaseBlock {
+class BaseBlock{
 	private:
 	bool accessible;
 	TPoint Cords;
@@ -144,22 +144,28 @@ class BaseBlock {
 	BaseBlock(BaseBlock &&) = delete;
 	BaseBlock &operator=(const BaseBlock &) = default;
 	BaseBlock &operator=(BaseBlock &&) = delete;
-	~BaseBlock(){ };
+	~BaseBlock(){};
 };
 typedef BaseBlock bb;
+//Simple Bath aka. Basic Path
 typedef struct {
-	int radius;// denotes max path length aka max vector length
-	TPoint DestPoint;//denotes a max point on FieldMap that the "ConcrateMixer" is managed to move
+	// denotes max path length aka max vector length
+	int radius;
+	//denotes a max point on FieldMap that the "ConcrateMixer" is managed to move
+	TPoint DestPoint;
 	int Mask;
-} SimpPath;//Simple Bath aka. Basic Path
+} SimpPath;
 typedef SimpPath TVect[8];
 const SimpPath Starter={-1, (TPoint){-1,-1}, -1};
 typedef struct{
-	TVect Vect;// a vector of possible maximum paths - thanks to radious z CMoveblur[.x] can set any coordinates on the filed on which the item Path has to move - that is my "Concrate Mixer"
-	int VectCount;// takes a value that represents number of vectors found with possible moves
-	TPoint Ground00;// represents a point (TPoint) for which all the above computations have been calculated
+	// a vector of possible maximum paths - thanks to radious z CMoveblur[.x] can set any coordinates on the filed on which the item Path has to move - that is my "Concrate Mixer"
+	TVect Vect;
+	// takes a value that represents number of vectors found with possible moves
+	int VectCount;
+	// represents a point (TPoint) for which all the above computations have been calculated
+	TPoint Ground00;
 } VV;
-class TPath {
+class TPath{
 	public:
 	VV fVV;
 	// represents a filed which is used to as a point from which a "BOMB" will be deployed 
@@ -217,8 +223,8 @@ class TPath {
 		TempNotIntresting = false;
 		SetNewPos(Org);
 	};
-	TPath(){ };
-	~TPath(){ };
+	TPath(){};
+	~TPath(){};
 };
 typedef TPath TPathPoints[4];
 typedef BaseBlock TPole[10][10];
@@ -238,11 +244,9 @@ class FieldSpace{
 	// ustawia pola na lanszy z zajetych na wolne i zapisuje:
 	// **na planszy pole ktore zostalo zacementowane
 	// **pole ktore zostalo zajete
-	
 	// sets fields on the board from occupied to NOT-occupied and saves them
 	// **a field on board that got occupied (by obsticle, not the player itself)
 	// **a field on boeard that is used (taken by player itself)
-	//
 	bool EQPoint(TPoint P1,int  X, int Y) {
 		return (P1.x==X && P1.y==Y);
 	};
