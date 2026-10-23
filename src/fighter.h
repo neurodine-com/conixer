@@ -9,7 +9,6 @@ typedef struct{
 	TPoint point[4];
 } TPoints;
 
-
 // typedef TPoint T8Points[8];
 
 // typedef struct {

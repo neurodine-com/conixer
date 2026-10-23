@@ -40,12 +40,12 @@ const TPoints constWariorLoc = {
 
 
 const TPoints constEnemyLoc = {
-    {
-        {0, 0}, // point[0]
-        {0, 0}, // point[1]
-        {0, 0}, // point[2]
-        {0, 0}  // point[3]
-    }
+	{
+		{0, 0}, // point[0]
+		{0, 0}, // point[1]
+		{0, 0}, // point[2]
+		{0, 0}  // point[3]
+	}
 };
 
 // const TPoint cMoveBlur[8] = {0};
@@ -53,14 +53,14 @@ const TPoints constEnemyLoc = {
 
 
 const TPoint cMoveBlur[8] = {
-    {0, 0}, // [0]
-    {0, 0}, // [1]
-    {0, 0}, // [2]
-    {0, 0}, // [3]
-    {0, 0}, // [4]
-    {0, 0}, // [5]
-    {0, 0}, // [6]
-    {0, 0}  // [7]
+	{0, 0}, // [0]
+	{0, 0}, // [1]
+	{0, 0}, // [2]
+	{0, 0}, // [3]
+	{0, 0}, // [4]
+	{0, 0}, // [5]
+	{0, 0}, // [6]
+	{0, 0}  // [7]
 };
 
 
@@ -486,7 +486,7 @@ class FieldSpace{
 				Di[t].radius++;
 				Step(Di[t].DestPoint,cMoveBlur[t]);
 				//tot++;
-			} while( ( GoodP(Di[t].DestPoint) == true )&&( Valid(Di[t].DestPoint) == true ) );
+			} while(( GoodP(Di[t].DestPoint) == true )&&( Valid(Di[t].DestPoint) == true ));
 		};
 		/*(tot)<10) && */
 		/*ponizej, przypisane danemu elementowi jego wszystkich mozliwosci ruchu*/
@@ -507,11 +507,11 @@ class FieldSpace{
 
 	void FindFieldToShoot(VV& XUnit, const TPoint StopOnThisOne, bool& Found) {
 		TVect Di;
-	#if DEBUGIN == 2
-		pp(Found);
-		pp(StopOnThisOne.x); pp(StopOnThisOne.y);
-		pp(XUnit.Ground00.x); pp(XUnit.Ground00.y);
-	#endif
+		#if DEBUGIN == 2
+			pp(Found);
+			pp(StopOnThisOne.x); pp(StopOnThisOne.y);
+			pp(XUnit.Ground00.x); pp(XUnit.Ground00.y);
+		#endif
 		for(int it=0; it<8; it++) {
 			//Di[it].radius=-1;//-1 ze wzglefu na algorytm obliczania mozliwych drog -> petla do{..}while();
 			Di[it].DestPoint = XUnit.Ground00;
@@ -531,7 +531,6 @@ class FieldSpace{
 		};
 	};
 
-
 	void ClearGameMutuals() {
 		for(int d=0; d<10; d++) {
 			for(int dd=0; dd<10; dd++) {
@@ -540,33 +539,30 @@ class FieldSpace{
 		};
 	};
 
-        FieldSpace(const FieldSpace &) = default;
-        FieldSpace(FieldSpace &&) = delete;
-        FieldSpace &operator=(const FieldSpace &) = default;
-        FieldSpace &operator=(FieldSpace &&) = delete;
-        FieldSpace(int PlayersNumber) {
-          EmptyFields = 92;
-          TimeLeft = -1;
-          for (int x = 0; x < 10; x++) {
-            for (int y = 0; y < 10; y++) {
-              MOF[x][y] = BaseBlock(x, y, true);
-            };
-          };
-          TPoint BoardPos = NullPoint;
-          for (int o = 0; o < 4; o++) {
-            /*My Team*/
-            BoardPos =
-                (PlayersNumber == 1) ? constWariorLoc[o] : constEnemyLoc[o];
-            WariorLoc[o] = TPath(true, BoardPos.x, BoardPos.y, o);
-            MOF[WariorLoc[o].Org.x][WariorLoc[o].Org.y].SetAccessRights(false);
-            /*Enemy Team*/
-            BoardPos =
-                (PlayersNumber == 2) ? constWariorLoc[o] : constEnemyLoc[o];
-            EnemyLoc[o] = TPath(false, BoardPos.x, BoardPos.y, o);
-            MOF[EnemyLoc[o].Org.x][EnemyLoc[o].Org.y].SetAccessRights(false);
-          };
-        };
-
-        //destructor
+	FieldSpace(const FieldSpace &) = default;
+	FieldSpace(FieldSpace &&) = delete;
+	FieldSpace &operator=(const FieldSpace &) = default;
+	FieldSpace &operator=(FieldSpace &&) = delete;
+	FieldSpace(int PlayersNumber) {
+		EmptyFields = 92;
+		TimeLeft = -1;
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
+				MOF[x][y] = BaseBlock(x, y, true);
+			};
+		};
+		TPoint BoardPos = NullPoint;
+		for (int o = 0; o < 4; o++) {
+			// My Team
+			BoardPos = (PlayersNumber == 1)?constWariorLoc[o]:constEnemyLoc[o];
+			WariorLoc[o] = TPath(true, BoardPos.x, BoardPos.y, o);
+			MOF[WariorLoc[o].Org.x][WariorLoc[o].Org.y].SetAccessRights(false);
+			// Enemy Team
+			BoardPos = (PlayersNumber == 2)?constWariorLoc[o]:constEnemyLoc[o];
+			EnemyLoc[o] = TPath(false, BoardPos.x, BoardPos.y, o);
+			MOF[EnemyLoc[o].Org.x][EnemyLoc[o].Org.y].SetAccessRights(false);
+		};
+	};
+	//destructor
 	~FieldSpace(){ };
 };

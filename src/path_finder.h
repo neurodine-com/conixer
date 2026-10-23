@@ -28,9 +28,7 @@
 // -------------------------------------------------------------------------------------------------------
 
 #include "stdio.h"
-#include "../src/FieldSpace.h"
-
-
+#include "FieldSpace.h"
 typedef TAtackHQ TAtack[4];
 
 #define DifP(P1, P2) ((TPoint){P1.x - P2.x , P1.y - P2.y})
@@ -63,7 +61,7 @@ class CPathFinder : FieldSpace {
 						fUnit=k;
 						max_move_ability=Team[k].PathCount();
 					};
-                };
+				};
 			} else {
 				Team[k].TempNotIntresting=true;
 			};
@@ -72,15 +70,15 @@ class CPathFinder : FieldSpace {
 	};
 
 	int FindMostRestrictedUnit(TPathPoints& Team){
-		int min_move_ability=7;
-		int fUnit=-1;
-		for(int k=0;k<4;k++){
-			if (Team[k].TempNotIntresting==false ) {
+		int min_move_ability = 7;
+		int fUnit = -1;
+		for(int k=0; k<4; k++) {
+			if ( Team[k].TempNotIntresting==false ) {
 				if( Team[k].PathCount()>0 ) {
 					if( min_move_ability == Team[k].PathCount() ) {
 						int przypadek = rand()%10;
 						fUnit = (przypadek >= 5)?k:fUnit;
-						if(fUnit<0){
+						if( fUnit<0 ) {
 							fUnit=k;
 						};
 					} else {
@@ -195,11 +193,11 @@ class CPathFinder : FieldSpace {
 	// zalozenie ze przefiltrowane zostaly PathCount=0 i do tej metody nei sa pzrekazywane
 		int ResultingThreatFromAllEnemys=0;
 		restBufer(ThreatsCount);
-		for(int nei=0; nei<CheckingUnit.PathCount();nei++){
+		for(int nei=0; nei<CheckingUnit.PathCount(); nei++){
 			TPoint _m=cMoveBlur[CheckingUnit.fVV.Vect[nei].Mask];
 			TPoint ElToCheck=CheckingUnit.Org;
 			Step(ElToCheck,_m);
-			for(int k=0;k<4;k++){
+			for(int k=0; k<4; k++) {
 			// z zalozenia ThreatsCount[k] mzoe przyjac max wartosc 2 bo EnemysID_MutualMov
 			// i ten drugi max wartosci 1 pzryjmuja
 				int cumulativ=0;
@@ -213,23 +211,22 @@ class CPathFinder : FieldSpace {
 				if(ThreatsCount[k]<2){
 					ThreatsCount[k]=cumulativ;
 				};
-				ResultingThreatFromAllEnemys+=cumulativ;//ThreatsCount[k];
+				ResultingThreatFromAllEnemys+=cumulativ;
 			};
 		};
-		#if DEBUGIN==1
+#if DEBUGIN==1
 		V4(ThreatsCount);
-		#endif
+#endif
 		return ResultingThreatFromAllEnemys;
 	};
-
 
 	// procedura wykonana wtedy gdy nie ma dubletu ruchu i cementowania pzrez
 	// jakakolwiek jdnostke druzyny pzeciwnej.. czyli wyszukiwana jedst jednostka w
 	// druzynie do ktoerej jest najlatwiejszy dostep
 	int ThreatCountSearch(TPathPoints& Tim/*, TUDI& Junction*/){
-		#if DEBUGIN==1
-			wia();
-		#endif
+#if DEBUGIN==1
+		wia();
+#endif
 		int WynikC=-1;
 		int thrCount=0;
 		int oldthrCount=0;
@@ -243,12 +240,11 @@ class CPathFinder : FieldSpace {
 				};
 			};
 		};
-		#if DEBUGIN==1
-			pp(WynikC);
-		#endif
+#if DEBUGIN==1
+		pp(WynikC);
+#endif
 		return WynikC;
 	};
-
 
 	// procedura liczy ilosc dwujek (mozliwosci rdostania sie i
 	// zacementowania jednoczesne tego samego pola)
@@ -262,8 +258,7 @@ class CPathFinder : FieldSpace {
 		return wynik;
 	};
 
-
-	// /*procedura wybierze sposrod druzyny jednostke ktorej
+	// procedura wybierze sposrod druzyny jednostke ktorej
 	// pola otaczajace moga byc zasiedzone badz zacementowane pzrez
 	// najwieksza ilosc jednostek pzreciwnej druzyny
 	// ** w tym pzrypadku procedura szuka jednostki w druzynie do krorej
@@ -274,9 +269,9 @@ class CPathFinder : FieldSpace {
 	// to po prostu wybeiraa jest jednsotka z druzyny do ktorej najlatwiejszy jest dostep
 	// jak najwiekszej ilsoci jednostek druzyny pzreciwnej
 	int FindMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& DoubletsFound ){
-		#if DEBUGIN==1
-			wia();
-		#endif
+#if DEBUGIN==1
+		wia();
+#endif
 		int RsultingUnitID=-1;
 		int oldNumberOfDublets=0;
 		int numberOfDublets=0;
@@ -319,7 +314,7 @@ class CPathFinder : FieldSpace {
 		return RsultingUnitID;
 	};
 
-	bool CheckVectorCorectness(TPoint V1, TPoint V2, TPoint V2Mask, int MaxRadius){
+	bool CheckVectorCorectness(TPoint V1, TPoint V2, TPoint V2Mask, int MaxRadius) {
 		bool IQlity=false;
 		if(Touching(V1,V2)==false){
 			TPoint meetPoint=V2;
@@ -357,11 +352,9 @@ class CPathFinder : FieldSpace {
 		};
 	};
 
-	bool CheckIfCanCementAndStay( TPath& EnUnitToCheck, TPath& MyUnit, 
-		TPoint& OUTPossibleNEWLocation, int& OUTPossibilitysCount, 
-		TUID& OUTPossibleMasks ) {
-		bool Result=false;
-		for(int i=0;i<EnUnitToCheck.PathCount();i++){
+	bool CheckIfCanCementAndStay( TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPossibleNEWLocation, int& OUTPossibilitysCount, TUID& OUTPossibleMasks ){
+		bool Result = false;
+		for(int i=0; i<EnUnitToCheck.PathCount(); i++){
 			if(Result==false){
 				TPoint m=cMoveBlur[EnUnitToCheck.fVV.Vect[i].Mask];
 				TPoint _org=EnUnitToCheck.Org;
@@ -420,9 +413,9 @@ class CPathFinder : FieldSpace {
 		int FineFieldsCount;
 		TUID PointsMaskBufer;
 		restBufer(AppropriateUnitsIDsVector);
-		for(int k=0;k<4;k++){
+		for(int k=0; k<4; k++){
 			int tmp=rawBuff[k];
-			if(tmp==2) {
+			if( tmp==2 ) {
 				NewWariorLocum=NullPoint;
 				FineFieldsCount=0;
 				restBufer(PointsMaskBufer);
@@ -433,15 +426,15 @@ class CPathFinder : FieldSpace {
 					AtackInfo[MyAppropriateUnitsCount].PosibleFieldsCount=FineFieldsCount;
 					CopyOneToOther(PointsMaskBufer,AtackInfo[MyAppropriateUnitsCount].UsableMasksIDsVector);
 					MyAppropriateUnitsCount++;
-					#if DEBUGIN==1
-						pp(MyAppropriateUnitsCount-1);
-						V4(AtackInfo[MyAppropriateUnitsCount-1].UsableMasksIDsVector);
-						V4(PointsMaskBufer);
-						pp(AppropriateUnitsIDsVector[MyAppropriateUnitsCount-1]);
-						pp(AtackInfo[MyAppropriateUnitsCount-1].PosibleFieldsCount);
-						pp(AtackInfo[MyAppropriateUnitsCount-1].NewORGForWariorUnit.x);
-						pp(AtackInfo[MyAppropriateUnitsCount-1].NewORGForWariorUnit.y);
-					#endif
+#if DEBUGIN==1
+					pp(MyAppropriateUnitsCount-1);
+					V4(AtackInfo[MyAppropriateUnitsCount-1].UsableMasksIDsVector);
+					V4(PointsMaskBufer);
+					pp(AppropriateUnitsIDsVector[MyAppropriateUnitsCount-1]);
+					pp(AtackInfo[MyAppropriateUnitsCount-1].PosibleFieldsCount);
+					pp(AtackInfo[MyAppropriateUnitsCount-1].NewORGForWariorUnit.x);
+					pp(AtackInfo[MyAppropriateUnitsCount-1].NewORGForWariorUnit.y);
+#endif
 				};
 			};
 		};
@@ -456,10 +449,10 @@ class CPathFinder : FieldSpace {
 			int unitID=MyUnitsVec[co];
 			TUID fuu;
 			int ThreatTest=CheckHoodForThreat(WariorLoc[unitID],fuu);
-			#if DEBUGIN==1
-				pp(ThreatTest);
-			#endif
-			if(ThreatTest>MyUnitsBigestThreat){
+#if DEBUGIN==1
+			pp(ThreatTest);
+#endif
+			if( ThreatTest>MyUnitsBigestThreat ) {
 				curr_id=co;
 				MyUnitsBigestThreat=ThreatTest;
 				thisUnit=unitID;
@@ -469,18 +462,18 @@ class CPathFinder : FieldSpace {
 		//utaj mozna jakas dodatkowa funkcje wybrac
 		int mask_to_use = rand() % FInfo[curr_id].PosibleFieldsCount;
 		TPoint masc = cMoveBlur[FInfo[curr_id].UsableMasksIDsVector[mask_to_use]];
-		#if DEBUGIN==1 || DEBUGIN==2
-			pp(masc.x); pp(masc.y);
-			pp(curr_id);
-			pp(FInfo[curr_id].PosibleFieldsCount);
-			pp(mask_to_use);
-			V4(FInfo[curr_id].UsableMasksIDsVector);
-			pp(FInfo[curr_id].PosibleFieldsCount);
-		#endif
+#if DEBUGIN==1 || DEBUGIN==2
+		pp(masc.x); pp(masc.y);
+		pp(curr_id);
+		pp(FInfo[curr_id].PosibleFieldsCount);
+		pp(mask_to_use);
+		V4(FInfo[curr_id].UsableMasksIDsVector);
+		pp(FInfo[curr_id].PosibleFieldsCount);
+#endif
 		Step(ShootDestination,masc);
-		#if DEBUGIN==1
-			pp(ShootDestination.x); pp(ShootDestination.y);
-		#endif
+#if DEBUGIN==1
+		pp(ShootDestination.x); pp(ShootDestination.y);
+#endif
 		MoveAndShoot(OutputPlacement, WariorLoc[thisUnit],FInfo[curr_id].NewORGForWariorUnit,ShootDestination);
 		//wywolanie rozkazu strzalu bezposrednei parametry - dwa punkty start i des i strzal
 	};
@@ -488,67 +481,67 @@ class CPathFinder : FieldSpace {
 	void CementOldPlace(TBufor& OutputPlacement, TPath& WolnyElement){
 		int maxRadius=0;
 		int Direction=-1;
-		#if DEBUGIN==2
-			fx<<"ruch Z miejsca:"<<endl;
-			pp(WolnyElement.Org.x); pp(WolnyElement.Org.y);
-			pp(WolnyElement.PathCount());
-		#endif
-		for(int i=0;i<WolnyElement.PathCount();i++) {
+#if DEBUGIN==2
+		fx<<"ruch Z miejsca:"<<endl;
+		pp(WolnyElement.Org.x); pp(WolnyElement.Org.y);
+		pp(WolnyElement.PathCount());
+#endif
+		for(int i=0; i<WolnyElement.PathCount(); i++) {
 			if(maxRadius<WolnyElement.fVV.Vect[i].radius) {
 				Direction = i;
 				maxRadius = WolnyElement.fVV.Vect[i].radius;
 			};
 		};
 		TPoint Destination = WolnyElement.fVV.Vect[Direction].DestPoint;
-		#if DEBUGIN==2
-			fx<<"ruch DO miejsca:"<<endl;
-			pp(Destination.x); pp(Destination.y);
-		#endif
+#if DEBUGIN==2
+		fx<<"ruch DO miejsca:"<<endl;
+		pp(Destination.x); pp(Destination.y);
+#endif
 		MoveAndShoot(OutputPlacement, WolnyElement, Destination, WolnyElement.Org);
 	};
 
-// procedura wykona sie zawsze gdy nei ma mozliwosci wykonania
-// dupletu na jednej z jednostek pzreciwnika
+	// procedura wykona sie zawsze gdy nei ma mozliwosci wykonania
+	// dupletu na jednej z jednostek pzreciwnika
 	void ChooseShootAndRun(TBufor& OutputPlacement) {
-		#if DEBUGIN==2
-			wia();
-		#endif
+#if DEBUGIN==2
+		wia();
+#endif
 		int id=FindMostRestrictedUnit(WariorLoc);
-		#if DEBUGIN==2
-			pp(id);
-			pp(FindMostRestrictedUnit(WariorLoc));
-			pp(WariorLoc[id].Org.x); pp(WariorLoc[id].Org.y);
-			pp(WariorLoc[id].PathCount());
-		#endif
+#if DEBUGIN==2
+		pp(id);
+		pp(FindMostRestrictedUnit(WariorLoc));
+		pp(WariorLoc[id].Org.x); pp(WariorLoc[id].Org.y);
+		pp(WariorLoc[id].PathCount());
+#endif
 		if(id<0) {
 			FindLessRestrictedUnit(WariorLoc);
-			#if DEBUGIN==2
-				pp(FindLessRestrictedUnit(WariorLoc));
-			#endif
+#if DEBUGIN==2
+			pp(FindLessRestrictedUnit(WariorLoc));
+#endif
 		};
 		TUID RestrictionsForMyUnitFrom;
 		int RestrictionsForHOOD = CheckHoodForThreat(WariorLoc[id],RestrictionsForMyUnitFrom);
-		#if DEBUGIN==2
-			pp(RestrictionsForHOOD);
-			V4(RestrictionsForMyUnitFrom);
-		#endif
+#if DEBUGIN==2
+		pp(RestrictionsForHOOD);
+		V4(RestrictionsForMyUnitFrom);
+#endif
 		switch(RestrictionsForHOOD){
 			case 0:{
 				// move and CementOldPlace
 				CementOldPlace(OutputPlacement,WariorLoc[id]);
-				#if DEBUGIN==2
-					wia();
-				#endif		
-				};break;
+#if DEBUGIN==2
+				wia();
+#endif		
+			};break;
 			default: {
 				int EngagedEnemyIs=-1;
 				int tmp=0;
-				for(int re=0;re<4;re++){
+				for(int re=0; re<4; re++){
 					if(tmp < RestrictionsForMyUnitFrom[re]) {
 						tmp=RestrictionsForMyUnitFrom[re];
 						EngagedEnemyIs=re;
 					} else {
-						if( (tmp == RestrictionsForMyUnitFrom[re] )>0 ){
+						if( (tmp=RestrictionsForMyUnitFrom[re])>0 ){
 							EngagedEnemyIs=(rand()%10 >= 5)? EngagedEnemyIs:re;
 						};
 					};
@@ -556,29 +549,29 @@ class CPathFinder : FieldSpace {
 				};
 			};
 		};
-		#if DEBUGIN==2
-			pp(EngagedEnemyIs);
-			pp(EnemyLoc[EngagedEnemyIs].Org.x); pp(EnemyLoc[EngagedEnemyIs].Org.y);
-			pp(WariorLoc[id].Org.x); pp(WariorLoc[id].Org.y);
-		#endif
+#if DEBUGIN==2
+		pp(EngagedEnemyIs);
+		pp(EnemyLoc[EngagedEnemyIs].Org.x); pp(EnemyLoc[EngagedEnemyIs].Org.y);
+		pp(WariorLoc[id].Org.x); pp(WariorLoc[id].Org.y);
+#endif
 		TPoint CementX=ChooseFieldToCement(WariorLoc[id], EnemyLoc[EngagedEnemyIs]);
 		// to pole bedze zacementowane, nastene jest znalezienei punktu do ktorego nalezy sie ruszyc*/
-		#if DEBUGIN==2
-			pp(CementX.x);pp(CementX.y);
-		#endif
+#if DEBUGIN==2
+		pp(CementX.x);pp(CementX.y);
+#endif
 		if( IQl(CementX,NullPoint) == true ) {
 			WariorLoc[id].TempNotIntresting=true;
 			// fx<<"HOHO --- Wejscie w kolejna iteracie: "<<__FUNCTION__<<endl;
 			ChooseShootAndRun(OutputPlacement);
 		} else {
 			TPoint StopField=GetConnectionField(OutputPlacement, WariorLoc[id], EnemyLoc[EngagedEnemyIs], CementX);
-			#if DEBUGIN==2
+#if DEBUGIN==2
 			pp(StopField.x);pp(StopField.y);
-			#endif
+#endif
 			MoveAndShoot(OutputPlacement, WariorLoc[id], StopField, CementX);
-			#if DEBUGIN==2
-				fx<<"koniec rcedury ChooseShootAndRun()"<<endl;
-			#endif
+#if DEBUGIN==2
+			fx<<"koniec rcedury ChooseShootAndRun()"<<endl;
+#endif
 		};
 	};
 
@@ -595,19 +588,19 @@ class CPathFinder : FieldSpace {
 				_msk.x*=z2
 				_msk.y*=z2;
 				Step(NextP, _msk);
-				#if DEBUGIN==2
-					fx<<"Pole z ktoego testuje strzaly do pola:"<<" ["<<CementDest.x<<", "<<CementDest.y<<"]"<<endl;
-					pp(NextP.x);pp(NextP.y);
-				#endif
+#if DEBUGIN==2
+				fx<<"Pole z ktoego testuje strzaly do pola:"<<" ["<<CementDest.x<<", "<<CementDest.y<<"]"<<endl;
+				pp(NextP.x);pp(NextP.y);
+#endif
 				ClearTempVV(Base,NextP);
 				FindFieldToShoot(Base, CementDest, FoundSearchedField);
 				if(FoundSearchedField==true) {
 				// do tego punktu (NextP)
 				// musi sie pzremiescic Warior zeby strzelic w CementDest
-					#if DEBUGIN==2
-						fx<<"znaleziony punkt:"<<endl;
-						pp(NextP.x);pp(NextP.y);
-					#endif
+#if DEBUGIN==2
+					fx<<"znaleziony punkt:"<<endl;
+					pp(NextP.x);pp(NextP.y);
+#endif
 					return NextP;
 				};
 			};
@@ -634,9 +627,9 @@ class CPathFinder : FieldSpace {
 	};
 
 	void MoveAndShoot(TBufor& OutputPlacement, TPath& ActiveUnit, TPoint MoveDestination, TPoint ShootDestination ){
-        #if DEBUGIN==1
-			wia();
-		#endif
+#if DEBUGIN==1
+		wia();
+#endif
 		MoveWarior(ActiveUnit, MoveDestination);
 		RuchNR++;
 		ShotsFromLocalization(ActiveUnit,MoveDestination);
@@ -646,10 +639,10 @@ class CPathFinder : FieldSpace {
 
 	void ChoosingUnits(TBufor& OutputPlacement){
 		bool doesItHasDuplet;
-		#if DEBUGIN==2
-			fx<<"---"<<RuchNR<<"----"<<endl;
-			fx<<"-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-="<<endl;
-		#endif
+#if DEBUGIN==2
+		fx<<"---"<<RuchNR<<"----"<<endl;
+		fx<<"-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-="<<endl;
+#endif
 		EnemyLoc[0].TempNotIntresting = (EnemyLoc[0].PathCount()==0)?true:false;
 		EnemyLoc[1].TempNotIntresting = (EnemyLoc[1].PathCount()==0)?true:false;
 		EnemyLoc[2].TempNotIntresting = (EnemyLoc[2].PathCount()==0)?true:false;
@@ -661,15 +654,15 @@ class CPathFinder : FieldSpace {
 		bool FurtherOperationsGO=true;
 		for(int i=0; i<4; i++) {
 			if( ( true == FurtherOperationsGO )&&( false == WariorLoc[i].TempNotIntresting) ) {
-				for(int j=0;j<4;j++){
+				for(int j=0; j<4; j++) {
 					if( EnemyLoc[j].PathCount()<=2 ) {
-					if( (true == FurtherOperationsGO)&&( true == Touching(WariorLoc[i].Org,EnemyLoc[j].Org )) {
-						FurtherOperationsGO=false;
-						#if DEBUGIN==2
+						if((true == FurtherOperationsGO)&&( true == Touching(WariorLoc[i].Org,EnemyLoc[j].Org )) {
+							FurtherOperationsGO=false;
+#if DEBUGIN==2
 							wia();
-						#endif
-						CementOldPlace(OutputPlacement,WariorLoc[i]);
-						break;
+#endif
+							CementOldPlace(OutputPlacement,WariorLoc[i]);
+							break;
 						};
 					};
 				};
@@ -695,43 +688,42 @@ class CPathFinder : FieldSpace {
 				ThreatCount=CheckHoodForThreat(EnemyLoc[id],Bufer);
 				WNJS(TTMUC, TTMUVec, FinalInfo, EnemyLoc[id],Bufer);
 			}while(( TTMUC==0 )&&( (++iterator)<4 ));
-			#if DEBUGIN==2
-				pp(TTMUC);
-				pp(id);
-			#endif
+#if DEBUGIN==2
+			pp(TTMUC);
+			pp(id);
+#endif
 			// oznacza ze nie zostala znaleziona zadna jednostka z mozliwoscia wykonania dubletu
 			if(id<0) {
-				#if DEBUGIN==2
-					wia();
-				#endif
+#if DEBUGIN==2
+				wia();
+#endif
 				ChooseShootAndRun(OutputPlacement);
 			} else {
-				int RestrictionLvl=EnemyLoc[id].PathCount();
+				int RestrictionLvl = EnemyLoc[id].PathCount();
 				switch(RestrictionLvl) {
 					case 1:{
 							// pootzrena procedura korkujaca jednostke
-							WykonajJalowyRuch(OutputPlacement);
-							#if DEBUGIN==2
-								wia();
-							#endif
-						}; break;
+						WykonajJalowyRuch(OutputPlacement);
+#if DEBUGIN==2
+						wia();
+#endif
+					}; break;
 					default:{
-							if(TTMUC==0){
-								#if DEBUGIN==2
-									pp(MenacedParameter);
-									fx<<"SIMPLE computation"<<endl;
-								#endif
+						if(TTMUC==0){
+#if DEBUGIN==2
+							pp(MenacedParameter);
+							fx<<"SIMPLE computation"<<endl;
+#endif
 							ChooseShootAndRun(OutputPlacement);
-							} else {
-								#if DEBUGIN==2
-									pp(TTMUC);
-									pp(id);
-									pp(EnemyLoc[id].PathForMixer);
-									pp(EnemyLoc[id].Org.x); pp(EnemyLoc[id].Org.y);
-									fx<<"DUPLET computation"<<endl;
-								#endif
-								ChooseFromGivenAndCement_DupletShoot(OutputPlacement,TTMUC, TTMUVec, FinalInfo, EnemyLoc[id]);
-							};
+						} else {
+#if DEBUGIN==2
+							pp(TTMUC);
+							pp(id);
+							pp(EnemyLoc[id].PathForMixer);
+							pp(EnemyLoc[id].Org.x); pp(EnemyLoc[id].Org.y);
+							fx<<"DUPLET computation"<<endl;
+#endif
+							ChooseFromGivenAndCement_DupletShoot(OutputPlacement,TTMUC, TTMUVec, FinalInfo, EnemyLoc[id]);
 						};
 					};
 				};
@@ -806,15 +798,9 @@ class CPathFinder : FieldSpace {
 		Data={-1, -1, -1, -1};
  	};
 
-
 	void InvokeKoniec(TBufor& _OutputPlacement) {
 		RuchNR++;
-		_OutputPlacement[0]=-1;
-		_OutputPlacement[1]=-1;
-		_OutputPlacement[2]=-1;
-		_OutputPlacement[3]=-1;
-		_OutputPlacement[4]=-1;
-		_OutputPlacement[5]=-1;
+		_OutputPlacement ={ -1, -1, -1, -1, -1, -1, -1};
 	};
 
 	CPathFinder(int PlayerStartID): FieldSpace::FieldSpace(PlayerStartID) {
@@ -822,6 +808,5 @@ class CPathFinder : FieldSpace {
 		srand(time(0));
 	};
 
-	~CPathFinder() {
-	};
+	~CPathFinder() { };
 };
