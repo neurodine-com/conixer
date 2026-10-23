@@ -13,17 +13,21 @@
 // 
 // ---------------------------------------------------------------------------------------------------------
 
-#include <iostream>
-#include <cstdio>
+#include "stdio.h"
+#include "iostream"
+
+
+#include "../src/fighter.h"
+
 using namespace std;
 
-class tel{
-	protected:
+class tel {
+
 	int fStaringWith;
 	public:
 
 	void GetLineOfLuckingTime(int& TimeToEnd){
-		cin >> TimeToEnd;
+		std::cin >> TimeToEnd;
 		#if DEBUGIN==1
 		pp(TimeToEnd);
 		#endif
@@ -51,18 +55,22 @@ class tel{
 		return (fStaringWith==1);
 	};
 
-
-	tel(int StartZNumerem){
-		if(!(StartZNumerem==1 || StartZNumerem==2)){
-		#if DEBUGIN==1
+    tel(const tel &) = default;
+    tel(tel &&) = delete;
+    tel &operator=(const tel &) = default;
+    tel &operator=(tel &&) = delete;
+    
+	tel(int StartZNumerem) {
+          if (!(StartZNumerem == 1 || StartZNumerem == 2)) {
+	#if DEBUGIN==1
 		pp(StartZNumerem);
-		#endif
+	#endif
 		cout <<"ERROR: Program start with bad number: " << StartZNumerem << " :D" << endl;
 		};
-		};
+    };
 
-	~tel(){
+    ~tel() {
 		cout << "Program end."<< endl;
-		};
-
 	};
+
+};

@@ -20,9 +20,7 @@
 //#include <sstream>
 using namespace std;
 
-int StaringWith;
-typedef int TBufor[6];
-
+int StaringWith = 0;
 
 
 #define DEBUGIN 2
@@ -41,9 +39,11 @@ ofstream fx;
 
 #endif
 
-#include <tel.h>
-#include <FieldSpace.h>
-#include <path_finder.h>
+#include "fighter.h"
+
+#include "tel.h"
+#include "FieldSpace.h"
+#include "path_finder.h"
 
 
 int MaxMoves;
@@ -62,8 +62,8 @@ MaxMoves=92;
 if(fx.is_open()){
 #endif
 
-	tel call=tel::tel(StaringWith);
-	CPathFinder World=CPathFinder::CPathFinder(StaringWith);
+	tel call = tel(StaringWith);
+	CPathFinder World = CPathFinder(StaringWith);
 
 	TBufor MyReadBuff={0,0,0,0,0,0};
 	TBufor MyWriteBuff={0,3,0,2,0,3};
@@ -83,7 +83,7 @@ if(fx.is_open()){
 	};
 
 	World.RuchNR=1;
-	while(World.RuchNR<100){
+	while( World.RuchNR < 100 ){
 
 		call.GetLineOfLuckingTime(World.TimeLeft);
 
