@@ -26,15 +26,11 @@
 // 		   probability filter is used to choose which one will be used in iteration)
 //  
 // -------------------------------------------------------------------------------------------------------
-
 #include "stdio.h"
 #include "FieldSpace.h"
 typedef TAtackHQ TAtack[4];
-
 #define DifP(P1, P2) ((TPoint){P1.x - P2.x , P1.y - P2.y})
-
 class CPathFinder : FieldSpace {
-
 	public:
 	//okresla ilosc wykonanych ruchow w grze
 	int RuchNR; 
@@ -44,15 +40,14 @@ class CPathFinder : FieldSpace {
 	int EnFreeSpace;
 	int TimUnidID;
 	int EnUnitID;
-
 	int FindLessRestrictedUnit(TPathPoints& Team){
 		int max_move_ability=0;
 		int fUnit=-1;
-		for(int k=0;k<4;k++){
+		for(int k=0; k<4; k++){
 			if(( Team[k].PathCount()>0 )&&( Team[k].TempNotIntresting==false )) {
 				if( max_move_ability == Team[k].PathCount() ) {
-					int przypadek=rand() % 10;
-					fUnit=(przypadek >= 5)? k:fUnit;
+					int przypadek = rand()%10;
+					fUnit = (przypadek >= 5)?k:fUnit;
 					if(fUnit<0){
 						fUnit=k;
 					};
@@ -68,7 +63,6 @@ class CPathFinder : FieldSpace {
 		};
 		return fUnit;
 	};
-
 	int FindMostRestrictedUnit(TPathPoints& Team){
 		int min_move_ability = 7;
 		int fUnit = -1;
@@ -94,14 +88,12 @@ class CPathFinder : FieldSpace {
 		};
 		return fUnit;
 	};
-
 	TPoint GetNextPointInRadiusOf(int radius, TPoint maskToUse, TPoint Location) {
 		TPoint y=Location;
 		maskToUse.x*=radius; maskToUse.y*=radius;
 		Step(y,maskToUse);
 		return y;
 	};
-
 	void RunMutuals(){
 		for(int t=0; t<4; t++) {
 			//wywoluje shoot mutuals
@@ -110,11 +102,9 @@ class CPathFinder : FieldSpace {
 			FindMoveMutuals(EnemyLoc[t]);
 		};
 	};
-
 	// procedura do szukania punkto wspolnych
 	// **ustawiane sa odpowednie parametryna wszystkich polach mapy
 	// po ktorych w danej tuze moga sie poruszac jednsotki
-	// 
 	void FindMoveMutuals(TPath& XUmut){
 		if( XUmut.PathCount()>0 ) {
 			for(int ivec=0; ivec<XUmut.PathCount(); ivec++) {
@@ -140,7 +130,6 @@ class CPathFinder : FieldSpace {
 			};
 		};
 	};
-
 	void FindShootMutuals(TPath& VirtualShooting_Element, const TPoint Startup){
 		VV Temporary;
 		//czyszczenei struktory w celu wyszukania kierunkow i zasiegow(promieni)
@@ -158,9 +147,8 @@ class CPathFinder : FieldSpace {
 			};
 		};
 	};
-
 	void ClearTempVV(VV& _tmp, const TPoint Destination_or_Start) {
-		for(int p=0;p<8;p++){
+		for(int p=0; p<8; p++){
 			_tmp.Vect[p].radius = -1;
 			_tmp.Vect[p].Mask = -1;
 			_tmp.Vect[p].DestPoint = Destination_or_Start;
@@ -168,7 +156,6 @@ class CPathFinder : FieldSpace {
 		_tmp.Ground00 = Destination_or_Start;
 		_tmp.VectCount = 0;
 	};
-
 	bool Touching(TPoint B1, TPoint B2) {
 		bool AreTuching=false;
 		int cmb=0;
@@ -178,13 +165,11 @@ class CPathFinder : FieldSpace {
 		}while(( AreTuching==false )&&( cmb<8 ));
 		return AreTuching;
 	};
-
 	void CleatParametersState(){
 		ClearGameMutuals();
 		TimFreeSpace=0;
 		EnFreeSpace=0;
 	};
-
 	// procedura szuka okolice jednostki sprawdzajac czy jednsotka wroga ma bezposredni kontakt
 	// strzalem badz ruchem z jednostka ktora bada
 	// bezposredni kontakt z ruchem i strzalem =2
@@ -219,7 +204,6 @@ class CPathFinder : FieldSpace {
 #endif
 		return ResultingThreatFromAllEnemys;
 	};
-
 	// procedura wykonana wtedy gdy nie ma dubletu ruchu i cementowania pzrez
 	// jakakolwiek jdnostke druzyny pzeciwnej.. czyli wyszukiwana jedst jednostka w
 	// druzynie do ktoerej jest najlatwiejszy dostep
@@ -245,7 +229,6 @@ class CPathFinder : FieldSpace {
 #endif
 		return WynikC;
 	};
-
 	// procedura liczy ilosc dwujek (mozliwosci rdostania sie i
 	// zacementowania jednoczesne tego samego pola)
 	// gdyz wtedy jest najwieksze prawdopodobienstwoe ze
@@ -257,7 +240,6 @@ class CPathFinder : FieldSpace {
 		};
 		return wynik;
 	};
-
 	// procedura wybierze sposrod druzyny jednostke ktorej
 	// pola otaczajace moga byc zasiedzone badz zacementowane pzrez
 	// najwieksza ilosc jednostek pzreciwnej druzyny
@@ -272,9 +254,9 @@ class CPathFinder : FieldSpace {
 #if DEBUGIN==1
 		wia();
 #endif
-		int RsultingUnitID=-1;
-		int oldNumberOfDublets=0;
-		int numberOfDublets=0;
+		int RsultingUnitID = -1;
+		int oldNumberOfDublets = 0;
+		int numberOfDublets = 0;
 		for(int op=0; op<4; op++) {
 			if(( LoopedTim[op].PathCount()>0 )&&( LoopedTim[op].TempNotIntresting==false )){
 			TUID ThreatStatus;
@@ -289,14 +271,13 @@ class CPathFinder : FieldSpace {
 		};
 		return RsultingUnitID;
 	};
-
 	// funkcja robi to samo co popzredniczka lecz szuka obektow ktorych ilosc
 	// dupletow jest mniejsza od wskazanego parametru
 	int FindNextMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& IN_OUT_MeancedParam ) {
-		int RsultingUnitID=-1;
-		int oldNumberOfDublets=IN_OUT_MeancedParam;
-		int local_min=0;
-		int numberOfDublets=0;
+		int RsultingUnitID = -1;
+		int oldNumberOfDublets = IN_OUT_MeancedParam;
+		int local_min = 0;
+		int numberOfDublets = 0;
 		//hasDuplet=false;
 		for(int op=0; op<4; op++) {
 			if(LoopedTim[op].PathCount()>0 && LoopedTim[op].TempNotIntresting==false){
@@ -313,12 +294,11 @@ class CPathFinder : FieldSpace {
 		};
 		return RsultingUnitID;
 	};
-
 	bool CheckVectorCorectness(TPoint V1, TPoint V2, TPoint V2Mask, int MaxRadius) {
 		bool IQlity=false;
 		if(Touching(V1,V2)==false){
-			TPoint meetPoint=V2;
-			int tmpr=0;
+			TPoint meetPoint = V2;
+			int tmpr = 0;
 			do{
 				tmpr++;
 				Step(meetPoint,V2Mask);
@@ -328,18 +308,17 @@ class CPathFinder : FieldSpace {
 		};
 		return IQlity;
 	};
-
 	// z pola CementingFrom nastepuje cementowanie pol w obrebie jednostki E
 	// a wyniki ktore to pola maja byc zacementowane sa pzekazywane
 	// w postaci numeru maski ktora ma byc uzyta aby zacementowac jakies pole.
 	// w ten sposob otzrymuje mozliwosc wyboru sposrod pol mozliwych do zacementowanie ,
 	// tego pola ktory bedzie sluzylo mojej druzynie
-	void SerchFieldToCement_OtherThanAndTouchingTo( TPoint CementingFrom, TPath& E, TUID& Result, int& FieldsToCementFound ){
+	void SerchFieldToCement_OtherThanAndTouchingTo(TPoint CementingFrom, TPath& E, TUID& Result, int& FieldsToCementFound) {
 		FieldsToCementFound=0;
 		resetToMinusOne(Result);
 		for(int z=0; z<E.PathCount(); z++) {
-			TPoint P=E.Org;
-			TPoint mm=cMoveBlur[E.fVV.Vect[z].Mask];
+			TPoint P = E.Org;
+			TPoint mm = cMoveBlur[E.fVV.Vect[z].Mask];
 			Step(P,mm);
 			if(IQl(P,CementingFrom) == false){
 				bool validIs=Touching(CementingFrom,P);
@@ -351,16 +330,15 @@ class CPathFinder : FieldSpace {
 			};
 		};
 	};
-
 	bool CheckIfCanCementAndStay( TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPossibleNEWLocation, int& OUTPossibilitysCount, TUID& OUTPossibleMasks ){
 		bool Result = false;
 		for(int i=0; i<EnUnitToCheck.PathCount(); i++){
 			if(Result==false){
-				TPoint m=cMoveBlur[EnUnitToCheck.fVV.Vect[i].Mask];
-				TPoint _org=EnUnitToCheck.Org;
-				int MaxRad=EnUnitToCheck.fVV.Vect[i].radius;
+				TPoint m = cMoveBlur[EnUnitToCheck.fVV.Vect[i].Mask];
+				TPoint _org = EnUnitToCheck.Org;
+				int MaxRad = EnUnitToCheck.fVV.Vect[i].radius;
 				Step(_org,m);
-				bool isValid=CheckVectorCorectness(MyUnit.Org,_org,m,MaxRad);
+				bool isValid = CheckVectorCorectness(MyUnit.Org,_org,m,MaxRad);
 				if(isValid==true){
 					// oznacza to ze w dany punbkt (_org) o pdanej masce m obektu wroga
 					// moze zostac pzresuniety moj element
@@ -368,7 +346,7 @@ class CPathFinder : FieldSpace {
 					// moga byc zacementowane
 					SerchFieldToCement_OtherThanAndTouchingTo(_org,EnUnitToCheck,OUTPossibleMasks,OUTPossibilitysCount);
 					if(OUTPossibilitysCount>0) {	
-						OUTPossibleNEWLocation=_org;
+						OUTPossibleNEWLocation = _org;
 						Result=true;
 					};
 				};
@@ -379,36 +357,31 @@ class CPathFinder : FieldSpace {
 		// do nowego polozenia mojeje jednostki(_org) natomiast w PossibleFieldsToCement zwracane sa indexy
 		// maski wroga okreslajace te pola
 	};
-
 // Wybiez Najodpoiedniejsza Jedsotke Sposrod Moich
 // Opis Parametrow:
-// **int& MyAppropriateUnitsCount zwraca liczbe jednostek mojej druzyny
+// int& MyAppropriateUnitsCount zwraca liczbe jednostek mojej druzyny
 // kore nadaja sie do zadania zasiadniecia kolo
 // jednostki woga i zacementowania jej najblizszej okolic
 //
-// **TUID& AppropriateUnitsIDsVector = to wektor o dlugosc MyAppropriateUnitsCount ktory
+// TUID& AppropriateUnitsIDsVector = to wektor o dlugosc MyAppropriateUnitsCount ktory
 // zawiera indexy moich jednostek ktore nadaja sie do tego zadania
 //
-// **TPath& OnEn - jednostka pzreciwnika ddla ktorej sprawdzanei sie odbywa
+// TPath& OnEn - jednostka pzreciwnika ddla ktorej sprawdzanei sie odbywa
 //
-// **TUID rawBuff - bufor okreslajacy ilosc pol wokol jednostki w ktorej
+// TUID rawBuff - bufor okreslajacy ilosc pol wokol jednostki w ktorej
 // wystapil dublet (moziwosc zasiadniecia i zacementoweania
 // tego samego punktu w obrebie jednostki wroga (OnEn))
 //
-// **TPoint& NewWariorLocum - Jesli odpwiednia jednostka jest znaleziona
+// TPoint& NewWariorLocum - Jesli odpwiednia jednostka jest znaleziona
 // wspolzredne do ktorych powinna sie pzremiescic sa okreslone ta zmienne
 //
-// **int& FineFieldsCount - okresla ile pol dla danej jednostki odpowiedniej
+// int& FineFieldsCount - okresla ile pol dla danej jednostki odpowiedniej
 // do tego zadania jest w zsiegu cementowania (pol bedacych w bezposrednim sasiedztwie jednsotki wroga OnEn)
 //
-// **TUID& PointsMaskBufer - okresla indexy maski jednostki wroga ktore jesl iuzyte
+// TUID& PointsMaskBufer - okresla indexy maski jednostki wroga ktore jesl iuzyte
 // wyznacza punkty ktore moga byc zacementowane
-
-	void WNJS( int& MyAppropriateUnitsCount, 
-			TUID& AppropriateUnitsIDsVector,
-			TAtack& AtackInfo,
-			TPath& OnEn, TUID rawBuff ) {
-		MyAppropriateUnitsCount=0;
+	void WNJS( int& MyAppropriateUnitsCount, TUID& AppropriateUnitsIDsVector, TAtack& AtackInfo,TPath& OnEn, TUID rawBuff ) {
+		MyAppropriateUnitsCount = 0;
 		TPoint NewWariorLocum;
 		int FineFieldsCount;
 		TUID PointsMaskBufer;
@@ -416,10 +389,10 @@ class CPathFinder : FieldSpace {
 		for(int k=0; k<4; k++){
 			int tmp=rawBuff[k];
 			if( tmp==2 ) {
-				NewWariorLocum=NullPoint;
-				FineFieldsCount=0;
+				NewWariorLocum = NullPoint;
+				FineFieldsCount = 0;
 				restBufer(PointsMaskBufer);
-				bool C_A_S=CheckIfCanCementAndStay(OnEn, WariorLoc[k],NewWariorLocum,FineFieldsCount, PointsMaskBufer);
+				bool C_A_S = CheckIfCanCementAndStay(OnEn, WariorLoc[k],NewWariorLocum,FineFieldsCount, PointsMaskBufer);
 				if(C_A_S==true) {
 					AppropriateUnitsIDsVector[MyAppropriateUnitsCount]=k;
 					AtackInfo[MyAppropriateUnitsCount].NewORGForWariorUnit=NewWariorLocum;
@@ -439,12 +412,11 @@ class CPathFinder : FieldSpace {
 			};
 		};
 	};
-
 	void ChooseFromGivenAndCement_DupletShoot(TBufor& OutputPlacement,int count, TUID& MyUnitsVec, TAtack& FInfo, TPath& UEnemy){
-	// wybor jednostki  strzal
-		int MyUnitsBigestThreat=0;
-		int thisUnit=-1;
-		int curr_id=-1;
+		// wybor jednostki  strzal
+		int MyUnitsBigestThreat = 0;
+		int thisUnit = -1;
+		int curr_id = -1;
 		for(int co=0; co<count; co++) {
 			int unitID=MyUnitsVec[co];
 			TUID fuu;
@@ -452,15 +424,15 @@ class CPathFinder : FieldSpace {
 #if DEBUGIN==1
 			pp(ThreatTest);
 #endif
-			if( ThreatTest>MyUnitsBigestThreat ) {
-				curr_id=co;
-				MyUnitsBigestThreat=ThreatTest;
-				thisUnit=unitID;
+			if( ThreatTest>MyUnitsBigestThreat ){
+				curr_id = co;
+				MyUnitsBigestThreat = ThreatTest;
+				thisUnit = unitID;
 			};
 		};
 		TPoint ShootDestination=UEnemy.Org;
 		//utaj mozna jakas dodatkowa funkcje wybrac
-		int mask_to_use = rand() % FInfo[curr_id].PosibleFieldsCount;
+		int mask_to_use = rand()%FInfo[curr_id].PosibleFieldsCount;
 		TPoint masc = cMoveBlur[FInfo[curr_id].UsableMasksIDsVector[mask_to_use]];
 #if DEBUGIN==1 || DEBUGIN==2
 		pp(masc.x); pp(masc.y);
@@ -477,10 +449,9 @@ class CPathFinder : FieldSpace {
 		MoveAndShoot(OutputPlacement, WariorLoc[thisUnit],FInfo[curr_id].NewORGForWariorUnit,ShootDestination);
 		//wywolanie rozkazu strzalu bezposrednei parametry - dwa punkty start i des i strzal
 	};
-
 	void CementOldPlace(TBufor& OutputPlacement, TPath& WolnyElement){
-		int maxRadius=0;
-		int Direction=-1;
+		int maxRadius = 0;
+		int Direction = -1;
 #if DEBUGIN==2
 		fx<<"ruch Z miejsca:"<<endl;
 		pp(WolnyElement.Org.x); pp(WolnyElement.Org.y);
@@ -499,14 +470,13 @@ class CPathFinder : FieldSpace {
 #endif
 		MoveAndShoot(OutputPlacement, WolnyElement, Destination, WolnyElement.Org);
 	};
-
 	// procedura wykona sie zawsze gdy nei ma mozliwosci wykonania
 	// dupletu na jednej z jednostek pzreciwnika
 	void ChooseShootAndRun(TBufor& OutputPlacement) {
 #if DEBUGIN==2
 		wia();
 #endif
-		int id=FindMostRestrictedUnit(WariorLoc);
+		int id = FindMostRestrictedUnit(WariorLoc);
 #if DEBUGIN==2
 		pp(id);
 		pp(FindMostRestrictedUnit(WariorLoc));
@@ -533,16 +503,17 @@ class CPathFinder : FieldSpace {
 				wia();
 #endif		
 			};break;
-			default: {
+			default:{
 				int EngagedEnemyIs=-1;
 				int tmp=0;
 				for(int re=0; re<4; re++){
 					if(tmp < RestrictionsForMyUnitFrom[re]) {
-						tmp=RestrictionsForMyUnitFrom[re];
-						EngagedEnemyIs=re;
+						tmp = RestrictionsForMyUnitFrom[re];
+						EngagedEnemyIs = re;
 					} else {
-						if( (tmp=RestrictionsForMyUnitFrom[re])>0 ){
-							EngagedEnemyIs=(rand()%10 >= 5)? EngagedEnemyIs:re;
+						if( RestrictionsForMyUnitFrom[re]>0 ){
+							tmp = RestrictionsForMyUnitFrom[re]
+							EngagedEnemyIs = ((rand()%10)>=5)?EngagedEnemyIs:re;
 						};
 					};
 				// koniec szukania jednostki ktora bede atakowal
@@ -574,19 +545,18 @@ class CPathFinder : FieldSpace {
 #endif
 		};
 	};
-
 	TPoint GetConnectionField( TBufor& OutputPlacement, TPath& Warior, TPath& Enemy, TPoint CementDest ) {
 		VV Base;
 		bool FoundSearchedField = false;
 		TPoint NextP = NullPoint;
 		TPoint _msk = NullPoint;
-		for(int z=0;z<Warior.PathCount();z++){
-			int z2=0;
-			while(++z2 <= Warior.fVV.Vect[z].radius) {
+		for(int z=0; z<Warior.PathCount(); z++){
+			int zZ=0;
+			while(++zZ <= Warior.fVV.Vect[z].radius) {
 				NextP=Warior.Org;
 				_msk=cMoveBlur[Warior.fVV.Vect[z].Mask];
-				_msk.x*=z2
-				_msk.y*=z2;
+				_msk.x *= zZ
+				_msk.y *= zZ;
 				Step(NextP, _msk);
 #if DEBUGIN==2
 				fx<<"Pole z ktoego testuje strzaly do pola:"<<" ["<<CementDest.x<<", "<<CementDest.y<<"]"<<endl;
@@ -595,8 +565,8 @@ class CPathFinder : FieldSpace {
 				ClearTempVV(Base,NextP);
 				FindFieldToShoot(Base, CementDest, FoundSearchedField);
 				if(FoundSearchedField==true) {
-				// do tego punktu (NextP)
-				// musi sie pzremiescic Warior zeby strzelic w CementDest
+					// do tego punktu (NextP)
+					// musi sie pzremiescic Warior zeby strzelic w CementDest
 #if DEBUGIN==2
 					fx<<"znaleziony punkt:"<<endl;
 					pp(NextP.x);pp(NextP.y);
@@ -607,11 +577,10 @@ class CPathFinder : FieldSpace {
 		};
 		return NullPoint
 	};
-
 	TPoint ChooseFieldToCement(TPath& Warior ,TPath& Enemy){
 		TPoint Result=NullPoint;
-		TPoint _m = {0, 0}
-		TPoint _t = {0, 0}
+		TPoint _m = ZeroPoint
+		TPoint _t = ZeroPoint
 		for(int x=0; x<Enemy.PathCount(); x++) {
 			_t = Enemy.Org;
 			_m = cMoveBlur[Enemy.fVV.Vect[x].Mask];
@@ -625,8 +594,7 @@ class CPathFinder : FieldSpace {
 		};
 		return Result;
 	};
-
-	void MoveAndShoot(TBufor& OutputPlacement, TPath& ActiveUnit, TPoint MoveDestination, TPoint ShootDestination ){
+	void MoveAndShoot(TBufor& OutputPlacement, TPath& ActiveUnit, TPoint MoveDestination, TPoint ShootDestination ) {
 #if DEBUGIN==1
 		wia();
 #endif
@@ -636,7 +604,6 @@ class CPathFinder : FieldSpace {
 		ShootAtLocalization(ShootDestination);
 		SendData(OutputPlacement);
 	};
-
 	void ChoosingUnits(TBufor& OutputPlacement){
 		bool doesItHasDuplet;
 #if DEBUGIN==2
@@ -670,19 +637,19 @@ class CPathFinder : FieldSpace {
 		};
 		if(FurtherOperationsGO==true){
 			// okresla ilosc znalezionych dubletow
-			int MenacedParameter=0;
+			int MenacedParameter = 0;
 			TUID Bufer;
 			int id;
 			int ThreatCount;
 			// This Task My Units Count
-			int TTMUC=0;
+			int TTMUC = 0;
 			// This Task My Units Vector
 			TUID TTMUVec;
 			// zbior Informacji o jednostkch i ich parametrach koncowych
 			TAtack FinalInfo;
 			id=FindMostMenacedUnit_DupletSearch(EnemyLoc, MenacedParameter);
 			MenacedParameter++;
-			int iterator=0;
+			int iterator = 0;
 			do{
 				id=FindNextMostMenacedUnit_DupletSearch(EnemyLoc, MenacedParameter);
 				ThreatCount=CheckHoodForThreat(EnemyLoc[id],Bufer);
@@ -730,15 +697,13 @@ class CPathFinder : FieldSpace {
 			};
 		};
 	};
-
 	void ChooseTimMoveCoordinates(TBufor& OutputPlacement) {
 		CleatParametersState();
-		//	okreslenie mozliwych drog
+		// okreslenie mozliwych drog
 		RunPathFinder();
 		RunMutuals();
 		ChoosingUnits(OutputPlacement);
 	};
-
 	void WykonajJalowyRuch(TBufor& OutputPlacement) {
 		int PathToMove;
 		int RadiusToMove;
@@ -773,7 +738,7 @@ class CPathFinder : FieldSpace {
 		maxRad = WariorLoc[id].BombHQ.Vect[ShootDirection].radius;
 		modRad = (maxRad>1)?(rand()%maxRad)+1:maxRad;
 		if(modRad==0) {
-			modRad=1;
+			modRad = 1;
 		};
 		ShootRadius = modRad;
 		TPoint tmpMask2 = cMoveBlur[WariorLoc[id].BombHQ.Vect[ShootDirection].Mask];
@@ -782,31 +747,26 @@ class CPathFinder : FieldSpace {
 		ShootAtLocalization(ShootDestination);
 		SendData(OutputPlacement);
 	};
-
 	void CopyOneToOther(TUID& Source, TUID& Dest) {
 		Dest[0]=Source[0];
 		Dest[1]=Source[1];
 		Dest[2]=Source[2];
 		Dest[3]=Source[3];
  	};
-
 	void restBufer(TUID& Data) {
 		Data={0, 0, 0, 0};
  	};
-
  	void resetToMinusOne(TUID& Data) {
 		Data={-1, -1, -1, -1};
  	};
-
 	void InvokeKoniec(TBufor& _OutputPlacement) {
 		RuchNR++;
 		_OutputPlacement ={ -1, -1, -1, -1, -1, -1, -1};
 	};
-
 	CPathFinder(int PlayerStartID): FieldSpace::FieldSpace(PlayerStartID) {
-		TimFreeSpace=0;	EnFreeSpace=0; /*oba paramatry ustawiane w pzry szukaniu mutuali*/
+		TimFreeSpace = 0;
+		EnFreeSpace = 0; /*oba paramatry ustawiane w pzry szukaniu mutuali*/
 		srand(time(0));
 	};
-
 	~CPathFinder() { };
 };

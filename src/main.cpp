@@ -18,37 +18,28 @@
 #include <fstream>
 //#include <sstream>
 using namespace std;
-
 int StaringWith = 0;
-
-
 #define DEBUGIN 2
-
-
 #if DEBUGIN==1 || DEBUGIN==2
 ofstream fx;
 #define ZZ fx
 	#define V4(vl4)	(ZZ<< __FUNCTION__ << "::"<< __LINE__<<":"<< #vl4 <<"["<< vl4[0] <<", " << vl4[1] \
-			<< ", " << vl4[2] << ", " << vl4[3] << "]"<<endl)
+		<< ", " << vl4[2] << ", " << vl4[3] << "]"<<endl)
 	#define V6(vl6) (ZZ<< __FUNCTION__ << "::"<< __LINE__<<":"<< #vl6 <<"["<< vl6[0] <<", " << vl6[1] \
-			<< ", " << vl6[2] << ", " << vl6[3] << ", " << vl6[4] << ", " << vl6[5] << "]"<<endl)
+		<< ", " << vl6[2] << ", " << vl6[3] << ", " << vl6[4] << ", " << vl6[5] << "]"<<endl)
 	#define pp(Val) (ZZ<< __FUNCTION__ << "::"<< __LINE__<< ":" << #Val <<"("<< Val<< ")"<<endl)
 
 	#define wia() (ZZ<< __FUNCTION__ << "::"<< __LINE__<< endl)
-
 #endif
 
 #include "fighter.h"
-
 #include "tel.h"
 #include "FieldSpace.h"
 #include "path_finder.h"
 
-
 int MaxMoves;
-
 int main(int argc, char *argv[]) {
-	MaxMoves=92;
+	MaxMoves = 92;
 	cin >> StaringWith;
 #if DEBUGIN==1 || DEBUGIN==2
 	if(StaringWith==1) {
