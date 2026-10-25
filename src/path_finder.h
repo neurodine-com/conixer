@@ -29,7 +29,7 @@
 #include "FieldSpace.h"
 typedef TAtackHQ TAtack[4];
 #define DifP(P1, P2) ((TPoint){P1.x - P2.x , P1.y - P2.y})
-class CPathFinder::FieldSpace{
+class CPathFinder:FieldSpace{
 	public:
 	//okresla ilosc wykonanych ruchow w grze
 	int RuchNR; 

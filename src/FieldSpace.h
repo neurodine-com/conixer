@@ -13,12 +13,12 @@
 // 			init a man would do when writing a chess łike game
 // --------------------------------------------------------------------------------------------------------
 #include "stdio.h"
+#include <iostream>
+
 #include "fighter.h"
-typedef struct{
-	TPoint NewORGForWariorUnit;
-	int PosibleFieldsCount;
-	TUID UsableMasksIDsVector;
-} TAtackHQ;
+#include "baseblock.h"
+#include "path_origin.h"
+
 const TUID ZeroThreat = {0, 0, 0, 0};
 const TPoint NullPoint = {-1, -1};
 const TPoint ZeroPoint = {0, 0};
@@ -50,182 +50,12 @@ const TPoint cMoveBlur[8] = {
 	{0, 0}, // [6]
 	{0, 0}  // [7]
 };
-class BaseBlock{
-	private:
-	bool accessible;
-	TPoint Cords;
-	int EnemyMutualMov;
-	int TimMutualMov;
-	int EnemyShootMut;
-	int TimShootMut;
-	public:
-	int FreeDiections;
-	TUID EnemysID_MutualMov;
-	TUID WariorsID_MutualMov;
-	TUID EnemysID_ShootMutual;
-	TUID WariorsID_ShootMutual;
-	bool BlockAccess() {
-		return accessible;
-	};
-	void SetAccessRights(bool value) {
-		accessible=value;
-		if(value==false) {
-			AfterMooveClearMutuals();
-		};
-	};
-	void AfterMooveClearMutuals() {
-		EnemyMutualMov=0;
-		TimMutualMov=0;
-		EnemyShootMut=0;
-		TimShootMut=0;
-		restBufer(EnemysID_MutualMov);
-		restBufer(WariorsID_MutualMov);
-		restBufer(EnemysID_ShootMutual);
-		restBufer(WariorsID_ShootMutual);
-	};
-	// WariorsID_xxx[..] i inne okreslaja czy jednostka
-	// tora wykonuje wirtualny strzal lub ruch np jednostka druzyny(Tim==true)
-	// ma mozliwosc strzelenia w ten punkt
-	void SetMutualFactor(int unitID, bool MyTeam, bool shooting) {
-		if (shooting) {
-			if( MyTeam==true ) {
-				TimShootMut++;
-				WariorsID_ShootMutual[unitID]=1;
-			} else {
-				EnemyShootMut++;
-				EnemysID_ShootMutual[unitID]=1;
-			};
-		} else {
-			if( MyTeam==true ) {
-				TimMutualMov++;
-				WariorsID_MutualMov[unitID]=1;
-			} else {
-				EnemyMutualMov++;
-				EnemysID_MutualMov[unitID]=1;
-			};
-		};
-	};
-	TPoint GetOrgin() {
-		return Cords;
-	};
-	BaseBlock(int X, int Y, bool FieldIsAccesible) {
-		accessible=FieldIsAccesible;
-		Cords.x=X;
-		Cords.y=Y;
-		EnemyMutualMov=0;
-		TimMutualMov=0;
-		EnemyShootMut=0;
-		TimShootMut=0;
-		restBufer(EnemysID_MutualMov);
-		restBufer(WariorsID_MutualMov);
-		restBufer(EnemysID_ShootMutual);
-		restBufer(WariorsID_ShootMutual);
-	};
-	void restBufer(TUID& Data) {
-		Data[0]=0;
-		Data[2]=0;
-		Data[1]=0;
-		Data[3]=0;
-	};
-	BaseBlock() {
-		Cords.x = -1;
-		Cords.y = -1;
-		EnemyMutualMov = 0;
-		TimMutualMov = 0;
-		EnemyShootMut = 0;
-		TimShootMut = 0;
-		accessible = true;
-		restBufer(EnemysID_MutualMov);
-		restBufer(WariorsID_MutualMov);
-		restBufer(EnemysID_ShootMutual);
-		restBufer(WariorsID_ShootMutual);
-	};
-	BaseBlock(const BaseBlock &) = default;
-	BaseBlock(BaseBlock &&) = delete;
-	BaseBlock &operator=(const BaseBlock &) = default;
-	BaseBlock &operator=(BaseBlock &&) = delete;
-	~BaseBlock(){};
-};
+
+
 typedef BaseBlock bb;
-//Simple Bath aka. Basic Path
-typedef struct {
-	// denotes max path length aka max vector length
-	int radius;
-	//denotes a max point on FieldMap that the "ConcrateMixer" is managed to move
-	TPoint DestPoint;
-	int Mask;
-} SimpPath;
 typedef SimpPath TVect[8];
 const SimpPath Starter={-1, (TPoint){-1,-1}, -1};
-typedef struct{
-	// a vector of possible maximum paths - thanks to radious z CMoveblur[.x] can set any coordinates on the filed on which the item Path has to move - that is my "Concrate Mixer"
-	TVect Vect;
-	// takes a value that represents number of vectors found with possible moves
-	int VectCount;
-	// represents a point (TPoint) for which all the above computations have been calculated
-	TPoint Ground00;
-} VV;
-class TPath{
-	public:
-	VV fVV;
-	// represents a filed which is used to as a point from which a "BOMB" will be deployed 
-	VV BombHQ;
-	// fields Vect and VectCount should get cleaned and only field GroundZero set
-	int PathForMixer;
-	TPoint Org;
-	// there are just two players so bool is enough to assign value for each of the teams; true - tema1, false - team2
-	bool Tim;
-	bool TempNotIntresting;
-	int PathCount() {
-		return fVV.VectCount;
-	};
-	int ShootDirectionCount() {
-		return BombHQ.VectCount;
-	};
-	void SetNewPos(TPoint NewPos) {
-		SetNewPos(NewPos.x, NewPos.y);
-	};
-	void SetNewPos(int _x, int _y) {
-		Org.x = _x;
-		Org.y = _y;
-		for(int p=0; p<8; p++) {
-			fVV.Vect[p].radius = -1;
-			fVV.Vect[p].Mask = p;
-			fVV.Vect[p].DestPoint = Org;
-		};
-		fVV.Ground00 = Org;
-		fVV.VectCount = 0;
-	};
-	void ClearMixer_VV_ToStartup() {
-		for(int p=0; p<8; p++) {
-			fVV.Vect[p].radius = -1;
-			fVV.Vect[p].Mask = -1;
-			fVV.Vect[p].DestPoint = this->Org;
-		};
-		fVV.Ground00=Org;
-		fVV.VectCount=0;
-	};
-	void SetHQ(const TPoint HQCording) {
-		BombHQ.Ground00 = HQCording;
-		BombHQ.VectCount = 0;
-		for(int z=0; z<8; z++) {
-			BombHQ.Vect[z].DestPoint=HQCording;
-			BombHQ.Vect[z].Mask=-1;
-			BombHQ.Vect[z].radius=-1;
-		};
-	};
-	//constructor & destrucotr
-	TPath(bool MyTeam, int mx, int my, int TeamId) {
-		Tim = MyTeam;
-		Org.x = mx;
-		Org.y = my;
-		PathForMixer = TeamId;
-		TempNotIntresting = false;
-		SetNewPos(Org);
-	};
-	TPath(){};
-	~TPath(){};
-};
+
 typedef TPath TPathPoints[4];
 typedef BaseBlock TPole[10][10];
 class FieldSpace{
@@ -377,7 +207,7 @@ class FieldSpace{
 	// a pole Ground00 tego elementu oznacza pole na planszy dla
 	// ktorego wykonywane so oblczenia
 	void GenerateMoves_or_Shots(VV& XUnit) {
-		TVect Di;
+		SimpPath Di;
 		// XUnit musi byc koniecznie przygotowane do wpisywania pzred wejsciem do tej procedury;
 		// jelsi obliczanei dla elementu zasigow ruchw w roznych kierunkach to robi to procedura ClearMixer_VV_ToStartup()
 		// jeli inne pochodzenie wywolania elementu to musi to robic inna procedura
@@ -411,7 +241,7 @@ class FieldSpace{
 		};
 	};
 	void FindFieldToShoot(VV& XUnit, const TPoint StopOnThisOne, bool& Found) {
-		TVect Di;
+		SimpPath Di;
 #if DEBUGIN == 2
 		pp(Found);
 		pp(StopOnThisOne.x); pp(StopOnThisOne.y);
@@ -442,10 +272,10 @@ class FieldSpace{
 			};
 		};
 	};
-	FieldSpace(const FieldSpace &) = default;
-	FieldSpace(FieldSpace &&) = delete;
+	FieldSpace(const FieldSpace &) = delete;
+	// FieldSpace(FieldSpace &&) = delete;
 	FieldSpace &operator=(const FieldSpace &) = default;
-	FieldSpace &operator=(FieldSpace &&) = delete;
+	// FieldSpace &operator=(FieldSpace &&) = delete;
 	FieldSpace(int PlayersNumber) {
 		EmptyFields = 92;
 		TimeLeft = -1;
@@ -457,13 +287,16 @@ class FieldSpace{
 		TPoint BoardPos = NullPoint;
 		for (int o = 0; o < 4; o++) {
 			// My Team
-			BoardPos = (PlayersNumber == 1)?constWariorLoc[o]:constEnemyLoc[o];
-			WariorLoc[o] = TPath(true, BoardPos.x, BoardPos.y, o);
-			MOF[WariorLoc[o].Org.x][WariorLoc[o].Org.y].SetAccessRights(false);
-			// Enemy Team
-			BoardPos = (PlayersNumber == 2)?constWariorLoc[o]:constEnemyLoc[o];
-			EnemyLoc[o] = TPath(false, BoardPos.x, BoardPos.y, o);
-			MOF[EnemyLoc[o].Org.x][EnemyLoc[o].Org.y].SetAccessRights(false);
+			if (PlayersNumber == 1) {
+				BoardPos = constWariorLoc.point[o];
+				WariorLoc[o] = TPath(true, BoardPos.x, BoardPos.y, o);
+				MOF[WariorLoc[o].Org.x][WariorLoc[o].Org.y].SetAccessRights(false);
+			}else if (PlayersNumber == 2) {
+				// Enemy Team
+				BoardPos = constEnemyLoc.point[o];
+				EnemyLoc[o] = TPath(false, BoardPos.x, BoardPos.y, o);
+				MOF[EnemyLoc[o].Org.x][EnemyLoc[o].Org.y].SetAccessRights(false);
+			}
 		};
 	};
 	//destructor
