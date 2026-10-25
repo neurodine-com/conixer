@@ -33,9 +33,7 @@ ofstream fx;
 #endif
 
 #include "fighter.h"
-#include "tel.h"
-#include "FieldSpace.h"
-#include "path_finder.h"
+
 
 int MaxMoves;
 int main(int argc, char *argv[]) {
