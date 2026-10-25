@@ -233,9 +233,6 @@ class FieldSpace{
 			};
 		};
 	};
-	FieldSpace(const FieldSpace &) = delete;
-	// FieldSpace(FieldSpace &&) = delete;
-	FieldSpace &operator=(const FieldSpace &) = default;
 	// FieldSpace &operator=(FieldSpace &&) = delete;
 	FieldSpace(int PlayersNumber) {
 		EmptyFields = 92;
