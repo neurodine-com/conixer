@@ -51,13 +51,14 @@ const TPoint cMoveBlur[8] = {
 	{0, 0}  // [7]
 };
 
+const SimpPath Starter={-1, (TPoint){-1,-1}, -1};
 
 typedef BaseBlock bb;
 typedef SimpPath TVect[8];
-const SimpPath Starter={-1, (TPoint){-1,-1}, -1};
 
 typedef TPath TPathPoints[4];
 typedef BaseBlock TPole[10][10];
+
 class FieldSpace{
 	private:
 	TBufor FinalBuff;

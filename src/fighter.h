@@ -2,11 +2,11 @@ typedef int TBufor[6];
 typedef int TUID[4];
 
 typedef struct{
-	int x; int y;
+int x; int y;
 } TPoint;
 
 typedef struct{
-	TPoint point[4];
+TPoint point[4];
 } TPoints;
 
 // typedef TPoint T8Points[8];

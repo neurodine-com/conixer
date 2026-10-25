@@ -2,6 +2,7 @@
 #include "fighter.h"
 
 class TPath{
+	public:
 	VV fVV;
 	// represents a filed which is used to as a point from which a "BOMB" will be deployed 
 	VV BombHQ;
