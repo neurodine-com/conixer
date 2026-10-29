@@ -1,5 +1,6 @@
 
-#include "fighter.h"
+#pragma once
+#include "fighting_structures.h"
 
 class BaseBlock {
 

@@ -13,7 +13,7 @@
 // 
 // ---------------------------------------------------------------------------------------------------------
 
-#include "fighter.h"
+#include "fighting_structures.h"
 
 class tel {
 	int fStaringWith;

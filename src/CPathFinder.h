@@ -26,27 +26,17 @@
 // 		   probability filter is used to choose which one will be used in iteration)
 // -------------------------------------------------------------------------------------------------------
 #include "stdio.h"
-#include "fighter.h"
+#include "fighting_structures.h"
 
-#include "baseblock.h"
-#include "FieldSpace.h"
+#include "BaseBlock.h"
+// #include "FieldSpace.h"
 
 #define DifP(P1, P2) ((TPoint){P1.x - P2.x , P1.y - P2.y})
 typedef TAtackHQ TAtack[4];
 
 
-class CPathFinder : public FieldSpace {
+class CPathFinder {
 	public:
-	//okresla ilosc wykonanych ruchow w grze
-	int RuchNR = -1; 
-	//okresla sumaryczna ilosc pol (z kazdego kierunku) jaka lezy w mozliwosci wyboru wszystkch jednostek mojej druzyny
-	int TimFreeSpace = -1;
-	// ---------------------||------------------------------------pzreciwnika druzyny
-	int EnFreeSpace = -1;
-	int TimUnidID = -1;
-	int EnUnitID = -1;
-
-	BaseBlock MOF[10][10];
 
 	int FindLessRestrictedUnit(TPathPoints& Team);
 	int FindMostRestrictedUnit(TPathPoints& Team);

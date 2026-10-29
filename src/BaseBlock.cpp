@@ -1,6 +1,6 @@
 
-#include "fighter.h"
-#include "baseblock.h"
+#include "fighting_structures.h"
+#include "BaseBlock.h"
 
 
 	bool accessible;

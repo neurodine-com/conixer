@@ -29,10 +29,24 @@
 #include <cstdlib>
 #include <ctime>
 #include "FieldSpace.h"
-#include "baseblock.h"
+#include "BaseBlock.h"
 
-#include "path_finder.h"
+#include "TPath.h"
 
+class CPathFinder : public FieldSpace {
+
+
+public:
+	//okresla ilosc wykonanych ruchow w grze
+	int RuchNR = -1; 
+	//okresla sumaryczna ilosc pol (z kazdego kierunku) jaka lezy w mozliwosci wyboru wszystkch jednostek mojej druzyny
+	int TimFreeSpace = -1;
+	// ---------------------||------------------------------------pzreciwnika druzyny
+	int EnFreeSpace = -1;
+	int TimUnidID = -1;
+	int EnUnitID = -1;
+
+	BaseBlock MOF[10][10];
 
 int CPathFinder::FindLessRestrictedUnit(TPathPoints& Team){
 	int max_move_ability=0;
@@ -800,3 +814,5 @@ CPathFinder::CPathFinder(int PlayerStartID): FieldSpace::FieldSpace(PlayerStartI
 	srand(time(0));
 };
 CPathFinder::~CPathFinder() { };
+
+};

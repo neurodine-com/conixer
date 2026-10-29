@@ -17,11 +17,34 @@
 
 // #include "path_origin.h"
 
-#include "FieldSpace.h"
 #include <iostream>
 // #include <new>
 
+#include "FieldSpace.h"
 
+class FieldSpace {
+
+	private:
+	TBufor FinalBuff;
+	
+	public:
+
+	TPath WariorLoc[4] = {
+		TPath(true, 0, 0, 0),
+		TPath(true, 0, 0, 1),
+		TPath(true, 0, 0, 2),
+		TPath(true, 0, 0, 3)
+	};
+		// represents coordinates of enemy units 
+	TPath EnemyLoc[4] = {
+		TPath(false, 0, 0, 0),
+		TPath(false, 0, 0, 1),
+		TPath(false, 0, 0, 2),
+		TPath(false, 0, 0, 3)
+	};
+
+int TimeLeft;
+int EmptyFields;
 // ustawia pola na lanszy z zajetych na wolne i zapisuje:
 // **na planszy pole ktore zostalo zacementowane
 // **pole ktore zostalo zajete
@@ -229,8 +252,7 @@ FieldSpace::FieldSpace(int PlayersNumber) {
 	TimeLeft = -1;
 	for (int x = 0; x < 10; x++) {
 		for (int y = 0; y < 10; y++) {
-			MOF[x][y].~BaseBlock();
-			::new (static_cast<void*>(&MOF[x][y])) BaseBlock(x, y, true);
+			MOF[x][y] = BaseBlock(x, y, true);
 		};
 	};
 	TPoint BoardPos = NullPoint;
@@ -250,3 +272,5 @@ FieldSpace::FieldSpace(int PlayersNumber) {
 };
 //destructor
 FieldSpace::~FieldSpace(){ };
+
+};

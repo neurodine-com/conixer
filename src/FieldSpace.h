@@ -16,7 +16,7 @@
 
 // #include "fighter.h"
 // #include "baseblock.h"
-#include "path_origin.h"
+#include "TPath.h"
 
 // typedef BaseBlock bb;
 // typedef SimpPath TVect[8];
@@ -25,28 +25,6 @@
 typedef TPath TPathPoints[4];
 
 class FieldSpace {
-
-	private:
-	TBufor FinalBuff;
-	
-	public:
-
-	TPath WariorLoc[4] = {
-		TPath(true, 0, 0, 0),
-		TPath(true, 0, 0, 1),
-		TPath(true, 0, 0, 2),
-		TPath(true, 0, 0, 3)
-	};
-		// represents coordinates of enemy units 
-	TPath EnemyLoc[4] = {
-		TPath(false, 0, 0, 0),
-		TPath(false, 0, 0, 1),
-		TPath(false, 0, 0, 2),
-		TPath(false, 0, 0, 3)
-	};
-
-int TimeLeft;
-int EmptyFields;
 
 // represents coordinates of my units
 // time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time 
@@ -95,7 +73,4 @@ int EmptyFields;
 	FieldSpace &operator=(const FieldSpace &) = default;
 	// FieldSpace &operator=(FieldSpace &&) = delete;
 	FieldSpace(int PlayersNumber);
-	//destructor
-	~FieldSpace();
-}
-;
+};

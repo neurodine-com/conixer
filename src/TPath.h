@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "fighter.h"
+#include "fighting_structures.h"
 
 class TPath {
 
