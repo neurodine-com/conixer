@@ -24,6 +24,8 @@ class TPath {
 	void SetNewPos(int _x, int _y);
 	void ClearMixer_VV_ToStartup();
 	void SetHQ(const TPoint HQCording);
-	//constructor & destrucotr
+	// Constructors and destructor
 	TPath(bool MyTeam, int mx, int my, int TeamId);
+	TPath(const TPath& other);
+	~TPath();
 };
