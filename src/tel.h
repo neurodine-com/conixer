@@ -13,19 +13,21 @@
 // 
 // ---------------------------------------------------------------------------------------------------------
 
+#ifndef CONIXER_TEL_H
+#define CONIXER_TEL_H
+
 #include "fighting_structures.h"
 
 class tel {
-	int fStaringWith;
 	public:
+		int fStaringWith{};
+
 	void GetLineOfLuckingTime(int& TimeToEnd);
 	void writeLine(TBufor MMB);
 	void readLine(TBufor buff);
 	bool GOonGO();
-	tel(const tel &) = default;
-	tel(tel &&) = delete;
-	tel &operator=(const tel &) = default;
-	tel &operator=(tel &&) = delete;
-	tel(int StartZNumerem);
+	explicit tel(int StartZNumerem);
 	~tel();
 };
+
+#endif // CONIXER_TEL_H

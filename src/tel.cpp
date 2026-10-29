@@ -14,51 +14,49 @@
 // ---------------------------------------------------------------------------------------------------------
 
 
-#include "tel.h"
 #include <iostream>
 #include <ostream>
 
-int fStaringWith;
-
-	void tel::GetLineOfLuckingTime(int& TimeToEnd){
+#include "tel.h"
+void tel::GetLineOfLuckingTime(int& TimeToEnd){
 		std::cin >> TimeToEnd;
 #if DEBUGIN==1
 		pp(TimeToEnd);
 #endif
-	};
+}
 
-	void tel::writeLine(TBufor MMB){
+void tel::writeLine(TBufor MMB){
 #if DEBUGIN==1
-		V6(MMB);
+	V6(MMB);
 #endif
-		for(int y=0;y<6;y++){MMB[y]++;};//dostosowanie do protokolu czyli od 1..10 a nie jak u mnie w programie od 0..9
-		std::cout << MMB[0] << " " << MMB[1]<< " " << MMB[2]<< " " << MMB[3]<< " " << MMB[4]<< " " << MMB[5]<< std::endl;
-		fflush(stdout);
-	};
+	for(int y=0;y<6;y++){MMB[y]++;};//dostosowanie do protokolu czyli od 1..10 a nie jak u mnie w programie od 0..9
+	std::cout << MMB[0] << " " << MMB[1]<< " " << MMB[2]<< " " << MMB[3]<< " " << MMB[4]<< " " << MMB[5]<< std::endl;
+	fflush(stdout);
+}
 
-	void tel::readLine(TBufor buff){
+void tel::readLine(TBufor buff){
 #if DEBUGIN==1
-		V6(buff);
+	V6(buff);
 #endif
-		std::cin >> buff[0] >> buff[1] >> buff[2] >> buff[3] >> buff[4] >> buff[5] ;
-		for(int i=0; i<6; i++){
-			buff[i]--;
-		};
+	std::cin >> buff[0] >> buff[1] >> buff[2] >> buff[3] >> buff[4] >> buff[5] ;
+	for(int i=0; i<6; i++){
+		buff[i]--;
 	};
+}
 
-	bool tel::GOonGO(){
-		return (fStaringWith==1);
-	};
+bool tel::GOonGO(){
+	return (fStaringWith==1);
+}
 
-	tel::tel(int StartZNumerem) {
-		if (!(StartZNumerem == 1 || StartZNumerem == 2)) {
+tel::tel(int StartZNumerem) {
+	if (!(StartZNumerem == 1 || StartZNumerem == 2)) {
 #if DEBUGIN==1
-			pp(StartZNumerem);
+		pp(StartZNumerem);
 #endif
-			std::cout <<"ERROR: Program start with bad number: " << StartZNumerem << " :D" << std::endl;
-		};
+		std::cout <<"ERROR: Program start with bad number: " << StartZNumerem << " :D" << std::endl;
 	};
+}
 
-	tel::~tel() {
-		std::cout << "Program end."<< std::endl;
-	};
+tel::~tel() {
+	std::cout << "Program end."<< std::endl;
+}

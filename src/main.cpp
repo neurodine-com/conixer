@@ -33,9 +33,8 @@ ofstream fx;
 #endif
 
 
-#define TPoint TelTPoint
+#include "fighting_structures.h"
 #include "tel.h"
-#undef TPoint
 #include "CPathFinder.h"
 
 
