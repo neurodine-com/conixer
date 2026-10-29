@@ -16,12 +16,10 @@
 #include "fighter.h"
 #include "baseblock.h"
 #include "path_origin.h"
-#include "FieldSpace.h"
 
 
 class FieldSpace{
-	private:
-	TBufor FinalBuff;
+
 	public:
 	TPole MOF;
 	// represents coordinates of my units

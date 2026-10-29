@@ -68,8 +68,7 @@ class FieldSpace{
 	TPathPoints WariorLoc;
 	// represents coordinates of enemy units 
 	TPathPoints EnemyLoc;
-	// time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time 
-	int TimeLeft;
+	
 	// represents the number of all free fields on the board
 	int EmptyFields;
 	// ustawia pola na lanszy z zajetych na wolne i zapisuje:

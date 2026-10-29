@@ -1,3 +1,6 @@
+
+#pragma once
+
 typedef int TBufor[6];
 typedef int TUID[4];
 

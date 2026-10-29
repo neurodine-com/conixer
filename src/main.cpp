@@ -32,7 +32,11 @@ ofstream fx;
 	#define wia() (ZZ<< __FUNCTION__ << "::"<< __LINE__<< endl)
 #endif
 
-#include "fighter.h"
+
+#define TPoint TelTPoint
+#include "tel.h"
+#undef TPoint
+#include "path_finder.h"
 
 
 int MaxMoves;
