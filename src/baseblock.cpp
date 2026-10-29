@@ -1,6 +1,6 @@
 
-#include "baseblock.h"
 #include "fighter.h"
+#include "baseblock.h"
 
 
 	bool accessible;
@@ -66,8 +66,8 @@ void BaseBlock::restBufer(TUID& Data) {
 	Data[1]=0;
 	Data[3]=0;
 };
-BaseBlock::BaseBlock(int X, int Y, bool FieldIsAccesible) {
-	accessible=FieldIsAccesible;
+BaseBlock::BaseBlock(int X, int Y, bool FieldIsaccessible) {
+	accessible=FieldIsaccessible;
 	Cords.x=X;
 	Cords.y=Y;
 	EnemyMutualMov=0;

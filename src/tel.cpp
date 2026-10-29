@@ -15,57 +15,50 @@
 
 
 #include "tel.h"
+#include <iostream>
+#include <ostream>
 
+int fStaringWith;
 
-class tel{
-
-	int fStaringWith;
-
-	public:
-	void GetLineOfLuckingTime(int& TimeToEnd){
+	void tel::GetLineOfLuckingTime(int& TimeToEnd){
 		std::cin >> TimeToEnd;
 #if DEBUGIN==1
 		pp(TimeToEnd);
 #endif
 	};
 
-	void writeLine(TBufor MMB){
+	void tel::writeLine(TBufor MMB){
 #if DEBUGIN==1
 		V6(MMB);
 #endif
 		for(int y=0;y<6;y++){MMB[y]++;};//dostosowanie do protokolu czyli od 1..10 a nie jak u mnie w programie od 0..9
-		std::cout << MMB[0] << " " << MMB[1]<< " " << MMB[2]<< " " << MMB[3]<< " " << MMB[4]<< " " << MMB[5]<< endl;
+		std::cout << MMB[0] << " " << MMB[1]<< " " << MMB[2]<< " " << MMB[3]<< " " << MMB[4]<< " " << MMB[5]<< std::endl;
 		fflush(stdout);
 	};
 
-	void readLine(TBufor buff){
+	void tel::readLine(TBufor buff){
 #if DEBUGIN==1
 		V6(buff);
 #endif
-		cin >> buff[0] >> buff[1] >> buff[2] >> buff[3] >> buff[4] >> buff[5] ;
+		std::cin >> buff[0] >> buff[1] >> buff[2] >> buff[3] >> buff[4] >> buff[5] ;
 		for(int i=0; i<6; i++){
 			buff[i]--;
 		};
 	};
 
-	bool GOonGO(){
+	bool tel::GOonGO(){
 		return (fStaringWith==1);
 	};
 
-	tel(const tel &) = default;
-	tel(tel &&) = delete;
-	tel &operator=(const tel &) = default;
-	tel &operator=(tel &&) = delete;
-	tel(int StartZNumerem) {
+	tel::tel(int StartZNumerem) {
 		if (!(StartZNumerem == 1 || StartZNumerem == 2)) {
 #if DEBUGIN==1
 			pp(StartZNumerem);
 #endif
-			cout <<"ERROR: Program start with bad number: " << StartZNumerem << " :D" << endl;
+			std::cout <<"ERROR: Program start with bad number: " << StartZNumerem << " :D" << std::endl;
 		};
 	};
 
-	~tel() {
-		cout << "Program end."<< endl;
+	tel::~tel() {
+		std::cout << "Program end."<< std::endl;
 	};
-};

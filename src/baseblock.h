@@ -16,7 +16,6 @@ class BaseBlock {
 		void restBufer(TUID& Data);
 
 		BaseBlock(int X, int Y, bool FieldIsAccesible);
-		BaseBlock();
 		// BaseBlock(BaseBlock &&) = delete;
 		BaseBlock &operator=(const BaseBlock &) = default;
 		// BaseBlock &operator=(BaseBlock &&) = delete;

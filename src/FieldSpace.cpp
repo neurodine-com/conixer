@@ -19,28 +19,9 @@
 
 #include "FieldSpace.h"
 #include <iostream>
-#include <new>
+// #include <new>
 
 
-BaseBlock MOF[10][10];
-// represents coordinates of my units
-TPath WariorLoc[4] = {
-	TPath(true, 0, 0, 0),
-	TPath(true, 0, 0, 1),
-	TPath(true, 0, 0, 2),
-	TPath(true, 0, 0, 3)
-};
-// represents coordinates of enemy units 
-TPath EnemyLoc[4] = {
-	TPath(false, 0, 0, 0),
-	TPath(false, 0, 0, 1),
-	TPath(false, 0, 0, 2),
-	TPath(false, 0, 0, 3)
-};
-// time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time 
-int TimeLeft;
-// represents the number of all free fields on the board
-int EmptyFields;
 // ustawia pola na lanszy z zajetych na wolne i zapisuje:
 // **na planszy pole ktore zostalo zacementowane
 // **pole ktore zostalo zajete
@@ -62,7 +43,7 @@ void FieldSpace::SendData(TBufor& WriteIn) {
 	};
 };
 bool FieldSpace::Valid(int fx, int fy) {
-	return (bool)MOF[fx][fy].BlockAccess();
+	return (bool) MOF[fx][fy].BlockAccess();
 };
 bool FieldSpace::Valid(TPoint _org) {
 	if(GoodP(_org)){

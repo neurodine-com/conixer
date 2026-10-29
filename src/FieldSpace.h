@@ -15,7 +15,7 @@
 #include "stdio.h"
 
 // #include "fighter.h"
-#include "baseblock.h"
+// #include "baseblock.h"
 #include "path_origin.h"
 
 // typedef BaseBlock bb;
@@ -27,15 +27,36 @@ typedef TPath TPathPoints[4];
 class FieldSpace {
 
 	private:
-		TBufor FinalBuff;
-
+	TBufor FinalBuff;
+	
 	public:
-	// ustawia pola na lanszy z zajetych na wolne i zapisuje:
-	// **na planszy pole ktore zostalo zacementowane
-	// **pole ktore zostalo zajete
-	// sets fields on the board from occupied to NOT-occupied and saves them
-	// **a field on board that got occupied (by obsticle, not the player itself)
-	// **a field on boeard that is used (taken by player itself)
+
+	TPath WariorLoc[4] = {
+		TPath(true, 0, 0, 0),
+		TPath(true, 0, 0, 1),
+		TPath(true, 0, 0, 2),
+		TPath(true, 0, 0, 3)
+	};
+		// represents coordinates of enemy units 
+	TPath EnemyLoc[4] = {
+		TPath(false, 0, 0, 0),
+		TPath(false, 0, 0, 1),
+		TPath(false, 0, 0, 2),
+		TPath(false, 0, 0, 3)
+	};
+
+int TimeLeft;
+int EmptyFields;
+
+// represents coordinates of my units
+// time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time 
+// represents the number of all free fields on the board
+// ustawia pola na lanszy z zajetych na wolne i zapisuje:
+// 		na planszy pole ktore zostalo zacementowane
+// 		pole ktore zostalo zajete
+// sets fields on the board from occupied to NOT-occupied and saves them
+// 		a field on board that got occupied (by obsticle, not the player itself)
+// 		a field on boeard that is used (taken by player itself)
 	bool EQPoint(TPoint P1,int  X, int Y);
 	bool IQl(TPoint P1, TPoint P2);
 	bool GoodP(TPoint A);
