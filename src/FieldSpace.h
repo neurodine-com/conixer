@@ -13,64 +13,23 @@
 // 			init a man would do when writing a chess łike game
 // --------------------------------------------------------------------------------------------------------
 #include "stdio.h"
-#include <iostream>
 
-#include "fighter.h"
+// #include "fighter.h"
 #include "baseblock.h"
 #include "path_origin.h"
 
-const TUID ZeroThreat = {0, 0, 0, 0};
-const TPoint NullPoint = {-1, -1};
-const TPoint ZeroPoint = {0, 0};
-const TPoints constWariorLoc = {
-	{
-		{3, 0},
-		{6, 0},
-		{0, 3},
-		{9, 3}
-	}
-};
-const TPoints constEnemyLoc = {
-	{
-		{0, 0}, // point[0]
-		{0, 0}, // point[1]
-		{0, 0}, // point[2]
-		{0, 0}  // point[3]
-	}
-};
-// const TPoint cMoveBlur[8] = {0};
-// const TPoint cMoveBlur[8] = {{0}};
-const TPoint cMoveBlur[8] = {
-	{0, 0}, // [0]
-	{0, 0}, // [1]
-	{0, 0}, // [2]
-	{0, 0}, // [3]
-	{0, 0}, // [4]
-	{0, 0}, // [5]
-	{0, 0}, // [6]
-	{0, 0}  // [7]
-};
+// typedef BaseBlock bb;
+// typedef SimpPath TVect[8];
 
-const SimpPath Starter={-1, (TPoint){-1,-1}, -1};
-
-typedef BaseBlock bb;
-typedef SimpPath TVect[8];
-
+// typedef BaseBlock TPole[10][10];
 typedef TPath TPathPoints[4];
-typedef BaseBlock TPole[10][10];
 
-class FieldSpace{
+class FieldSpace {
+
 	private:
-	TBufor FinalBuff;
+		TBufor FinalBuff;
+
 	public:
-	TPole MOF;
-	// represents coordinates of my units
-	TPathPoints WariorLoc;
-	// represents coordinates of enemy units 
-	TPathPoints EnemyLoc;
-	
-	// represents the number of all free fields on the board
-	int EmptyFields;
 	// ustawia pola na lanszy z zajetych na wolne i zapisuje:
 	// **na planszy pole ktore zostalo zacementowane
 	// **pole ktore zostalo zajete
@@ -117,4 +76,5 @@ class FieldSpace{
 	FieldSpace(int PlayersNumber);
 	//destructor
 	~FieldSpace();
-};
+}
+;

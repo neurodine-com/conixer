@@ -17,7 +17,7 @@ class BaseBlock {
 
 		BaseBlock(int X, int Y, bool FieldIsAccesible);
 		BaseBlock();
-		BaseBlock(BaseBlock &&) = delete;
+		// BaseBlock(BaseBlock &&) = delete;
 		BaseBlock &operator=(const BaseBlock &) = default;
-		BaseBlock &operator=(BaseBlock &&) = delete;
+		// BaseBlock &operator=(BaseBlock &&) = delete;
 };

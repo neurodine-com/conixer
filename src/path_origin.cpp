@@ -1,27 +1,26 @@
 
 #include "path_origin.h"
 
-class TPath{
-	public:
-	VV fVV;
-	// represents a filed which is used to as a point from which a "BOMB" will be deployed 
-	VV BombHQ;
-	// fields Vect and VectCount should get cleaned and only field GroundZero set
-	int PathForMixer;
-	TPoint Org;
-	// there are just two players so bool is enough to assign value for each of the teams; true - tema1, false - team2
-	bool Tim;
-	bool TempNotIntresting;
-	int PathCount() {
+VV fVV;
+// represents a filed which is used to as a point from which a "BOMB" will be deployed 
+VV BombHQ;
+// fields Vect and VectCount should get cleaned and only field GroundZero set
+int PathForMixer;
+TPoint Org;
+// there are just two players so bool is enough to assign value for each of the teams; true - tema1, false - team2
+bool Tim;
+bool TempNotIntresting;
+
+	int TPath::PathCount() {
 		return fVV.VectCount;
 	};
-	int ShootDirectionCount() {
+	int TPath::ShootDirectionCount() {
 		return BombHQ.VectCount;
 	};
-	void SetNewPos(TPoint NewPos) {
+	void TPath::SetNewPos(TPoint NewPos) {
 		SetNewPos(NewPos.x, NewPos.y);
 	};
-	void SetNewPos(int _x, int _y) {
+	void TPath::SetNewPos(int _x, int _y) {
 		Org.x = _x;
 		Org.y = _y;
 		for(int p=0; p<8; p++) {
@@ -32,7 +31,7 @@ class TPath{
 		fVV.Ground00 = Org;
 		fVV.VectCount = 0;
 	};
-	void ClearMixer_VV_ToStartup() {
+	void TPath::ClearMixer_VV_ToStartup() {
 		for(int p=0; p<8; p++) {
 			fVV.Vect[p].radius = -1;
 			fVV.Vect[p].Mask = -1;
@@ -41,7 +40,7 @@ class TPath{
 		fVV.Ground00=Org;
 		fVV.VectCount=0;
 	};
-	void SetHQ(const TPoint HQCording) {
+	void TPath::SetHQ(const TPoint HQCording) {
 		BombHQ.Ground00 = HQCording;
 		BombHQ.VectCount = 0;
 		for(int z=0; z<8; z++) {
@@ -51,7 +50,7 @@ class TPath{
 		};
 	};
 	//constructor & destrucotr
-	TPath(bool MyTeam, int mx, int my, int TeamId) {
+	TPath::TPath(bool MyTeam, int mx, int my, int TeamId) {
 		Tim = MyTeam;
 		Org.x = mx;
 		Org.y = my;
@@ -59,6 +58,3 @@ class TPath{
 		TempNotIntresting = false;
 		SetNewPos(Org);
 	};
-	TPath(){};
-	~TPath(){};
-};

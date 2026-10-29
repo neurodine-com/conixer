@@ -1,4 +1,6 @@
+
 #include "baseblock.h"
+#include "fighter.h"
 
 
 	bool accessible;
