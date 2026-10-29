@@ -1,6 +1,3 @@
-
-#pragma once
-
 #include "fighting_structures.h"
 
 class TPath {
