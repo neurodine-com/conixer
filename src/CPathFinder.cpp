@@ -1,61 +1,14 @@
-// --------------------------------------------------------------------------------------------------------
-// Author:          Blazej Kaczmarek
-// ORCID:           https://orcid.org/0009-0003-1070-8870
-// email:           fajny.masz.tornister@gmail.com
-// github ord email:MasterDisaster@neurodine.com
-// domain email:    Blazej.Kaczmarek@neurodine.com
-// oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
-// PEN:             1.3.6.1.4.1.53685
-// oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
-// Description:     So here I am creating a structures that hold some lists/arrays of vectors. this 
-// 		   vectors are divided in general into filed holding a:
-// 			a.) location where the Conctare Comixer is exactly now, as a address on the board.
-// 			b.) this filed is used to calculte all possible allowwed moves I can make
-// 			c.) the are sorted in order to moves with "placing a bomb" and moves without it
-// 			d.) additionally the most effective move is calcutated - this is also a vector 
-// 			    in the logic so that it is not that predictible and get OUT from local minima 
-// 		   The goal is to Calculate the same structure for Me - making the move and for my oponent and
-// 		   based on this relation to select the coordinates of my next move that will:
-// 		    a.) limit in MOST ability of my oponent for future moves
-// 		    b.) leave him smalles amount of possible location to place a obsticle that i will not be able to cross over
-// 		   Each of this set of records is calculated in a way that sth reletive to a probability is 
-// 		   calculated and first on the list is used to achieve one of this 2 goals but... which one this is dependant
-// 		   on calculating which move will be most effective BUT this is also factorized with a probability of a scalar that represents 
-// 	           the UNKNOW factor so that my o[ponent does not prepera itself to fight me with predicting my strategy.
-// 		   ( and i have more then one strategy and which one is chosen is also  unknown for me as a 
-// 		   probability filter is used to choose which one will be used in iteration)
-// -------------------------------------------------------------------------------------------------------
-
 #include <cstdlib>
 #include <ctime>
-#include "FieldSpace.h"
-#include "BaseBlock.h"
 
-#include "TPath.h"
-#include "fighting_structures.h"
-
-class CPathFinder : public FieldSpace {
-
-
-public:
-	//okresla ilosc wykonanych ruchow w grze
-	int RuchNR = -1; 
-	//okresla sumaryczna ilosc pol (z kazdego kierunku) jaka lezy w mozliwosci wyboru wszystkch jednostek mojej druzyny
-	int TimFreeSpace = -1;
-	// ---------------------||------------------------------------pzreciwnika druzyny
-	int EnFreeSpace = -1;
-	int TimUnidID = -1;
-	int EnUnitID = -1;
-
-
-
-int FindLessRestrictedUnit(TPathPoints& Team){
+#include "CPathFinder.h"
+int CPathFinder::FindLessRestrictedUnit(TPathPoints& Team) {
 	int max_move_ability=0;
 	int fUnit=-1;
 	for(int k=0; k<4; k++){
 		if(( Team[k].PathCount()>0 )&&( Team[k].TempNotIntresting==false )) {
 			if( max_move_ability == Team[k].PathCount() ) {
-				int przypadek = rand()%10;
+				int przypadek = std::rand()%10;
 				fUnit = (przypadek >= 5)?k:fUnit;
 				if(fUnit<0){
 					fUnit=k;
@@ -71,16 +24,16 @@ int FindLessRestrictedUnit(TPathPoints& Team){
 		};
 	};
 	return fUnit;
-};
-	
-int FindMostRestrictedUnit(TPathPoints& Team){
-	int min_move_ability = 7;
+}
+
+int CPathFinder::FindMostRestrictedUnit(TPathPoints& Team) {
+	int min_move_ability = 9;
 	int fUnit = -1;
 	for(int k=0; k<4; k++) {
 		if ( Team[k].TempNotIntresting==false ) {
 			if( Team[k].PathCount()>0 ) {
 				if( min_move_ability == Team[k].PathCount() ) {
-					int przypadek = rand()%10;
+					int przypadek = std::rand()%10;
 					fUnit = (przypadek >= 5)?k:fUnit;
 					if( fUnit<0 ) {
 						fUnit=k;
@@ -97,41 +50,38 @@ int FindMostRestrictedUnit(TPathPoints& Team){
 		};
 	};
 	return fUnit;
-};
-	
-TPoint GetNextPointInRadiusOf(int radius, TPoint maskToUse, TPoint Location) {
+}
+
+TPoint CPathFinder::GetNextPointInRadiusOf(int radius, TPoint maskToUse, TPoint Location) {
 	TPoint y=Location;
 	maskToUse.x*=radius; maskToUse.y*=radius;
 	Step(y,maskToUse);
 	return y;
-};
+}
 
-void RunMutuals(){
+void CPathFinder::RunMutuals() {
 	for(int t=0; t<4; t++) {
 		//wywoluje shoot mutuals
 		FindMoveMutuals(WariorLoc[t]);
 		//wywoluje shoot mutuals
 		FindMoveMutuals(EnemyLoc[t]);
 	};
-};
-// procedura do szukania punkto wspolnych
-// **ustawiane sa odpowednie parametryna wszystkich polach mapy
-// po ktorych w danej tuze moga sie poruszac jednsotki
+}
 
-void FindMoveMutuals(TPath& XUmut){
+void CPathFinder::FindMoveMutuals(TPath& XUmut) {
 	if( XUmut.PathCount()>0 ) {
 		for(int ivec=0; ivec<XUmut.PathCount(); ivec++) {
 			TPoint tp = XUmut.fVV.Vect[ivec].DestPoint;
 			TPoint o = XUmut.Org;
 			int elementRad = XUmut.fVV.Vect[ivec].radius;
-			if(XUmut.Tim==true){ 
+			if(XUmut.Tim==true){
 				TimFreeSpace += elementRad;
 			} else {
 				EnFreeSpace+=elementRad;
 			};
 			TPoint maska=cMoveBlur[XUmut.fVV.Vect[ivec].Mask];
 			int rad_it=0;
-			do{	
+			do{
 				rad_it++;
 				Step(o,maska);
 				MOF[o.x][o.y].SetMutualFactor(XUmut.PathForMixer, XUmut.Tim, false);
@@ -142,9 +92,9 @@ void FindMoveMutuals(TPath& XUmut){
 			while(( rad_it <= elementRad )&&( IQl(o,tp)==false ));
 		};
 	};
-};
+}
 
-void FindShootMutuals(TPath& VirtualShooting_Element, const TPoint Startup){
+void CPathFinder::FindShootMutuals(TPath& VirtualShooting_Element, const TPoint Startup) {
 	VV Temporary;
 	//czyszczenei struktory w celu wyszukania kierunkow i zasiegow(promieni)
 	ClearTempVV(Temporary,Startup);
@@ -160,9 +110,9 @@ void FindShootMutuals(TPath& VirtualShooting_Element, const TPoint Startup){
 			}while( IQl(base,MaxP)==false );
 		};
 	};
-};
+}
 
-void ClearTempVV(VV& _tmp, const TPoint Destination_or_Start) {
+void CPathFinder::ClearTempVV(VV& _tmp, const TPoint Destination_or_Start) {
 	for(int p=0; p<8; p++){
 		_tmp.Vect[p].radius = -1;
 		_tmp.Vect[p].Mask = -1;
@@ -170,9 +120,9 @@ void ClearTempVV(VV& _tmp, const TPoint Destination_or_Start) {
 	};
 	_tmp.Ground00 = Destination_or_Start;
 	_tmp.VectCount = 0;
-};
+}
 
-bool Touching(TPoint B1, TPoint B2) {
+bool CPathFinder::Touching(TPoint B1, TPoint B2) {
 	bool AreTuching=false;
 	int cmb=0;
 	do{
@@ -180,19 +130,15 @@ bool Touching(TPoint B1, TPoint B2) {
 		cmb++;
 	}while(( AreTuching==false )&&( cmb<8 ));
 	return AreTuching;
-};
+}
 
-void CleatParametersState(){
+void CPathFinder::CleatParametersState() {
 	ClearGameMutuals();
 	TimFreeSpace=0;
 	EnFreeSpace=0;
-};
-// procedura szuka okolice jednostki sprawdzajac czy jednsotka wroga ma bezposredni kontakt
-// strzalem badz ruchem z jednostka ktora bada
-// bezposredni kontakt z ruchem i strzalem =2
-// bezposredni kontakt ruchem BADZ strzalem =1
+}
 
-int CheckHoodForThreat(TPath& CheckingUnit, TUID& ThreatsCount) { 
+int CPathFinder::CheckHoodForThreat(TPath& CheckingUnit, TUID& ThreatsCount) {
 // zalozenie ze przefiltrowane zostaly PathCount=0 i do tej metody nei sa pzrekazywane
 	int ResultingThreatFromAllEnemys=0;
 	restBufer(ThreatsCount);
@@ -221,12 +167,9 @@ int CheckHoodForThreat(TPath& CheckingUnit, TUID& ThreatsCount) {
 	V4(ThreatsCount);
 #endif
 	return ResultingThreatFromAllEnemys;
-};
-// procedura wykonana wtedy gdy nie ma dubletu ruchu i cementowania pzrez
-// jakakolwiek jdnostke druzyny pzeciwnej.. czyli wyszukiwana jedst jednostka w
-// druzynie do ktoerej jest najlatwiejszy dostep
+}
 
-int ThreatCountSearch(TPathPoints& Tim/*, TUDI& Junction*/){
+int CPathFinder::ThreatCountSearch(TPathPoints& Tim) {
 #if DEBUGIN==1
 	wia();
 #endif
@@ -247,31 +190,17 @@ int ThreatCountSearch(TPathPoints& Tim/*, TUDI& Junction*/){
 	pp(WynikC);
 #endif
 	return WynikC;
-};
+}
 
-// procedura liczy ilosc dwujek (mozliwosci rdostania sie i
-// zacementowania jednoczesne tego samego pola)
-// gdyz wtedy jest najwieksze prawdopodobienstwoe ze
-// jednostka zostanie unieruchomiona
-int CountDoubletsInFearFactor(TUID& FF){
+int CPathFinder::CountDoubletsInFearFactor(TUID& FF) {
 	int wynik=0;
 	for(int p=0; p<4; p++){
 		wynik += (FF[p]==2)?1:0;
 	};
 	return wynik;
-};
+}
 
-// procedura wybierze sposrod druzyny jednostke ktorej
-// pola otaczajace moga byc zasiedzone badz zacementowane pzrez
-// najwieksza ilosc jednostek pzreciwnej druzyny
-// ** w tym pzrypadku procedura szuka jednostki w druzynie do krorej
-// jest dostep jednoczesnie betonem i ruchem pzrez jak najwieksza
-// licznbe jednostek druzyny pzreciwnej
-// jelsi taki dostep nei istnieje (tzn.. nei ma takiej jednostki ktora mogla by sie ruszyc
-// w bezposrednie sasiedztwo jednostki i dodatkowo zacementowac jej sasiedztwo),
-// to po prostu wybeiraa jest jednsotka z druzyny do ktorej najlatwiejszy jest dostep
-// jak najwiekszej ilsoci jednostek druzyny pzreciwnej
-int FindMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& DoubletsFound ){
+int CPathFinder::FindMostMenacedUnit_DupletSearch(TPathPoints& LoopedTim, int& DoubletsFound) {
 #if DEBUGIN==1
 	wia();
 #endif
@@ -281,7 +210,7 @@ int FindMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& DoubletsFound
 	for(int op=0; op<4; op++) {
 		if(( LoopedTim[op].PathCount()>0 )&&( LoopedTim[op].TempNotIntresting==false )){
 		TUID ThreatStatus;
-		int TreatsCount=CheckHoodForThreat(LoopedTim[op],ThreatStatus);
+		CheckHoodForThreat(LoopedTim[op], ThreatStatus);
 		numberOfDublets=CountDoubletsInFearFactor(ThreatStatus);
 			if(oldNumberOfDublets<numberOfDublets) {
 				oldNumberOfDublets=numberOfDublets;
@@ -291,11 +220,9 @@ int FindMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& DoubletsFound
 		};
 	};
 	return RsultingUnitID;
-};
+}
 
-// funkcja robi to samo co popzredniczka lecz szuka obektow ktorych ilosc
-// dupletow jest mniejsza od wskazanego parametru
-int FindNextMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& IN_OUT_MeancedParam ) {
+int CPathFinder::FindNextMostMenacedUnit_DupletSearch(TPathPoints& LoopedTim, int& IN_OUT_MeancedParam) {
 	int RsultingUnitID = -1;
 	int oldNumberOfDublets = IN_OUT_MeancedParam;
 	int local_min = 0;
@@ -304,7 +231,7 @@ int FindNextMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& IN_OUT_Me
 	for(int op=0; op<4; op++) {
 		if(LoopedTim[op].PathCount()>0 && LoopedTim[op].TempNotIntresting==false){
 		TUID ThreatStatus;
-		int TreatsCount=CheckHoodForThreat(LoopedTim[op],ThreatStatus);
+		CheckHoodForThreat(LoopedTim[op], ThreatStatus);
 		numberOfDublets=CountDoubletsInFearFactor(ThreatStatus);
 			if( (local_min<numberOfDublets)&&(numberOfDublets<oldNumberOfDublets) ){
 				local_min=numberOfDublets;
@@ -315,9 +242,9 @@ int FindNextMostMenacedUnit_DupletSearch( TPathPoints& LoopedTim, int& IN_OUT_Me
 		};
 	};
 	return RsultingUnitID;
-};
+}
 
-bool CheckVectorCorectness(TPoint V1, TPoint V2, TPoint V2Mask, int MaxRadius) {
+bool CPathFinder::CheckVectorCorectness(TPoint V1, TPoint V2, TPoint V2Mask, int MaxRadius) {
 	bool IQlity=false;
 	if(Touching(V1,V2)==false){
 		TPoint meetPoint = V2;
@@ -330,14 +257,9 @@ bool CheckVectorCorectness(TPoint V1, TPoint V2, TPoint V2Mask, int MaxRadius) {
 		IQlity=true;
 	};
 	return IQlity;
-};
+}
 
-// z pola CementingFrom nastepuje cementowanie pol w obrebie jednostki E
-// a wyniki ktore to pola maja byc zacementowane sa pzekazywane
-// w postaci numeru maski ktora ma byc uzyta aby zacementowac jakies pole.
-// w ten sposob otzrymuje mozliwosc wyboru sposrod pol mozliwych do zacementowanie ,
-// tego pola ktory bedzie sluzylo mojej druzynie
-void SerchFieldToCement_OtherThanAndTouchingTo(TPoint CementingFrom, TPath& E, TUID& Result, int& FieldsToCementFound) {
+void CPathFinder::SerchFieldToCement_OtherThanAndTouchingTo(TPoint CementingFrom, TPath& E, TUID& Result, int& FieldsToCementFound) {
 	FieldsToCementFound=0;
 	resetToMinusOne(Result);
 	for(int z=0; z<E.PathCount(); z++) {
@@ -352,9 +274,9 @@ void SerchFieldToCement_OtherThanAndTouchingTo(TPoint CementingFrom, TPath& E, T
 			};
 		};
 	};
-};
+}
 
-bool CheckIfCanCementAndStay(TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPossibleNEWLocation, int& OUTPossibilitysCount, TUID& OUTPossibleMasks) {
+bool CPathFinder::CheckIfCanCementAndStay(TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPossibleNEWLocation, int& OUTPossibilitysCount, TUID& OUTPossibleMasks) {
 	bool Result = false;
 	for(int i=0; i<EnUnitToCheck.PathCount(); i++){
 		if(Result==false){
@@ -369,7 +291,7 @@ bool CheckIfCanCementAndStay(TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPos
 				// teraznalezy sprawidzic czy pola pzryegle do tego w ktore sie moze ruszyc
 				// moga byc zacementowane
 				SerchFieldToCement_OtherThanAndTouchingTo(_org,EnUnitToCheck,OUTPossibleMasks,OUTPossibilitysCount);
-				if(OUTPossibilitysCount>0) {	
+				if(OUTPossibilitysCount>0) {
 					OUTPossibleNEWLocation = _org;
 					Result=true;
 				};
@@ -380,32 +302,9 @@ bool CheckIfCanCementAndStay(TPath& EnUnitToCheck, TPath& MyUnit, TPoint& OUTPos
 	//PossibilitysCount zwracana jest ilosc pzryleglych pol do wroga rowniez pzrleglych
 	// do nowego polozenia mojeje jednostki(_org) natomiast w PossibleFieldsToCement zwracane sa indexy
 	// maski wroga okreslajace te pola
-};
-// Wybiez Najodpoiedniejsza Jedsotke Sposrod Moich
-// Opis Parametrow:
-// int& MyAppropriateUnitsCount zwraca liczbe jednostek mojej druzyny
-// kore nadaja sie do zadania zasiadniecia kolo
-// jednostki woga i zacementowania jej najblizszej okolic
-//
-// TUID& AppropriateUnitsIDsVector = to wektor o dlugosc MyAppropriateUnitsCount ktory
-// zawiera indexy moich jednostek ktore nadaja sie do tego zadania
-//
-// TPath& OnEn - jednostka pzreciwnika ddla ktorej sprawdzanei sie odbywa
-//
-// TUID rawBuff - bufor okreslajacy ilosc pol wokol jednostki w ktorej
-// wystapil dublet (moziwosc zasiadniecia i zacementoweania
-// tego samego punktu w obrebie jednostki wroga (OnEn))
-//
-// TPoint& NewWariorLocum - Jesli odpwiednia jednostka jest znaleziona
-// wspolzredne do ktorych powinna sie pzremiescic sa okreslone ta zmienne
-//
-// int& FineFieldsCount - okresla ile pol dla danej jednostki odpowiedniej
-// do tego zadania jest w zsiegu cementowania (pol bedacych w bezposrednim sasiedztwie jednsotki wroga OnEn)
-//
-// TUID& PointsMaskBufer - okresla indexy maski jednostki wroga ktore jesl iuzyte
-// wyznacza punkty ktore moga byc zacementowane
+}
 
-void WNJS( int& MyAppropriateUnitsCount, TUID& AppropriateUnitsIDsVector, TAtack& AtackInfo,TPath& OnEn, TUID rawBuff ) {
+void CPathFinder::WNJS(int& MyAppropriateUnitsCount, TUID& AppropriateUnitsIDsVector, TAtack& AtackInfo,TPath& OnEn, TUID rawBuff) {
 	MyAppropriateUnitsCount = 0;
 	TPoint NewWariorLocum;
 	int FineFieldsCount;
@@ -436,9 +335,9 @@ void WNJS( int& MyAppropriateUnitsCount, TUID& AppropriateUnitsIDsVector, TAtack
 			};
 		};
 	};
-};
+}
 
-void ChooseFromGivenAndCement_DupletShoot(TBufor& OutputPlacement,int count, TUID& MyUnitsVec, TAtack& FInfo, TPath& UEnemy){
+void CPathFinder::ChooseFromGivenAndCement_DupletShoot(TBufor& OutputPlacement,int count, TUID& MyUnitsVec, TAtack& FInfo, TPath& UEnemy) {
 	// wybor jednostki  strzal
 	int MyUnitsBigestThreat = 0;
 	int thisUnit = -1;
@@ -458,7 +357,7 @@ void ChooseFromGivenAndCement_DupletShoot(TBufor& OutputPlacement,int count, TUI
 	};
 	TPoint ShootDestination=UEnemy.Org;
 	//utaj mozna jakas dodatkowa funkcje wybrac
-	int mask_to_use = rand() % FInfo[curr_id].PosibleFieldsCount;
+	int mask_to_use = std::rand() % FInfo[curr_id].PosibleFieldsCount;
 	TPoint masc = cMoveBlur[FInfo[curr_id].UsableMasksIDsVector[mask_to_use]];
 #if DEBUGIN==1 || DEBUGIN==2
 	pp(masc.x); pp(masc.y);
@@ -474,9 +373,9 @@ void ChooseFromGivenAndCement_DupletShoot(TBufor& OutputPlacement,int count, TUI
 #endif
 	MoveAndShoot(OutputPlacement, WariorLoc[thisUnit], FInfo[curr_id].NewORGForWariorUnit, ShootDestination);
 	//wywolanie rozkazu strzalu bezposrednei parametry - dwa punkty start i des i strzal
-};
+}
 
-void CementOldPlace(TBufor& OutputPlacement, TPath& WolnyElement){
+void CPathFinder::CementOldPlace(TBufor& OutputPlacement, TPath& WolnyElement) {
 	int maxRadius = 0;
 	int Direction = -1;
 #if DEBUGIN==2
@@ -496,11 +395,9 @@ void CementOldPlace(TBufor& OutputPlacement, TPath& WolnyElement){
 	pp(Destination.x); pp(Destination.y);
 #endif
 	MoveAndShoot(OutputPlacement, WolnyElement, Destination, WolnyElement.Org);
-};
+}
 
-// procedura wykona sie zawsze gdy nei ma mozliwosci wykonania
-// dupletu na jednej z jednostek pzreciwnika
-void ChooseShootAndRun(TBufor& OutputPlacement) {
+void CPathFinder::ChooseShootAndRun(TBufor& OutputPlacement) {
 #if DEBUGIN==2
 	wia();
 #endif
@@ -529,7 +426,7 @@ void ChooseShootAndRun(TBufor& OutputPlacement) {
 			CementOldPlace(OutputPlacement,WariorLoc[id]);
 #if DEBUGIN==2
 			wia();
-#endif		
+#endif
 			};break;
 		default:{
 			int EngagedEnemyIs=-1;
@@ -541,7 +438,7 @@ void ChooseShootAndRun(TBufor& OutputPlacement) {
 				} else {
 					if( RestrictionsForMyUnitFrom[re]>0 ){
 						tmp = RestrictionsForMyUnitFrom[re];
-						EngagedEnemyIs = ((rand()%10)>=5)?EngagedEnemyIs:re;
+						EngagedEnemyIs = ((std::rand()%10)>=5)?EngagedEnemyIs:re;
 					};
 				};
 			// koniec szukania jednostki ktora bede atakowal
@@ -572,9 +469,9 @@ void ChooseShootAndRun(TBufor& OutputPlacement) {
 			};
 		};
 	};
-};
+}
 
-TPoint GetConnectionField( TBufor& OutputPlacement, TPath& Warior, TPath& Enemy, TPoint CementDest ) {
+TPoint CPathFinder::GetConnectionField(TBufor& OutputPlacement, TPath& Warior, TPath& Enemy, TPoint CementDest) {
 	VV Base;
 	bool FoundSearchedField = false;
 	TPoint NextP = NullPoint;
@@ -605,9 +502,9 @@ TPoint GetConnectionField( TBufor& OutputPlacement, TPath& Warior, TPath& Enemy,
 		};
 	};
 	return NullPoint;
-};
+}
 
-TPoint ChooseFieldToCement(TPath& Warior ,TPath& Enemy){
+TPoint CPathFinder::ChooseFieldToCement(TPath& Warior ,TPath& Enemy) {
 	TPoint Result=NullPoint;
 	TPoint _m = ZeroPoint;
 	TPoint _t = ZeroPoint;
@@ -623,9 +520,9 @@ TPoint ChooseFieldToCement(TPath& Warior ,TPath& Enemy){
 		};
 	};
 	return Result;
-};
+}
 
-void MoveAndShoot(TBufor& OutputPlacement, TPath& ActiveUnit, TPoint MoveDestination, TPoint ShootDestination ) {
+void CPathFinder::MoveAndShoot(TBufor& OutputPlacement, TPath& ActiveUnit, TPoint MoveDestination, TPoint ShootDestination) {
 #if DEBUGIN==1
 	wia();
 #endif
@@ -634,10 +531,9 @@ void MoveAndShoot(TBufor& OutputPlacement, TPath& ActiveUnit, TPoint MoveDestina
 	ShotsFromLocalization(ActiveUnit,MoveDestination);
 	ShootAtLocalization(ShootDestination);
 	SendData(OutputPlacement);
-};
+}
 
-void ChoosingUnits(TBufor& OutputPlacement){
-	bool doesItHasDuplet;
+void CPathFinder::ChoosingUnits(TBufor& OutputPlacement) {
 #if DEBUGIN==2
 	fx<<"---"<<RuchNR<<"----"<<endl;
 	fx<<"-=-=-=-=-=-=-=-New Begining-=-=-=-=-=-=-=-="<<endl;
@@ -672,19 +568,18 @@ void ChoosingUnits(TBufor& OutputPlacement){
 		int MenacedParameter = 0;
 		TUID Bufer;
 		int id;
-		int ThreatCount;
 		// This Task My Units Count
 		int TTMUC = 0;
 		// This Task My Units Vector
 		TUID TTMUVec;
 		// zbior Informacji o jednostkch i ich parametrach koncowych
-		TAtackHQ FinalInfo;
+		TAtack FinalInfo{};
 		id=FindMostMenacedUnit_DupletSearch(EnemyLoc, MenacedParameter);
 		MenacedParameter++;
 		int iterator = 0;
 		do{
 			id=FindNextMostMenacedUnit_DupletSearch(EnemyLoc, MenacedParameter);
-			ThreatCount=CheckHoodForThreat(EnemyLoc[id],Bufer);
+			CheckHoodForThreat(EnemyLoc[id], Bufer);
 			WNJS(TTMUC, TTMUVec, FinalInfo, EnemyLoc[id],Bufer);
 		}while(( TTMUC==0 )&&( (++iterator)<4 ));
 #if DEBUGIN==2
@@ -728,17 +623,17 @@ void ChoosingUnits(TBufor& OutputPlacement){
 			};
 		};
 	};
-};
+}
 
-void ChooseTimMoveCoordinates(TBufor& OutputPlacement) {
+void CPathFinder::ChooseTimMoveCoordinates(TBufor& OutputPlacement) {
 	CleatParametersState();
 	// okreslenie mozliwych drog
 	RunPathFinder();
 	RunMutuals();
 	ChoosingUnits(OutputPlacement);
-};
+}
 
-void WykonajJalowyRuch(TBufor& OutputPlacement) {
+void CPathFinder::WykonajJalowyRuch(TBufor& OutputPlacement) {
 	int PathToMove;
 	int RadiusToMove;
 	int maxRad;
@@ -747,9 +642,9 @@ void WykonajJalowyRuch(TBufor& OutputPlacement) {
 	TPoint ShootDestination;
 	int id;
 	id = FindLessRestrictedUnit(WariorLoc);
-	PathToMove = rand() % WariorLoc[id].PathCount();
+	PathToMove = std::rand() % WariorLoc[id].PathCount();
 	maxRad = WariorLoc[id].fVV.Vect[PathToMove].radius;
-	modRad = (maxRad>1)?(rand()%(maxRad+1)):maxRad;
+	modRad = (maxRad>1)?(std::rand()%(maxRad+1)):maxRad;
 	if( modRad == 0 ) {
 		modRad = 1;
 	};
@@ -764,13 +659,13 @@ void WykonajJalowyRuch(TBufor& OutputPlacement) {
 	int ShootRadius;
 	ShotsFromLocalization(WariorLoc[id], MoveDestination);
 	if(WariorLoc[id].ShootDirectionCount()>1) {
-		ShootDirection = rand() % WariorLoc[id].ShootDirectionCount();
+		ShootDirection = std::rand() % WariorLoc[id].ShootDirectionCount();
 	} else {
 		ShootDirection=1;
 	};
-	ShootDirection = rand() % WariorLoc[id].ShootDirectionCount();
+	ShootDirection = std::rand() % WariorLoc[id].ShootDirectionCount();
 	maxRad = WariorLoc[id].BombHQ.Vect[ShootDirection].radius;
-	modRad = (maxRad>1)?(rand()%maxRad)+1:maxRad;
+	modRad = (maxRad>1)?(std::rand()%maxRad)+1:maxRad;
 	if(modRad==0) {
 		modRad = 1;
 	};
@@ -780,41 +675,35 @@ void WykonajJalowyRuch(TBufor& OutputPlacement) {
 	//2. <<END
 	ShootAtLocalization(ShootDestination);
 	SendData(OutputPlacement);
-};
+}
 
-void CopyOneToOther(TUID& Source, TUID& Dest) {
+void CPathFinder::CopyOneToOther(TUID& Source, TUID& Dest) {
 	for (int i = 0; i < 4; ++i) {
 		if (Source[i]) {
 			Dest[i] = Source[i];
 		};
 	};
-};
+}
 
-void restBufer(TUID& Data) {
+void CPathFinder::restBufer(TUID& Data) {
 	for (int i = 0; i < 4; ++i) {
 		Data[i] = 0;
 	}
-};
+}
 
-void resetToMinusOne(TUID& Data) {
+void CPathFinder::resetToMinusOne(TUID& Data) {
 	for (int i = 0; i < 4; ++i) {
 		Data[i] = -1;
 	}
-};
+}
 
-void InvokeKoniec(TBufor& _OutputPlacement) {
+void CPathFinder::InvokeKoniec(TBufor& _OutputPlacement) {
 	for (int i = 0; i < 6; ++i) {
 		_OutputPlacement[i] = -1;
 	}
 	RuchNR++;
-};
+}
 
-	CPathFinder(int PlayerStartID): FieldSpace::FieldSpace(PlayerStartID) {
-		TimFreeSpace = 0;
-		EnFreeSpace = 0; /*oba paramatry ustawiane w pzry szukaniu mutuali*/
-		srand(time(0));
-	};
-
-	~CPathFinder() { };
-
-};
+CPathFinder::CPathFinder(int PlayerStartID) : FieldSpace(PlayerStartID) {
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	}

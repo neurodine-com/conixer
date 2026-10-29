@@ -9,28 +9,31 @@
 // oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
 // Description:     this is the file that creates the structures that are used in path_finding file
 //			there is not much logic here.. it's simply definitions and not much except setting some
-// 			constant valuses, ZERO states and base values for structures itself - usual 
+// 			constant valuses, ZERO states and base values for structures itself - usual
 // 			init a man would do when writing a chess łike game
 // --------------------------------------------------------------------------------------------------------
-#include "stdio.h"
 
-#pragma once
+#ifndef CONIXER_FIELDSPACE_H
+#define CONIXER_FIELDSPACE_H
 
 #include "fighting_structures.h"
 #include "BaseBlock.h"
 #include "TPath.h"
 
+using TPathPoints = TPath[4];
+
 
 class FieldSpace {
 	public:
-		typedef TPath TPathPoints[4];
+		using TPathPoints = ::TPathPoints;
+
 		TPath WariorLoc[4] = {
 			TPath(true, 0, 0, 0),
 			TPath(true, 0, 0, 1),
 			TPath(true, 0, 0, 2),
 			TPath(true, 0, 0, 3)
 		};
-			// represents coordinates of enemy units 
+			// represents coordinates of enemy units
 		TPath EnemyLoc[4] = {
 			TPath(false, 0, 0, 0),
 			TPath(false, 0, 0, 1),
@@ -38,11 +41,12 @@ class FieldSpace {
 			TPath(false, 0, 0, 3)
 		};
 		BaseBlock MOF[10][10];
+		TBufor FinalBuff{};
 
 		int TimeLeft;
 		int EmptyFields;
 // represents coordinates of my units
-// time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time 
+// time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time
 // represents the number of all free fields on the board
 // ustawia pola na lanszy z zajetych na wolne i zapisuje:
 // 		na planszy pole ktore zostalo zacementowane
@@ -87,5 +91,8 @@ class FieldSpace {
 	// FieldSpace(FieldSpace &&) = delete;
 	FieldSpace &operator=(const FieldSpace &) = default;
 	// FieldSpace &operator=(FieldSpace &&) = delete;
-	FieldSpace(int PlayersNumber);
+	explicit FieldSpace(int PlayersNumber);
+	virtual ~FieldSpace() = default;
 };
+
+#endif // CONIXER_FIELDSPACE_H

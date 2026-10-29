@@ -26,17 +26,19 @@
 // 		   probability filter is used to choose which one will be used in iteration)
 // -------------------------------------------------------------------------------------------------------
 
-#pragma once
-#include "stdio.h"
+#ifndef CONIXER_CPATHFINDER_H
+#define CONIXER_CPATHFINDER_H
 
-#include "fighting_structures.h"
-#include "BaseBlock.h"
-#include "TPath.h"
+#include "FieldSpace.h"
 
-#define DifP(P1, P2) ((TPoint){P1.x - P2.x , P1.y - P2.y})
-
-class CPathFinder {
+class CPathFinder : public FieldSpace {
 	public:
+		int RuchNR{-1};
+		int TimFreeSpace{};
+		int EnFreeSpace{};
+		int TimUnidID{-1};
+		int EnUnitID{-1};
+
 
 	int FindLessRestrictedUnit(TPathPoints& Team);
 	int FindMostRestrictedUnit(TPathPoints& Team);
@@ -125,6 +127,8 @@ class CPathFinder {
 	void restBufer(TUID& Data);
  	void resetToMinusOne(TUID& Data);
 	void InvokeKoniec(TBufor& _OutputPlacement);
-	CPathFinder(int PlayerStartID);
-	~CPathFinder();
+	explicit CPathFinder(int PlayerStartID);
+	~CPathFinder() override = default;
 };
+
+#endif // CONIXER_CPATHFINDER_H

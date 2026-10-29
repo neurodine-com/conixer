@@ -1,87 +1,68 @@
-// --------------------------------------------------------------------------------------------------------
-// Author:          Blazej Kaczmarek
-// ORCID:           https://orcid.org/0009-0003-1070-8870
-// email:           fajny.masz.tornister@gmail.com
-// github ord email:MasterDisaster@neurodine.com
-// domain email:    Blazej.Kaczmarek@neurodine.com
-// oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
-// PEN:             1.3.6.1.4.1.53685
-// oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
-// Description:     this is the file that creates the structures that are used in path_finding file
-//			there is not much logic here.. it's simply definitions and not much except setting some
-// 			constant valuses, ZERO states and base values for structures itself - usual 
-// 			init a man would do when writing a chess łike game
-// --------------------------------------------------------------------------------------------------------
-
 #include "FieldSpace.h"
-
-class FieldSpace {
-
-	bool EQPoint(TPoint P1,int  X, int Y) {
+bool FieldSpace::EQPoint(TPoint P1,int  X, int Y) {
 		return (P1.x==X && P1.y==Y);
-	};
+	}
 
-	bool IQl(TPoint P1, TPoint P2) {
+bool FieldSpace::IQl(TPoint P1, TPoint P2) {
 			return (P1.x==P2.x && P1.y==P2.y);
-	};
+	}
 
-	bool GoodP(TPoint A) {
+bool FieldSpace::GoodP(TPoint A) {
 			return  (A.x>=0 && A.x<10 && A.y>=0 && A.y<10 );
-	};
+	}
 
-	void SendData(TBufor& WriteIn) {
+void FieldSpace::SendData(TBufor& WriteIn) {
 		for(int o=0; o<6;o++) {
 			WriteIn[o]=FinalBuff[o];
 		};
-	};
+	}
 
-	bool Valid(int fx, int fy) {
-		return (bool)MOF[fx][fy].BlockAccess();
-	};
+bool FieldSpace::Valid(int fx, int fy) {
+		return fx >= 0 && fx < 10 && fy >= 0 && fy < 10 && MOF[fx][fy].BlockAccess();
+	}
 
-	bool Valid(TPoint _org) {
+bool FieldSpace::Valid(TPoint _org) {
 		if(GoodP(_org)){
 			return Valid(_org.x,_org.y);
 		} else {
 			return false;
 		};
-	};
+	}
 
-	// Player To Coordinates
-	int PTC(TPathPoints& Team, int X, int Y) {
-		int i=-1;
-		while(( EQPoint(Team[++i].Org,X,Y)==false )&&( i<4 )){
-		};
-		return (i<4)?i:-1;
-	};
+int FieldSpace::PTC(TPathPoints& Team, int X, int Y) {
+		for (int i = 0; i < 4; ++i) {
+			if (EQPoint(Team[i].Org, X, Y)) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
-	int PTC(TPathPoints& Team, const TPoint Pkt) {
+int FieldSpace::PTC(TPathPoints& Team, const TPoint Pkt) {
 		return PTC(Team,Pkt.x, Pkt.y);
-	};
+	}
 
-	void ConcrateXY(int shoot_x, int shoot_y) {
+void FieldSpace::ConcrateXY(int shoot_x, int shoot_y) {
 		MOF[shoot_x][shoot_y].SetAccessRights(false);
 		EmptyFields--;
-	};
+	}
 
-	void ConcrateXY(TPoint ShootPos) {
+void FieldSpace::ConcrateXY(TPoint ShootPos) {
 		if(GoodP(ShootPos)) {
 			ConcrateXY(ShootPos.x, ShootPos.y);
 		};
-	};
+	}
 
-	bool MaskOK(int MAskId) {
-		return (MAskId>=0 || MAskId<=7);
-	};
+bool FieldSpace::MaskOK(int MAskId) {
+		return MAskId >= 0 && MAskId <= 7;
+	}
 
-	bool RadOK(int radius_length) {
+bool FieldSpace::RadOK(int radius_length) {
 		return (radius_length>0 && radius_length<10);
-	};
+	}
 
-	TPoint GetPoint(TPath& Element,  int radius, int MoveBlurID) {
+TPoint FieldSpace::GetPoint(TPath& Element,  int radius, int MoveBlurID) {
 		if((RadOK(radius) == false )||( MaskOK(MoveBlurID) == false )){
-			std::cout << "radius: "<< radius << " or mask ID: "<< MoveBlurID << " couses error";
-			std::cin>> radius;
 			return NullPoint;
 		} else {
 			TPoint Local=Element.Org;
@@ -89,12 +70,15 @@ class FieldSpace {
 			Local.y = (radius*cMoveBlur[MoveBlurID].y) + Element.Org.y;
 			return Local;
 		};
-	};
+	}
 
-	void RecordMovement(TBufor& MovVector) {
+void FieldSpace::RecordMovement(TBufor& MovVector) {
 		int lx = MovVector[0];
 		int ly = MovVector[1];
 		int _a = PTC(EnemyLoc,lx,ly);
+		if (_a < 0) {
+			return;
+		}
 		int nx = MovVector[2];
 		int ny = MovVector[3];
 		int cx = MovVector[4];
@@ -108,42 +92,39 @@ class FieldSpace {
 		fx<<"Nowe polozenie wroga:"<<endl;
 		V6(MovVector);
 #endif
-	};
+	}
 
-	void RunPathFinder() {
+void FieldSpace::RunPathFinder() {
 		for(int TeamMemb=0; TeamMemb<4; TeamMemb++) {
 			WariorLoc[TeamMemb].ClearMixer_VV_ToStartup();
 			GenerateMoves_or_Shots(WariorLoc[TeamMemb].fVV);
 			EnemyLoc[TeamMemb].ClearMixer_VV_ToStartup();
 			GenerateMoves_or_Shots(EnemyLoc[TeamMemb].fVV);
 		};
-	};
+	}
 
-	void Step(TPoint& Base, TPoint oVektor) {
+void FieldSpace::Step(TPoint& Base, TPoint oVektor) {
 		Base.x += oVektor.x;
 		Base.y += oVektor.y;
-	};
+	}
 
-	TPoint Conv(int x, int y) {
+TPoint FieldSpace::Conv(int x, int y) {
 		TPoint tmp;
 		tmp.x = x;
 		tmp.y = y;
 		return tmp;
-	};
+	}
 
-	// okresla mozliwe rodziny mozliwych strzalow
-	void ShotsFromLocalization(TPath& TeamMemb, const TPoint ShootingFrom) {
+void FieldSpace::ShotsFromLocalization(TPath& TeamMemb, const TPoint ShootingFrom) {
 		TeamMemb.SetHQ(ShootingFrom);
 		GenerateMoves_or_Shots(TeamMemb.BombHQ);
-	};
+	}
 
-	//w proc wywolujacej ustawiane sa wszelkie wartosci wstepne (czyli w pathFinder::FindShootMutuals(..))
-	void VirtualShotsFromLocalization(VV& VirtualShotsPlacement) {
+void FieldSpace::VirtualShotsFromLocalization(VV& VirtualShotsPlacement) {
 		GenerateMoves_or_Shots(VirtualShotsPlacement);
-	};
+	}
 
-	// okresla pzremieszczenie danej jednostki - nei wywoluje niczego
-	void MoveWarior(TPath& WariorToBeMoved, TPoint MoveTo) {
+void FieldSpace::MoveWarior(TPath& WariorToBeMoved, TPoint MoveTo) {
 		// 2
 		FinalBuff[0]=WariorToBeMoved.Org.x;
 		FinalBuff[1]=WariorToBeMoved.Org.y;
@@ -153,21 +134,16 @@ class FieldSpace {
 		// 4
 		FinalBuff[2]=MoveTo.x;
 		FinalBuff[3]=MoveTo.y;
-	};
+	}
 
-	// okresla punkt ktory ma zostac ostrzelany - nei wywoluje niczego
-	void ShootAtLocalization(const TPoint LocalizationToBeShot) {
+void FieldSpace::ShootAtLocalization(const TPoint LocalizationToBeShot) {
 		// 5
 		ConcrateXY(LocalizationToBeShot);
 		// 6
 		FinalBuff[4]=LocalizationToBeShot.x; FinalBuff[5]=LocalizationToBeShot.y;
-	};
+	}
 
-	// Argumentem procedury jest element typu VV
-	// sa zapisywane wyniki szukania mozliwych max drog/ich ilosc
-	// a pole Ground00 tego elementu oznacza pole na planszy dla
-	// ktorego wykonywane so oblczenia
-	void GenerateMoves_or_Shots(VV& XUnit) {
+void FieldSpace::GenerateMoves_or_Shots(VV& XUnit) {
 		SimpPath Di[8];
 		// XUnit musi byc koniecznie przygotowane do wpisywania pzred wejsciem do tej procedury;
 		// jelsi obliczanei dla elementu zasigow ruchw w roznych kierunkach to robi to procedura ClearMixer_VV_ToStartup()
@@ -180,7 +156,6 @@ class FieldSpace {
 		};
 		for(int t=0; t<8; t++) {
 			//min(XUnit.Ground00.x, XUnit.Ground00.y);
-			int tot=0;
 			do{
 				Di[t].radius++;
 				Step(Di[t].DestPoint,cMoveBlur[t]);
@@ -200,9 +175,9 @@ class FieldSpace {
 				XUnit.VectCount++;
 			};
 		};
-	};
+	}
 
-	void FindFieldToShoot(VV& XUnit, const TPoint StopOnThisOne, bool& Found) {
+void FieldSpace::FindFieldToShoot(VV& XUnit, const TPoint StopOnThisOne, bool& Found) {
 		SimpPath Di[8];
 #if DEBUGIN == 2
 	pp(Found);
@@ -226,18 +201,17 @@ class FieldSpace {
 				break;
 			};
 		};
-	};
+	}
 
-	void ClearGameMutuals() {
+void FieldSpace::ClearGameMutuals() {
 		for(int d=0; d<10; d++) {
 			for(int dd=0; dd<10; dd++) {
 				MOF[d][dd].AfterMooveClearMutuals();
 			};
 		};
-	};
+	}
 
-	// FieldSpace &operator=(FieldSpace &&) = delete;
-	FieldSpace(int PlayersNumber) {
+FieldSpace::FieldSpace(int PlayersNumber) {
 		EmptyFields = 92;
 		TimeLeft = -1;
 		for (int x = 0; x < 10; x++) {
@@ -259,8 +233,4 @@ class FieldSpace {
 				MOF[EnemyLoc[o].Org.x][EnemyLoc[o].Org.y].SetAccessRights(false);
 			}
 		};
-	};
-
-	~FieldSpace(){ };
-
-};
+	}
