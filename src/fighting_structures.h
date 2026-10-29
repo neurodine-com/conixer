@@ -28,6 +28,7 @@ typedef struct {
 	TPoint DestPoint;
 	int Mask;
 } SimpPath;
+
 typedef struct{
 	// a vector of possible maximum paths - thanks to radious z CMoveblur[.x] can set any coordinates on the filed on which the item Path has to move - that is my "Concrate Mixer"
 	SimpPath Vect[8];
@@ -43,6 +44,7 @@ typedef struct{
 	TUID UsableMasksIDsVector;
 } TAtackHQ;
 
+typedef TAtackHQ TAtack[4];
 
 const TUID ZeroThreat = {0, 0, 0, 0};
 const TPoint NullPoint = {-1, -1};

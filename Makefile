@@ -12,7 +12,13 @@ DEPS = $(addsuffix .d,$(patsubst %,$(OBJ_DIR)/%.o, $(SOURCES)))
 
 LDFLAGS = -lpthread
 
-CXXFLAGS = -Wall -std=c++14
+UPGRADE_MY_STANDARDS = -std=c++20
+USE_CHILLY_OLD = -std=c++14
+
+
+CXXFLAGS_STANDARIZE_VER = $(UPGRADE_MY_STANDARDS)
+# CXXFLAGS_STANDARIZE_VER = $(USE_CHILLY_OLD)
+CXXFLAGS = -Wall $(CXXFLAGS_STANDARIZE_VER)
 
 .PHONY: all clean run
 

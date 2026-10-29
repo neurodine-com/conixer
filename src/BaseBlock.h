@@ -5,6 +5,18 @@
 class BaseBlock {
 
 	public:
+		bool accessible;
+		TPoint Cords;
+		int EnemyMutualMov;
+		int TimMutualMov;
+		int EnemyShootMut;
+		int TimShootMut;
+
+		int FreeDiections;
+		TUID EnemysID_MutualMov;
+		TUID WariorsID_MutualMov;
+		TUID EnemysID_ShootMutual;
+		TUID WariorsID_ShootMutual;
 
 		bool BlockAccess();
 		void SetAccessRights(bool value);

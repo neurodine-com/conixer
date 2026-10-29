@@ -25,15 +25,15 @@
 // 		   ( and i have more then one strategy and which one is chosen is also  unknown for me as a 
 // 		   probability filter is used to choose which one will be used in iteration)
 // -------------------------------------------------------------------------------------------------------
-#include "stdio.h"
-#include "fighting_structures.h"
 
+#pragma once
+#include "stdio.h"
+
+#include "fighting_structures.h"
 #include "BaseBlock.h"
-// #include "FieldSpace.h"
+#include "TPath.h"
 
 #define DifP(P1, P2) ((TPoint){P1.x - P2.x , P1.y - P2.y})
-typedef TAtackHQ TAtack[4];
-
 
 class CPathFinder {
 	public:

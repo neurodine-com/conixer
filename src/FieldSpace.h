@@ -14,18 +14,33 @@
 // --------------------------------------------------------------------------------------------------------
 #include "stdio.h"
 
-// #include "fighter.h"
-// #include "baseblock.h"
+#pragma once
+
+#include "fighting_structures.h"
+#include "BaseBlock.h"
 #include "TPath.h"
 
-// typedef BaseBlock bb;
-// typedef SimpPath TVect[8];
-
-// typedef BaseBlock TPole[10][10];
-typedef TPath TPathPoints[4];
 
 class FieldSpace {
+	public:
+		typedef TPath TPathPoints[4];
+		TPath WariorLoc[4] = {
+			TPath(true, 0, 0, 0),
+			TPath(true, 0, 0, 1),
+			TPath(true, 0, 0, 2),
+			TPath(true, 0, 0, 3)
+		};
+			// represents coordinates of enemy units 
+		TPath EnemyLoc[4] = {
+			TPath(false, 0, 0, 0),
+			TPath(false, 0, 0, 1),
+			TPath(false, 0, 0, 2),
+			TPath(false, 0, 0, 3)
+		};
+		BaseBlock MOF[10][10];
 
+		int TimeLeft;
+		int EmptyFields;
 // represents coordinates of my units
 // time left for doing the computations... this is thik i did not totaly used but the Applet deefines some maximum time 
 // represents the number of all free fields on the board
