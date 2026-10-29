@@ -36,7 +36,7 @@ ofstream fx;
 #define TPoint TelTPoint
 #include "tel.h"
 #undef TPoint
-#include "path_finder.h"
+#include "CPathFinder.h"
 
 
 int MaxMoves;
