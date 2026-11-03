@@ -3,3 +3,4 @@
 .dev.vars
 desktop.ini
 .*.apikey
+bin/*
