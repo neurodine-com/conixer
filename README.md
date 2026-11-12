@@ -55,9 +55,11 @@ Answer seems be straight-forward - git hub repositories -> this would require a 
 GitHub action with compilation for linux OS having it's source on a linux docker image with systemd subsystem onboard.  
 This would allow to run compiled programs in slices with strictly managed resources and it's own namespace - perfect sandbox.
 
+### More detaild functinality setup: Docker with linux with systemd slices of the "contestants" program.
+
 The docker image would have to be hosted as kubernet's cluster and the binary would have had to be uploaded to the image by a "web upload" and internal installation on this kubernet's or the Kubernets cluster would init the compilation of the program when the user request it - register/adds git hub repo to the GAME account hosted on my cloudflare site neurodine.com with subdomain assign to it like.. bfa.neurodine.com. 
 
-The bfa.neurodine.com would host the CMS with the game board.
+The domain: `bfa.neurodine.com` (subdomain:bfa) would host the CMS with the game Betoniarki universe.
 User would be able to register (registration starts on andoid/iOS app) and creates account on the CMS: mixers-fight-arena on bfa.neurodine.com. Without registration user would be allowed to play agains on automated bot - this exact on in this **conixer** repository, and use mouse/keyboard or voice to move Betoniarke on the playground grid agains the BOT.
 
 If the user would register then, he would would be able to add it's own git repository with it's own written code. When suitable he would commit it with the TAG mentioned before and the kubernets cluster service would start doing the compilation with some unit testing of the IO and finally make a systemd  slice for the compiled program and make it available for the GAME. The slice would live as long as the game is active. When game is NOT active, systemd kills the slice.  
