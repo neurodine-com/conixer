@@ -9,11 +9,11 @@
 # oid-tree:        http://oid-info.com/get/1.3.6.1.4.1.53685
 # PEN:             1.3.6.1.4.1.53685
 # oid ASN.1:       {iso(1) identified-organization(3) dod(6) internet(1) private(4) enterprise(1) 53685}
-# Description: 	  This is NOT that supere automatically generated file. I made some changes 
-# 		  to it 11.Sep.2026 ( heh .. over ~ 20 years after creation :D )
-#		  What i did is am made paths to be relative from some imaginary root dir "" [ empty one ]
-# 		  so that it is portble/usable with some general C building tool... and yes.. this 
-# 		  was made on a ~"should work" so might not work actually ( but IF.. then i am a super hero )
+# Description:    This is NOT a superman made Makefile -I made it myself :-/. This file content was orginally
+#                 crafted 20 year ago - 2007. Sirious changes towards C++ V20 compliance happened on it 11.Sep.2026
+#                 What I made was fiew paths to be relative from some imaginary root dir "" [ empty one ]
+#                 so that it is portble/usable with some general C building tool... and yes.. this 
+#                 was made on a ~"should work" so might not work actually ( but IF.. then I am a super hero )
 ###############################################################################
 
 CXX = g++
