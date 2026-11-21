@@ -16,46 +16,16 @@
 #                 was made on a ~"should work" so might not work actually ( but IF.. then I am a super hero )
 ###############################################################################
 
-CXX = g++
-CURDIR = .
-INCLUDE_DIRS = $(CURDIR)/src
-OUTPUT_DIR = $(CURDIR)/bin
-OBJ_DIR = $(CURDIR)/objs
-DEP_DIR = $(CURDIR)/deps
+.PHONY: all clean run test
 
-SOURCES = $(wildcard src/*.cpp)
-HEADERS = $(wildcard src/*.h)
+all:
+	cargo build --release
 
-OBJECTS = $(addprefix $(OBJ_DIR)/,$(notdir $(basename $(SOURCES))))
-DEPS = $(addsuffix .d,$(patsubst %,$(OBJ_DIR)/%.o, $(SOURCES)))
-
-LDFLAGS = -lpthread
-
-UPGRADE_MY_STANDARDS = -std=c++20
-USE_CHILLY_OLD = -std=c++14
-
-
-CXXFLAGS_STANDARIZE_VER = $(UPGRADE_MY_STANDARDS)
-# CXXFLAGS_STANDARIZE_VER = $(USE_CHILLY_OLD)
-CXXFLAGS = -Wall $(CXXFLAGS_STANDARIZE_VER)
-
-.PHONY: all clean run
-
-all:	conixer
-	@echo "Build of concrateMixer for BOT Fight Arena: Complete"
-
-conixer:	src/main.cpp 
-	@mkdir -p $(OUTPUT_DIR) $(DEP_DIR) $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -I$(INCLUDE_DIRS) $(SOURCES) \
-         -o $(OUTPUT_DIR)/conixer \
-         $(LDFLAGS)
+test:
+	cargo test
 
 clean:
-	rm -rf $(OBJECTS) $(DEPS) *.o main.cpp objs deps objs/*.d bin/ 
+	cargo clean
 
 run: all
-#	./bin/conixer
-
-%.o: %.cpp %*.h
-	@echo "Compiling $<"
-	$(CXX) $(CXXFLAGS) -I$(INCLUDE_DIRS) -c $< -o $@
+	./target/release/conixer

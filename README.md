@@ -1,5 +1,11 @@
 # Title: Conixer aka BOT @ concrateMixers-Bot-Fight-Arena
 
+## Rust implementation
+
+The active implementation is Rust. Build it with `cargo build --release` and run
+`./target/release/conixer`. The executable keeps the original 10x10 board,
+stdin/stdout Arbiter protocol, unit-state tracking, and move-selection logic.
+
 ## The Code
 
 This is code orginally writen in Object C in MinGW in codeBlocks on Windows - 20 years ago - 2007.
