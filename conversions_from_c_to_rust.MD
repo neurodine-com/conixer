@@ -24,7 +24,7 @@ The Rust conversion replaced the C++ implementation rather than retaining it beh
 ## C++ to Rust concept mapping
 
 | C++ concept / file | Rust implementation | Conversion approach |
-|---|---|---|
+| --- | --- | --- |
 | `TPoint` in `fighting_structures.h` | `Point` in `src/main.rs` | Two integer coordinates plus `valid()` and row-major `index()` helpers. |
 | `TBufor` (six integers) | `[i32; 6]` | Fixed-size Rust array represents the protocol's old position, new position, and concrete position. |
 | `TPath`, `VV`, `SimpPath` | `Bot` unit arrays and `Vec<Point>` from `all_moves()` | Replaced the C++ path-vector structures with on-demand candidate generation rather than recreating the nested C++ structs. |
