@@ -17,10 +17,11 @@
 ###############################################################################
 
 CXX = g++
+CURDIR = .
 INCLUDE_DIRS = $(CURDIR)/src
-OUTPUT_DIR = bin
-OBJ_DIR = objs
-DEP_DIR = deps
+OUTPUT_DIR = $(CURDIR)/bin
+OBJ_DIR = $(CURDIR)/objs
+DEP_DIR = $(CURDIR)/deps
 
 SOURCES = $(wildcard src/*.cpp)
 HEADERS = $(wildcard src/*.h)
@@ -40,20 +41,20 @@ CXXFLAGS = -Wall $(CXXFLAGS_STANDARIZE_VER)
 
 .PHONY: all clean run
 
-all:	Comixer
-	@echo "Building Comixer..."
+all:	conixer
+	@echo "Build of concrateMixer for BOT Fight Arena: Complete"
 
-Comixer:	src/main.cpp 
+conixer:	src/main.cpp 
 	@mkdir -p $(OUTPUT_DIR) $(DEP_DIR) $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -I$(INCLUDE_DIRS) $(SOURCES) \
-         -o $(OUTPUT_DIR)/comixer \
+         -o $(OUTPUT_DIR)/conixer \
          $(LDFLAGS)
 
 clean:
 	rm -rf $(OBJECTS) $(DEPS) *.o main.cpp objs deps objs/*.d bin/ 
 
 run: all
-	./bin/comixer
+#	./bin/conixer
 
 %.o: %.cpp %*.h
 	@echo "Compiling $<"

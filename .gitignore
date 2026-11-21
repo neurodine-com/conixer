@@ -4,3 +4,8 @@
 desktop.ini
 .*.apikey
 bin/*
+objs/*
+objs
+deps/*
+deps
+*.o
